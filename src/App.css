@@ -1,4 +1,4 @@
-.counter {
+/* .counter {
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -15,45 +15,18 @@
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
-}
+} */
 
-.hero {
+#welcomeImg {
   position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+  background-color: #e8f0f2;
+  background-image: url('./assets/welcome.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+  width: 100%;
+  height: 100vh;
 }
 
 #center {
@@ -68,6 +41,16 @@
     padding: 32px 20px 24px;
     gap: 18px;
   }
+}
+#login-signup {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 35px;
 }
 
 #next-steps {
@@ -104,12 +87,39 @@
   }
 }
 
+#login-signup ul {
+  list-style: none;
+  padding: 5;
+  display: flex;
+  gap: 8px;
+  margin: 20;
+
+
+  a {
+    /* border-radius: 26px; */
+    background: var(--social-bg);
+    display: flex;
+    /* padding: 6px 12px; */
+    align-items: center;
+    /* gap: 8px; */
+    text-decoration: none;
+    transition: box-shadow .3s;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+    .button-icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+}
 #next-steps ul {
   list-style: none;
   padding: 0;
   display: flex;
   gap: 8px;
-  margin: 32px 0 0;
+  margin: 0;
 
   .logo {
     height: 18px;
@@ -182,3 +192,111 @@
     border-right-color: var(--border);
   }
 }
+
+#authArea {
+  position: absolute;
+  bottom: 2vw;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  font-size: 1rem;
+}
+
+/* #authArea button, */
+#authArea input {
+  font: inherit;
+  padding: .5vw 1.5vw;
+  white-space: nowrap;
+  border-radius: 30px;
+}
+
+#authArea form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* .header {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+} */
+
+.sparkle-btn {
+  position: relative;
+  padding: 12px 32px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #44027c;
+  background: linear-gradient(135deg, #e0c3fc 0%, #d9b8f5 50%, #c9a3ec 100%);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(190, 140, 230, 0.4),
+              0 0 20px rgba(220, 180, 250, 0.3);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sparkle-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(190, 140, 230, 0.55),
+              0 0 30px rgba(220, 180, 250, 0.5);
+}
+
+.sparkle-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* sparkle shimmer sweep */
+.sparkle-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.sparkle-btn:hover::before {
+  left: 125%;
+}
+
+/* little floating sparkle dots */
+.sparkle-btn::after {
+  content: "✨";
+  position: absolute;
+  top: -6px;
+  right: 6px;
+  font-size: 12px;
+  opacity: 0;
+  animation: none;
+}
+
+.sparkle-btn:hover::after {
+  opacity: 1;
+  animation: twinkle 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { transform: scale(0.8) rotate(0deg); opacity: 0.6; }
+  to   { transform: scale(1.2) rotate(15deg); opacity: 1; }
+}
+
