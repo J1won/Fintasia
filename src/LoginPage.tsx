@@ -16,7 +16,7 @@ function LoginPage() {
           <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
         <div>
-          <h1>This is Login</h1>
+          <h1>Let's Invest!</h1>
           <p>
             Edit <code>src/LoginPage.tsx</code> and save to test <code>HMR</code>
           </p>

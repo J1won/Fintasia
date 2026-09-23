@@ -11,8 +11,8 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: 'Baloo 2', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: 'Baloo 2', system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -108,4 +108,98 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 70px;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+.logo-button {
+  width: clamp(140px, 32vw, 400px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.logo-button img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.logo-button:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.landing-page {
+  position: relative;
+}
+
+#scroll-gp-group {
+  position: absolute;
+  left: clamp(12px, 3vw, 48px);
+  bottom: clamp(12px, 3vw, 48px);
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(6px, 1vw, 16px);
+}
+
+#scroll-gp-group button {
+  width: clamp(50px, 17vw, 255px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  animation: scroll-float 2.4s ease-in-out infinite;
+}
+
+#scroll-gp-group button img,
+#scroll-gp-group > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+#scroll-gp-group > img {
+  width: clamp(30px, 24vh, 165px);
+  position: relative;
+  top: -36px;
+}
+
+#scroll-gp-group .grandpa-shaking {
+  animation: grandpa-shake 0.1s linear infinite;
+}
+
+@keyframes scroll-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes grandpa-shake {
+  0%,
+  100% {
+    transform: translateY(-16px);
+  }
+  50% {
+    transform: translateY(16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #scroll-gp-group button,
+  #scroll-gp-group .grandpa-shaking {
+    animation: none;
+  }
 }
