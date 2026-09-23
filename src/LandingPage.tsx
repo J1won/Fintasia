@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import type { SubmitEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './LandingPage.css'
 import landingPageImage from './assets/landingPageImage.png'
@@ -11,6 +10,7 @@ import scroll from './assets/scroll.png'
 function LandingPage() {
      const navigate = useNavigate();
      const [isScrollHovered, setIsScrollHovered] = useState(false);
+     const [isScrollOpen, setIsScrollOpen] = useState(false);
      return(
           <>
                {/* <div className="nav-bar">
@@ -46,7 +46,8 @@ function LandingPage() {
                          {/* scroll grandpa */}
 
                          <button
-                              onClick={() => navigate('/login')}
+                              type="button"
+                              onClick={() => setIsScrollOpen(true)}
                               onMouseEnter={() => setIsScrollHovered(true)}
                               onMouseLeave={() => setIsScrollHovered(false)}
                          >
@@ -58,6 +59,33 @@ function LandingPage() {
                               alt={isScrollHovered ? 'shaky reaction grandpa' : 'chill grandpa'}
                          />
                     </div>
+
+                    {isScrollOpen && (
+                         <div
+                              className="scroll-modal-backdrop"
+                              role="presentation"
+                              onClick={() => setIsScrollOpen(false)}
+                         >
+                              <section
+                                   className="scroll-modal"
+                                   role="dialog"
+                                   aria-modal="true"
+                                   aria-labelledby="scroll-modal-title"
+                                   onClick={(event) => event.stopPropagation()}
+                              >
+                                   <button
+                                        className="scroll-modal-close"
+                                        type="button"
+                                        aria-label="Close financial literacy window"
+                                        onClick={() => setIsScrollOpen(false)}
+                                   >
+                                        <span aria-hidden="true">&#215;</span>
+                                   </button>
+                                   <h2 id="scroll-modal-title">Financial Literacy</h2>
+                                   <p>Build the knowledge to make confident money decisions.</p>
+                              </section>
+                         </div>
+                    )}
                     
                </div>
           </>
