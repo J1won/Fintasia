@@ -1,0 +1,61 @@
+#scroll-gp-group {
+  position: absolute;
+  left: clamp(12px, 3vw, 48px);
+  bottom: clamp(12px, 3vw, 48px);
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(6px, 1vw, 16px);
+}
+
+#scroll-gp-group button {
+  width: clamp(50px, 17vw, 255px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  animation: scroll-float 2.4s ease-in-out infinite;
+}
+
+#scroll-gp-group button img,
+#scroll-gp-group > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+#scroll-gp-group > img {
+  width: clamp(30px, 24vh, 165px);
+  position: relative;
+  top: -36px;
+}
+
+#scroll-gp-group .grandpa-shaking {
+  animation: grandpa-shake 0.1s linear infinite;
+}
+
+@keyframes scroll-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes grandpa-shake {
+  0%,
+  100% {
+    transform: translateY(-16px);
+  }
+  50% {
+    transform: translateY(16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #scroll-gp-group button,
+  #scroll-gp-group .grandpa-shaking {
+    animation: none;
+  }
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { SubmitEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
+import './LandingPage.css'
 import landingPageImage from './assets/landingPageImage.png'
 import logo from './assets/logo.png'
 import shGrandpa from './assets/shakygp.png'
