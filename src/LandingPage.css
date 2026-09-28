@@ -12,21 +12,25 @@
   padding: 0;
   border: 0;
   background: transparent;
-  cursor: pointer;
-  animation: scroll-float 2.4s ease-in-out infinite;
+  cursor: pointer;  animation: scroll-float 2.4s ease-in-out infinite;
 }
 
-#scroll-gp-group button img,
-#scroll-gp-group > img {
+/* targets the image on the button */
+#scroll-gp-group button img {
   display: block;
   width: 100%;
   height: auto;
 }
+#scroll-gp-group button:hover img {
+  transform: scale(1.08);
+}
 
 #scroll-gp-group > img {
+  display: block;
   width: clamp(30px, 24vh, 165px);
+  height: auto;
   position: relative;
-  top: -36px;
+  top: -24px;
 }
 
 #scroll-gp-group .grandpa-shaking {
@@ -71,6 +75,8 @@
 }
 
 .scroll-modal {
+  --modal-origin-x: 50%;
+  --modal-origin-y: 50%;
   position: relative;
   width: min(96%, 1400px);
   height: min(92%, 900px);
@@ -82,7 +88,7 @@
   background: #fdf2d0;
   color: #30283a;
   box-shadow: 0 24px 70px rgba(31, 18, 45, 0.35);
-  transform-origin: bottom left;
+  transform-origin: var(--modal-origin-x) var(--modal-origin-y);
   animation: scroll-modal-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -122,11 +128,11 @@
 @keyframes scroll-modal-pop {
   from {
     opacity: 0;
-    transform: translate(-12%, 18%) scale(0.15);
+    transform: scale(0.15);
   }
   to {
     opacity: 1;
-    transform: translate(0, 0) scale(1);
+    transform: scale(1);
   }
 }
 
@@ -134,4 +140,39 @@
   .scroll-modal {
     animation: none;
   }
+}
+
+.button-stack {
+  position: fixed;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(10px, 2vw, 20px);
+  padding: clamp(20px, 4vw, 40px);
+}
+
+
+.big-btn {
+  width: clamp(150px, 24vw, 600px);
+  height: clamp(45px, 8vw, 1000px);
+  font-size: clamp(14px, 1.5vw, 20px);
+  font-weight: 600;
+  color: #fff;
+  background: #aee17f;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform, box-shadow 0.25s ease;
+}
+
+.big-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.big-btn:active {
+  transform: scale(1.02);
 }

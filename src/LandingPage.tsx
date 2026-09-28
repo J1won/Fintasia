@@ -11,6 +11,18 @@ function LandingPage() {
      const navigate = useNavigate();
      const [isScrollHovered, setIsScrollHovered] = useState(false);
      const [isScrollOpen, setIsScrollOpen] = useState(false);
+     const [isButtonOneOpen, setIsButtonOneOpen] = useState(false);
+     const [isButtonTwoOpen, setIsButtonTwoOpen] = useState(false);
+     const [modalOrigin, setModalOrigin] = useState({ x: '50%', y: '50%' });
+
+     const openFromButton = (event: React.MouseEvent<HTMLButtonElement>, openModal: () => void) => {
+          const rect = event.currentTarget.getBoundingClientRect();
+          const x = ((rect.left + rect.width / 2) / window.innerWidth) * 100;
+          const y = ((rect.top + rect.height / 2) / window.innerHeight) * 100;
+          setModalOrigin({ x: `${x}%`, y: `${y}%` });
+          openModal();
+     };
+
      return(
           <>
                {/* <div className="nav-bar">
@@ -47,7 +59,7 @@ function LandingPage() {
 
                          <button
                               type="button"
-                              onClick={() => setIsScrollOpen(true)}
+                              onClick={(event) => openFromButton(event, () => setIsScrollOpen(true))}
                               onMouseEnter={() => setIsScrollHovered(true)}
                               onMouseLeave={() => setIsScrollHovered(false)}
                          >
@@ -68,6 +80,10 @@ function LandingPage() {
                          >
                               <section
                                    className="scroll-modal"
+                                   style={{
+                                        ['--modal-origin-x' as any]: modalOrigin.x,
+                                        ['--modal-origin-y' as any]: modalOrigin.y,
+                                   }}
                                    role="dialog"
                                    aria-modal="true"
                                    aria-labelledby="scroll-modal-title"
@@ -83,6 +99,77 @@ function LandingPage() {
                                    </button>
                                    <h2 id="scroll-modal-title">Financial Literacy</h2>
                                    <p>Build the knowledge to make confident money decisions.</p>
+                              </section>
+                         </div>
+                    )}
+
+                    <div className="button-stack">
+                         <button className="big-btn" onClick={(event) => openFromButton(event, () => setIsButtonOneOpen(true))}>
+                              Button One
+                         </button>
+                         <button className="big-btn" onClick={(event) => openFromButton(event, () => setIsButtonTwoOpen(true))}>
+                              Button Two
+                         </button>
+                    </div>
+
+                    {isButtonOneOpen && (
+                         <div
+                              className="scroll-modal-backdrop"
+                              role="presentation"
+                              onClick={() => setIsButtonOneOpen(false)}
+                         >
+                              <section
+                                   className="scroll-modal"
+                                   style={{
+                                        ['--modal-origin-x' as any]: modalOrigin.x,
+                                        ['--modal-origin-y' as any]: modalOrigin.y,
+                                   }}
+                                   role="dialog"
+                                   aria-modal="true"
+                                   aria-labelledby="button-one-modal-title"
+                                   onClick={(event) => event.stopPropagation()}
+                              >
+                                   <button
+                                        className="scroll-modal-close"
+                                        type="button"
+                                        aria-label="Close button one window"
+                                        onClick={() => setIsButtonOneOpen(false)}
+                                   >
+                                        <span aria-hidden="true">&#215;</span>
+                                   </button>
+                                   <h2 id="button-one-modal-title">Button One</h2>
+                                   <p>Explore your next financial move with confidence.</p>
+                              </section>
+                         </div>
+                    )}
+
+                    {isButtonTwoOpen && (
+                         <div
+                              className="scroll-modal-backdrop"
+                              role="presentation"
+                              onClick={() => setIsButtonTwoOpen(false)}
+                         >
+                              <section
+                                   className="scroll-modal"
+                                   style={{
+                                        ['--modal-origin-x' as any]: modalOrigin.x,
+                                        ['--modal-origin-y' as any]: modalOrigin.y,
+                                   }}
+                                   role="dialog"
+                                   aria-modal="true"
+                                   aria-labelledby="button-two-modal-title"
+                                   onClick={(event) => event.stopPropagation()}
+                              >
+                                   <button
+                                        className="scroll-modal-close"
+                                        type="button"
+                                        aria-label="Close button two window"
+                                        onClick={() => setIsButtonTwoOpen(false)}
+                                   >
+                                        <span aria-hidden="true">&#215;</span>
+                                   </button>
+                                   <h2 id="button-two-modal-title">Button Two</h2>
+                                   <p>See your goals, habits, and plans in one place.</p>
                               </section>
                          </div>
                     )}
