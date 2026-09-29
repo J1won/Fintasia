@@ -32,7 +32,7 @@ function LandingPage() {
                     minHeight: '100vh'
                }}>
                     <div className='nav-bar'>
-                         <button className="logo-button" onClick={() => navigate('/login')}>
+                         <button className="logo-button" onClick={() => navigate('/landing')}>
                               <img src={logo} alt="Home reroute logo" />
                          </button>
 
