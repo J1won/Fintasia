@@ -12,7 +12,7 @@ function LandingPage() {
      const [isScrollHovered, setIsScrollHovered] = useState(false);
      const [isScrollOpen, setIsScrollOpen] = useState(false);
      const [isButtonOneOpen, setIsButtonOneOpen] = useState(false);
-     const [isButtonTwoOpen, setIsButtonTwoOpen] = useState(false);
+     // const [isButtonTwoOpen, setIsButtonTwoOpen] = useState(false);
      const [modalOrigin, setModalOrigin] = useState({ x: '50%', y: '50%' });
 
      const openFromButton = (event: React.MouseEvent<HTMLButtonElement>, openModal: () => void) => {
@@ -25,15 +25,6 @@ function LandingPage() {
 
      return(
           <>
-               {/* <div className="nav-bar">
-                    <button className='sparkle-btn'>
-                         Fintasia
-                    </button>
-                    <button className='sparkle-btn' onClick={() => window.location.href='/'}>
-                         Log Out
-                    </button>
-
-               </div> */}
                <div className="landing-page" style={{ 
                     backgroundImage: `url(${landingPageImage})`,
                     backgroundSize: 'cover',
@@ -44,10 +35,44 @@ function LandingPage() {
                          <button className="logo-button" onClick={() => navigate('/login')}>
                               <img src={logo} alt="Home reroute logo" />
                          </button>
-                         
-                         <button onClick={() => window.location.href='/'}>
-                              Log Out
+
+                         <button className="profile-button" onClick={(event) => openFromButton(event, () => setIsButtonOneOpen(true))}>
+                              Account
                          </button>
+                         {isButtonOneOpen && (
+                              <div
+                                   className="scroll-modal-backdrop"
+                                   role="presentation"
+                                   onClick={() => setIsButtonOneOpen(false)}
+                              >
+                                   <section
+                                        className="scroll-modal"
+                                        style={{
+                                             ['--modal-origin-x' as any]: modalOrigin.x,
+                                             ['--modal-origin-y' as any]: modalOrigin.y,
+                                        }}
+                                        role="dialog"
+                                        aria-modal="true"
+                                        aria-labelledby="button-one-modal-title"
+                                        onClick={(event) => event.stopPropagation()}
+                                   >
+                                        <button
+                                             className="scroll-modal-close"
+                                             type="button"
+                                             aria-label="Close button one window"
+                                             onClick={() => setIsButtonOneOpen(false)}
+                                        >
+                                             <span aria-hidden="true">&#215;</span>
+                                        </button>
+                                        
+                                        <h2 id="button-one-modal-title">Button One</h2>
+                                        <p>Explore your next financial move with confidence.</p>
+                                        <button  onClick={() => window.location.href='/'}> 
+                                             Log Out
+                                        </button>
+                                   </section>
+                              </div>
+                         )}
                     </div>
                     
                     <h1>
@@ -104,45 +129,16 @@ function LandingPage() {
                     )}
 
                     <div className="button-stack">
-                         <button className="big-btn" onClick={(event) => openFromButton(event, () => setIsButtonOneOpen(true))}>
-                              Button One
+                         <button className="big-btn" onClick={() => window.location.href='/save'}>
+                              All About Saving!
                          </button>
-                         <button className="big-btn" onClick={(event) => openFromButton(event, () => setIsButtonTwoOpen(true))}>
-                              Button Two
+                         <button className="big-btn" onClick={() => window.location.href='/invest'}>
+                              All About Investing!
                          </button>
                     </div>
 
-                    {isButtonOneOpen && (
-                         <div
-                              className="scroll-modal-backdrop"
-                              role="presentation"
-                              onClick={() => setIsButtonOneOpen(false)}
-                         >
-                              <section
-                                   className="scroll-modal"
-                                   style={{
-                                        ['--modal-origin-x' as any]: modalOrigin.x,
-                                        ['--modal-origin-y' as any]: modalOrigin.y,
-                                   }}
-                                   role="dialog"
-                                   aria-modal="true"
-                                   aria-labelledby="button-one-modal-title"
-                                   onClick={(event) => event.stopPropagation()}
-                              >
-                                   <button
-                                        className="scroll-modal-close"
-                                        type="button"
-                                        aria-label="Close button one window"
-                                        onClick={() => setIsButtonOneOpen(false)}
-                                   >
-                                        <span aria-hidden="true">&#215;</span>
-                                   </button>
-                                   <h2 id="button-one-modal-title">Button One</h2>
-                                   <p>Explore your next financial move with confidence.</p>
-                              </section>
-                         </div>
-                    )}
-
+                    
+{/* 
                     {isButtonTwoOpen && (
                          <div
                               className="scroll-modal-backdrop"
@@ -172,7 +168,7 @@ function LandingPage() {
                                    <p>See your goals, habits, and plans in one place.</p>
                               </section>
                          </div>
-                    )}
+                    )} */}
                     
                </div>
           </>

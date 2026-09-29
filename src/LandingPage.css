@@ -8,11 +8,12 @@
 }
 
 #scroll-gp-group button {
-  width: clamp(50px, 17vw, 255px);
+  width: clamp(50px, 40vh, 400px);
   padding: 0;
   border: 0;
   background: transparent;
-  cursor: pointer;  animation: scroll-float 2.4s ease-in-out infinite;
+  cursor: pointer;
+  animation: scroll-float 2.4s ease-in-out infinite;
 }
 
 /* targets the image on the button */
@@ -158,11 +159,12 @@
 .big-btn {
   width: clamp(150px, 24vw, 600px);
   height: clamp(45px, 8vw, 1000px);
-  font-size: clamp(14px, 1.5vw, 20px);
+  font-family: var(--heading, 'Baloo 2', system-ui, sans-serif);
+  font-size: clamp(14px, 3.5vw, 40px);
   font-weight: 600;
   color: #fff;
   background: #aee17f;
-  border: none;
+  border: 2px solid black;
   border-radius: 16px;
   cursor: pointer;
   transition: transform, box-shadow 0.25s ease;

@@ -3,19 +3,19 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 
 import './index.css'
-import App from './App.tsx'
 import LoginPage from './LoginPage.tsx'
+import SavePage from './SavePage.tsx'
 import InvestPage from './InvestPage.tsx'
 import LandingPage from './LandingPage.tsx'
 
 const pages = {
-  '/': App,
-  '/login': LoginPage,
+  '/': LoginPage,
+  '/save': SavePage,
   '/invest': InvestPage,
   '/landing': LandingPage,
 }
 
-const Page = pages[window.location.pathname as keyof typeof pages] ?? App
+const Page = pages[window.location.pathname as keyof typeof pages] ?? LoginPage
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>

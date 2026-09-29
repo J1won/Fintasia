@@ -1,57 +1,146 @@
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-// import './LoginPage.css'
+import type { SubmitEvent } from 'react'
+import './LoginPage.css'
+import welcomeLogo from './assets/welcomeLogo.png'
+
+type AuthMode = "none" | "login" | "signup";
+ 
+interface LoginCreds {
+  username: string;
+  password: string;
+}
+interface SignupDetails {
+  username: string;
+  password: string;
+  passwordTwo: string;
+}
+ 
+interface HeaderProps {
+  onLogin: (creds: LoginCreds) => void;
+  onSignup: (details: SignupDetails) => void;
+}
+ 
+const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
+  const [authMode, setAuthMode] = useState<AuthMode>("none");
+
+  // Login form state 
+  const [loginUsername, setLoginUsername] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  // Signup form state
+  const [signupUsername, setSignupUsername] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+  const [signupPasswordTwo, setSignupPasswordTwo] = useState("");
+
+
+  const handleLoginSubmit = (e: SubmitEvent) => {
+    e.preventDefault();
+    onLogin({ username: loginUsername, password: loginPassword });
+  };
+ 
+  const handleSignupSubmit = (e: SubmitEvent) => {
+    e.preventDefault();
+    onSignup({ username: signupUsername, password: signupPassword, passwordTwo: signupPasswordTwo });
+  };
+
+
+  return (
+    <header id='authArea'>
+      {/* /////////// Default Welcome Page /////////////// */}
+      {authMode === "none" && (
+        <>
+          <button className='sparkle-btn' onClick={() => setAuthMode("login")}>
+            Login
+          </button>
+          <button className='sparkle-btn' onClick={() => setAuthMode("signup")}>
+            Sign Up
+          </button>
+        </>
+      )}
+      {/* /////////// Login Creds Welcome Page /////////////// */}
+      {authMode === "login" && (
+        <form className="loginForm" onSubmit={handleLoginSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={loginUsername}
+            onChange={(e) => setLoginUsername(e.target.value)}
+            className="input"
+            autoFocus
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={loginPassword}
+            onChange={(e) => setLoginPassword(e.target.value)}
+            className="input"
+          />
+          <button type="submit" className='sparkle-btn' onClick={() => window.location.href='/landing'}>
+            Sign In
+          </button>
+          <button type="button" className='sparkle-btn' onClick={() => setAuthMode("none")}>
+            Cancel
+          </button>
+        </form>
+      )}
+      {/* /////////// Sign Up Welcome Page /////////////// */}
+      {authMode === "signup" && (
+        <form className="loginForm" onSubmit={handleSignupSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={signupUsername}
+            onChange={(e) => setSignupUsername(e.target.value)}
+            className="input"
+            autoFocus
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={signupPassword}
+            onChange={(e) => setSignupPassword(e.target.value)}
+            className="input"
+          />
+          <input
+            type="password"
+            placeholder="Retype Password"
+            value={signupPasswordTwo}
+            onChange={(e) => setSignupPasswordTwo(e.target.value)}
+            className="input"
+          />
+          <button type="submit" className='sparkle-btn' onClick={() => window.location.href='/login'}>
+            Create Account
+          </button>
+          <button type="button" className='sparkle-btn' onClick={() => setAuthMode("none")}>
+            Cancel
+          </button>
+        </form>
+      )}
+    </header>
+  )
+}
 
 function LoginPage() {
-  const [count, setCount] = useState(0)
+//  const [count, setCount] = useState(0)
+  const handleLogin = (creds: LoginCreds) => {
+    console.log("Attempting login:", creds);
+    // Call your auth API here, e.g.:
+    // await fetch('/api/login', { method: 'POST', body: JSON.stringify(creds) })
+
+  };
+  const handleSignup = (details: SignupDetails) => {
+    console.log("Attempting signup:", details);
+    // Call your signup API here, e.g.:
+    // await fetch('/api/signup', { method: 'POST', body: JSON.stringify(details) })
+  };
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Let's Invest!</h1>
-          <p>
-            Edit <code>src/LoginPage.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is?: {count}
-        </button>
-      </section>
+    <section id="center">
+      <img src={welcomeLogo}  height="300" alt="" />
+      <Header onLogin={handleLogin} onSignup={handleSignup} />
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="/">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+    </section>
     </>
   )
 }

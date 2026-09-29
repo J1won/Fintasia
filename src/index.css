@@ -138,6 +138,15 @@ code {
   transform: translateY(-2px) scale(1.03);
 }
 
+.profile-button {
+  width: clamp(30px, 10vw, 200px);
+  padding: 0;
+  border: 0;
+  background: rgb(189, 189, 255);
+  box-shadow: none;
+  cursor: pointer;
+}
+
 .landing-page {
   position: relative;
 }
