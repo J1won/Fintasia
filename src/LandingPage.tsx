@@ -103,35 +103,6 @@ function PairTable({ rows }: { rows: [string, string][] }) {
   );
 }
 
-const ANNUAL_RETURN = 0.07; // example only, not a promise
-
-function CompoundCalc() {
-  const [monthly, setMonthly] = useState(25);
-  const [years, setYears] = useState(30);
-
-  const r = ANNUAL_RETURN / 12;
-  const months = years * 12;
-  const future = monthly * ((Math.pow(1 + r, months) - 1) / r);
-
-  return (
-    <div className="calc">
-      <label htmlFor="monthly">
-        Put in per month: <b>${monthly}</b>
-      </label>
-      <input id="monthly" type="range" min={5} max={500} step={5} value={monthly} onChange={(e) => setMonthly(Number(e.target.value))} />
-      <label htmlFor="years">
-        For how many years: <b>{years}</b>
-      </label>
-      <input id="years" type="range" min={1} max={40} value={years} onChange={(e) => setYears(Number(e.target.value))} />
-      <p style={{ marginTop: 12 }}>
-        You’d put in <b>${(monthly * months).toLocaleString()}</b> and it could grow to{" "}
-        <span className="big">${Math.round(future).toLocaleString()}</span>
-      </p>
-      <p className="one">Pretend average of 7% a year. That’s an example, not a promise.</p>
-    </div>
-  );
-}
-
 /* ---------- Content ---------- */
 const STOPS: Stop[] = [
   {
@@ -166,16 +137,6 @@ const STOPS: Stop[] = [
             <p>Add up the things you <i>must</i> pay in a month (rent, food, bills, transport). Aim to keep <b>3 to 6 months</b> of that in a regular savings account you can reach quickly.</p>
             <p className="warn">🚫 <b>Invested money is NOT emergency money.</b> Invested money should be <b>forgotten money</b>. If you need cash on a day the market is down, you’d have to sell at a loss.</p>
             <Meme k="emerg" />
-          </>
-        ),
-      },
-      {
-        emoji: "🌲", title: "Power of investing", teaser: "Compound interest, in slow motion.",
-        body: (
-          <>
-            <p>Compound growth means your earnings start earning too. Slide the sliders and watch the forest grow.</p>
-            <CompoundCalc />
-            <Meme k="grow" />
           </>
         ),
       },

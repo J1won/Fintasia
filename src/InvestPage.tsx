@@ -127,7 +127,6 @@ const STOPS: Stop[] = [
           "Future you will be so thankful 🌰",
         ],
         tip: "Set up a small automatic transfer, even $5 a week.",
-        calculator: true,
       },
       {
         emoji: "🛟",
@@ -180,6 +179,7 @@ const STOPS: Stop[] = [
           "Pretend $25 a month at a 7% yearly average for 30 years: you’d put in $9,000 and it could grow to around $30,000. Just an example, not a promise.",
           "Starting early matters most. A tree needs time 🌳",
         ],
+        calculator: true,
         tip: "Try a compound interest calculator with your own numbers.",
       },
       {
