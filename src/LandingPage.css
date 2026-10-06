@@ -18,7 +18,7 @@
 }
 #scroll-gp-group {
   /* ⭐ the one knob: this is the scroll's width, everything else scales from it */
-  --group-size: clamp(50px, 20vh, 200px);
+  --group-size: clamp(44px, 15vh, 160px);
 
   /* proportions relative to the group size */
   --grandpa-size: calc(var(--group-size) * 0.6);   /* was 24vh vs 40vh */
@@ -27,9 +27,9 @@
   --float-distance: calc(var(--group-size) * -0.075); /* was -30px */
   --shake-distance: calc(var(--group-size) * 0.04);   /* was 16px */
 
-  position: absolute;
-  left: clamp(12px, 3vw, 48px);
-  bottom: clamp(12px, 3vw, 48px);
+  position: static;
+  margin-top: auto;
+  transform: translateX(min(0px, calc(490px + 16px - 50vw)));
   display: flex;
   align-items: flex-end;
   gap: var(--group-gap);

@@ -38,20 +38,20 @@ const STOPS: Stop[] = [
       {
         "emoji": "💭",
         "title": "Why does everyone want money?",
-        "question": "Why do you want money? (View the answer in your profile)",
         "lines": [
-          "Let’s zoom out for a sec: why does everyone want money? 💭",
-          "Because it can give you freedom, independence and comfort over the long run.",
-          "It can also give a quick buzz of happy. New shoes, a nice dinner, a little validation.",
+          "So. Why does everyone want money? 💭",
+          "Money can give you freedom, independence and comfort.",
+          "It can also give you a quick buzz of happy.",
           "The buzz fades fast. The freedom lasts.",
-          "Choosing the long game is hard for literally everyone, so go easy on yourself 💛",
+          "Picking the long game is hard for everyone, so go easy on yourself. 💛",
           "I'll show you small, simple things you can do. No jargon, no pressure."
         ],
         "tip": "Write down one money goal. The more detail, the better: “In 5 years I want ___ so I can ___.”"
       },
       {
         "emoji": "🪙",
-        "title": "What is money?",
+        "title": "What is your financial goal?",
+        "question": "More detailed the better! (View the answer in your profile)",
         "lines": [
           "Let’s start at the very beginning: what even is money? 🪙",
           "It’s a tool we trade for the things we need and want.",
@@ -274,6 +274,7 @@ export default function InvestPage() {
   const [asking, setAsking] = useState(false); // waiting for a typed answer
   const [typing, setTyping] = useState(false); // Fern is "typing"
   const [draft, setDraft] = useState("");
+  const [isScrollHovered, setIsScrollHovered] = useState(false);
 
   const timer = useRef<number>(0);
   const msgsRef = useRef<HTMLDivElement>(null);
@@ -458,6 +459,14 @@ export default function InvestPage() {
                </button>
                ))}
                </div>
+              <div id='scroll-gp-group'>
+              <button type="button">
+                <img src={scroll} alt="Financial Literacy Scroll" />
+              </button>
+              <img
+                src={isScrollHovered ? shGrandpa : chGrandpa}
+              />
+              </div>
           </div>
 
           <aside className="detail" aria-live="polite">
@@ -471,8 +480,8 @@ export default function InvestPage() {
                <div className="head">
                     <span className="av">🦊</span>
                     <div>
-                    <b>Fern</b>
-                    <small>your money friend</small>
+                    {/* <b>Fern</b>
+                    <small>your money friend</small> */}
                     </div>
                     <button type="button" className="x" onClick={closeChat}>✕ Close</button>
                </div>
@@ -513,6 +522,20 @@ export default function InvestPage() {
                </div>
           </aside>
           </div>
+          {/* <button
+               type="button"
+               onClick={(event) => openFromButton(event, () => setIsScrollOpen(true))}
+               onMouseEnter={() => setIsScrollHovered(true)}
+               onMouseLeave={() => setIsScrollHovered(false)}
+          >
+               <img src={scroll} alt="Financial Literacy Scroll" />
+          </button>
+          <img
+               className={isScrollHovered ? 'grandpa-shaking' : ''}
+               src={isScrollHovered ? shGrandpa : chGrandpa}
+               alt={isScrollHovered ? 'shaky reaction grandpa' : 'chill grandpa'}
+          />
+          </div> */}
 
           <p className="note">Educational only, not financial advice.</p>
      </div>
