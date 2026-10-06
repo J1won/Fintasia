@@ -333,6 +333,32 @@ h1 {
   color: #fff;
   border-radius: 20px 20px 6px 20px;
 }
+.calc-message {
+  width: 100%;
+}
+.calc {
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: 0 3px 0 var(--shadow);
+}
+.calc label {
+  display: block;
+  margin: 6px 0 2px;
+  font-size: 0.9rem;
+}
+.calc input[type="range"] {
+  width: 100%;
+  accent-color: var(--leaf);
+}
+.calc-result {
+  margin: 10px 0 6px;
+}
+.calc-disclaimer {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
 .ask {
   display: flex;
   gap: 8px;

@@ -10,16 +10,18 @@ useEffect,
   useMemo,
   useRef,
   type CSSProperties,
+  type ReactNode,
   useState,
 } from "react";
 import "./InvestPage.css";
 
 /* ---------- Types ---------- */
-type Kind = "h" | "b" | "t" | "me";
+type Kind = "h" | "b" | "t" | "me" | "calc";
 
 interface Msg {
   kind: Kind;
   text: string;
+  content?: ReactNode;
 }
 
 interface Topic {
@@ -28,6 +30,7 @@ interface Topic {
   question?: string; // optional typed-answer question asked first
   lines: string[];
   tip: string;
+  calculator?: boolean;
 }
 
 interface Stop {
@@ -124,6 +127,7 @@ const STOPS: Stop[] = [
           "Future you will be so thankful 🌰",
         ],
         tip: "Set up a small automatic transfer, even $5 a week.",
+        calculator: true,
       },
       {
         emoji: "🛟",
@@ -213,12 +217,65 @@ const saveGoal = (v: string) => {
 };
 
 function buildScript(t: Topic): Msg[] {
-  return [
+  const messages: Msg[] = [
     { kind: "h", text: `${t.emoji} ${t.title}` },
     ...(t.question ? [{ kind: "b" as const, text: t.question }] : []),
     ...t.lines.map((text) => ({ kind: "b" as const, text })),
     { kind: "t", text: `💡 Try this: ${t.tip}` },
   ];
+
+  if (t.calculator) {
+    messages.push({ kind: "calc", text: "", content: <CompoundCalc /> });
+  }
+
+  return messages;
+}
+
+const ANNUAL_RETURN = 0.07;
+
+function CompoundCalc() {
+  const [monthly, setMonthly] = useState(25);
+  const [years, setYears] = useState(30);
+
+  const monthlyRate = ANNUAL_RETURN / 12;
+  const months = years * 12;
+  const futureValue =
+    monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+
+  return (
+    <div className="calc">
+      <label htmlFor="monthly-contribution">
+        Monthly contribution: <b>${monthly}</b>
+      </label>
+      <input
+        id="monthly-contribution"
+        type="range"
+        min={5}
+        max={500}
+        step={5}
+        value={monthly}
+        onChange={(event) => setMonthly(Number(event.target.value))}
+      />
+      <label htmlFor="investment-years">
+        Years invested: <b>{years}</b>
+      </label>
+      <input
+        id="investment-years"
+        type="range"
+        min={1}
+        max={40}
+        value={years}
+        onChange={(event) => setYears(Number(event.target.value))}
+      />
+      <p className="calc-result">
+        You would contribute <b>${(monthly * months).toLocaleString()}</b> and
+        could have around <b>${Math.round(futureValue).toLocaleString()}</b>.
+      </p>
+      <p className="calc-disclaimer">
+        Example assumes a 7% average yearly return. This is not a promise.
+      </p>
+    </div>
+  );
 }
 
 /* ---------- Cat illustration ---------- */
@@ -655,9 +712,15 @@ export default function InvestPage() {
 
                 <div className="msgs" ref={msgsRef}>
                   {visible.map((m, i) => (
-                    <div key={`${stop}-${cur}-${i}`} className={`b ${m.kind}`}>
-                      {m.text}
-                    </div>
+                    m.kind === "calc" ? (
+                      <div key={`${stop}-${cur}-${i}`} className="calc-message">
+                        {m.content}
+                      </div>
+                    ) : (
+                      <div key={`${stop}-${cur}-${i}`} className={`b ${m.kind}`}>
+                        {m.text}
+                      </div>
+                    )
                   ))}
                   {typing && (
                     <div className="b">

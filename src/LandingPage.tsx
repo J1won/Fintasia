@@ -135,22 +135,6 @@ function CompoundCalc() {
 /* ---------- Content ---------- */
 const STOPS: Stop[] = [
   {
-    emoji: "🛍️",
-    name: "Spending Culture",
-    intro: <><b>Start here.</b> Four tiny ideas that everything else builds on.</>,
-    cards: [
-      {
-        emoji: "🪙", title: "Mass Consumerism", teaser: "Mass consumption is the new normal.",
-        body: (
-          <>
-            <p>Money is a tool we trade for the things we need and want. It’s also a way to store your work for later: the hours you work today become something you can use next month or next year.</p>
-            <p className="tip">💡 Money isn’t good or bad. What matters is what you point it at.</p>
-          </>
-        ),
-      },
-    ],
-  },
-  {
     emoji: "💰",
     name: "Free Money",
     intro: <><b>Beware of free money.</b> Money is never free.</>,
