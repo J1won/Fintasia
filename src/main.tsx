@@ -7,12 +7,14 @@ import LoginPage from './LoginPage.tsx'
 import SavePage from './SavePage.tsx'
 import InvestPage from './InvestPage.tsx'
 import LandingPage from './LandingPage.tsx'
+import VersionOnePage from './VersionOnePage.tsx'
 
 const pages = {
   '/': LoginPage,
   '/save': SavePage,
   '/invest': InvestPage,
   '/landing': LandingPage,
+  '/versionOne': VersionOnePage,
 }
 
 const Page = pages[window.location.pathname as keyof typeof pages] ?? LoginPage

@@ -123,7 +123,13 @@ function LandingPage() {
                                         <span aria-hidden="true">&#215;</span>
                                    </button>
                                    <h2 id="scroll-modal-title">Financial Literacy</h2>
-                                   <p>Build the knowledge to make confident money decisions.</p>
+                                   <p>Me and all the whimsy creatures here are so glad you're here at Fintasia!</p>
+                                   <p>In order to stay here, you must follow the three most important rules of Fintasia.
+                                        1. Love yourself. and  Respect yourself. 
+                                   </p>
+                                   <p>
+                                        In everything we teach here, loving yourself lies at the center of it all.
+                                   </p>
                               </section>
                          </div>
                     )}
@@ -134,6 +140,9 @@ function LandingPage() {
                          </button>
                          <button className="big-btn" onClick={() => window.location.href='/invest'}>
                               All About Investing!
+                         </button>
+                         <button className="big-btn" onClick={() => window.location.href='/versionOne'}>
+                              under construction
                          </button>
                     </div>
 

@@ -63,7 +63,7 @@ body {
   margin: 0;
   min-width: 100%;
   min-height: 100svh;
-  background-color: #0b9214;
+  background-color: #a6cf80a4;
 }
 
 h1,
@@ -142,7 +142,7 @@ code {
   width: clamp(30px, 10vw, 200px);
   padding: 0;
   border: 0;
-  background: rgb(189, 189, 255);
+  background: rgb(59, 128, 92);
   box-shadow: none;
   cursor: pointer;
 }

@@ -1,14 +1,24 @@
 #scroll-gp-group {
+  /* ⭐ the one knob: this is the scroll's width, everything else scales from it */
+  --group-size: clamp(50px, 20vh, 200px);
+
+  /* proportions relative to the group size */
+  --grandpa-size: calc(var(--group-size) * 0.6);   /* was 24vh vs 40vh */
+  --group-gap: calc(var(--group-size) * 0.04);
+  --grandpa-lift: calc(var(--group-size) * -0.06); /* was -24px */
+  --float-distance: calc(var(--group-size) * -0.075); /* was -30px */
+  --shake-distance: calc(var(--group-size) * 0.04);   /* was 16px */
+
   position: absolute;
   left: clamp(12px, 3vw, 48px);
   bottom: clamp(12px, 3vw, 48px);
   display: flex;
   align-items: flex-end;
-  gap: clamp(6px, 1vw, 16px);
+  gap: var(--group-gap);
 }
 
 #scroll-gp-group button {
-  width: clamp(50px, 40vh, 400px);
+  width: var(--group-size);
   padding: 0;
   border: 0;
   background: transparent;
@@ -16,11 +26,11 @@
   animation: scroll-float 2.4s ease-in-out infinite;
 }
 
-/* targets the image on the button */
 #scroll-gp-group button img {
   display: block;
   width: 100%;
   height: auto;
+  transition: transform 0.15s ease;
 }
 #scroll-gp-group button:hover img {
   transform: scale(1.08);
@@ -28,10 +38,10 @@
 
 #scroll-gp-group > img {
   display: block;
-  width: clamp(30px, 24vh, 165px);
+  width: var(--grandpa-size);
   height: auto;
   position: relative;
-  top: -24px;
+  top: var(--grandpa-lift);
 }
 
 #scroll-gp-group .grandpa-shaking {
@@ -39,23 +49,13 @@
 }
 
 @keyframes scroll-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-30px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(var(--float-distance)); }
 }
 
 @keyframes grandpa-shake {
-  0%,
-  100% {
-    transform: translateY(-16px);
-  }
-  50% {
-    transform: translateY(16px);
-  }
+  0%, 100% { transform: translateY(calc(var(--shake-distance) * -1)); }
+  50%      { transform: translateY(var(--shake-distance)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -158,10 +158,17 @@
 
 .big-btn {
   width: clamp(150px, 24vw, 600px);
-  height: clamp(45px, 8vw, 1000px);
+  min-height: clamp(45px, 8vw, 80px);
+  height: auto;
+  box-sizing: border-box;
+  padding: 0.35em 0.75em;
   font-family: var(--heading, 'Baloo 2', system-ui, sans-serif);
   font-size: clamp(14px, 3.5vw, 40px);
   font-weight: 600;
+  line-height: 1.15;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
   color: #fff;
   background: #aee17f;
   border: 2px solid black;
