@@ -131,16 +131,6 @@ const STOPS: Stop[] = [
     intro: <><b>Two jars, two jobs.</b> One jar is for emergencies. The other is for long-term growth.</>,
     cards: [
       {
-        emoji: "🛟", title: "Emergency fund", teaser: "3 to 6 months of must-pay costs.",
-        body: (
-          <>
-            <p>Add up the things you <i>must</i> pay in a month (rent, food, bills, transport). Aim to keep <b>3 to 6 months</b> of that in a regular savings account you can reach quickly.</p>
-            <p className="warn">🚫 <b>Invested money is NOT emergency money.</b> Invested money should be <b>forgotten money</b>. If you need cash on a day the market is down, you’d have to sell at a loss.</p>
-            <Meme k="emerg" />
-          </>
-        ),
-      },
-      {
         emoji: "🧺", title: "What’s an ETF?", teaser: "A basket of many companies.",
         body: (
           <>
@@ -177,15 +167,6 @@ const STOPS: Stop[] = [
               "Cook one extra meal at home this week",
               "Put wants on a 24-hour wish list",
             ]} />
-          </>
-        ),
-      },
-      {
-        emoji: "🕵️", title: "Spot the sales trick", teaser: "Know the words that make you rush.",
-        body: (
-          <>
-            <PairTable rows={SALES_TRICKS} />
-            <Meme k="ads" />
           </>
         ),
       },

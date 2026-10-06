@@ -75,7 +75,7 @@ const STOPS: Stop[] = [
   },
   {
     emoji: "🔍",
-    name: "Wise up",
+    name: "Spending",
     topics: [
       {
         emoji: "🪤",
@@ -116,7 +116,7 @@ const STOPS: Stop[] = [
   },
   {
     emoji: "🛟",
-    name: "Stay safe",
+    name: "Free Money",
     topics: [
       {
         emoji: "🌰",
@@ -157,7 +157,7 @@ const STOPS: Stop[] = [
   },
   {
     emoji: "🌳",
-    name: "Grow",
+    name: "Face the World",
     topics: [
       {
         emoji: "🌳",
