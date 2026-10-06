@@ -135,36 +135,6 @@ function CompoundCalc() {
 /* ---------- Content ---------- */
 const STOPS: Stop[] = [
   {
-    emoji: "🌱",
-    name: "Basics",
-    intro: <></>,
-    cards: [
-      {
-        emoji: "🪙", title: "Why we need money?", teaser: "Money is a tool.",
-        body: (
-          <>
-            <p>Money is a tool we trade for the things we need and want. It’s also a way to store your work for later: the hours you work today become something you can use next month or next year.</p>
-            <p className="tip">💡 Money isn’t good or bad. What matters is what you point it at.</p>
-          </>
-        ),
-      },
-      {
-        emoji: "🌰", title: "What's your goal?", teaser: "Write your financial goal here to view later in your profile.",
-        body: (
-          <>
-          <p></p>
-          <p>
-          <textarea name="message" >
-               The more detailed the better!
-          </textarea>
-          </p>
-            {/* <Meme k="save" /> */}
-          </>
-        ),
-      },
-    ],
-  },
-  {
     emoji: "🛍️",
     name: "Spending Culture",
     intro: <><b>Start here.</b> Four tiny ideas that everything else builds on.</>,
@@ -175,16 +145,6 @@ const STOPS: Stop[] = [
           <>
             <p>Money is a tool we trade for the things we need and want. It’s also a way to store your work for later: the hours you work today become something you can use next month or next year.</p>
             <p className="tip">💡 Money isn’t good or bad. What matters is what you point it at.</p>
-          </>
-        ),
-      },
-      {
-        emoji: "🕵️", title: "Genius Marketing", teaser: "Understand the traps.",
-        body: (
-          <>
-            <p>Saving means keeping some money instead of spending it all. It buys you <b>options</b>: handle a surprise bill, leave a bad job, or buy something without going into debt.</p>
-            <Meme k="save" />
-            <p className="warn">⚠️ Investments go up <i>and</i> down. They’re for money you won’t need for years.</p>
           </>
         ),
       },
@@ -208,103 +168,84 @@ const STOPS: Stop[] = [
           </>
         ),
       },
+    ],
+  },
+  {
+    emoji: "🛟",
+    name: "Save & grow",
+    intro: <><b>Two jars, two jobs.</b> One jar is for emergencies. The other is for long-term growth.</>,
+    cards: [
       {
-        emoji: "🕵️", title: "Genius Marketing", teaser: "Understand the traps.",
+        emoji: "🛟", title: "Emergency fund", teaser: "3 to 6 months of must-pay costs.",
         body: (
           <>
-            <p>Saving means keeping some money instead of spending it all. It buys you <b>options</b>: handle a surprise bill, leave a bad job, or buy something without going into debt.</p>
-            <Meme k="save" />
-            <p className="warn">⚠️ Investments go up <i>and</i> down. They’re for money you won’t need for years.</p>
+            <p>Add up the things you <i>must</i> pay in a month (rent, food, bills, transport). Aim to keep <b>3 to 6 months</b> of that in a regular savings account you can reach quickly.</p>
+            <p className="warn">🚫 <b>Invested money is NOT emergency money.</b> Invested money should be <b>forgotten money</b>. If you need cash on a day the market is down, you’d have to sell at a loss.</p>
+            <Meme k="emerg" />
+          </>
+        ),
+      },
+      {
+        emoji: "🌲", title: "Power of investing", teaser: "Compound interest, in slow motion.",
+        body: (
+          <>
+            <p>Compound growth means your earnings start earning too. Slide the sliders and watch the forest grow.</p>
+            <CompoundCalc />
+            <Meme k="grow" />
+          </>
+        ),
+      },
+      {
+        emoji: "🧺", title: "What’s an ETF?", teaser: "A basket of many companies.",
+        body: (
+          <>
+            <p>An <b>ETF</b> (exchange-traded fund) bundles lots of investments into one thing you can buy with one click. Instead of betting on a single company, you own a tiny slice of many, which spreads out the risk.</p>
+            <p className="tip">💡 Look at the <b>expense ratio</b>. It’s the yearly fee, and lower is usually better.</p>
           </>
         ),
       },
     ],
   },
-//   {
-//     emoji: "🛟",
-//     name: "Save & grow",
-//     intro: <><b>Two jars, two jobs.</b> One jar is for emergencies. The other is for long-term growth.</>,
-//     cards: [
-//       {
-//         emoji: "🛟", title: "Emergency fund", teaser: "3 to 6 months of must-pay costs.",
-//         body: (
-//           <>
-//             <p>Add up the things you <i>must</i> pay in a month (rent, food, bills, transport). Aim to keep <b>3 to 6 months</b> of that in a regular savings account you can reach quickly.</p>
-//             <p className="warn">🚫 <b>Invested money is NOT emergency money.</b> Invested money should be <b>forgotten money</b>. If you need cash on a day the market is down, you’d have to sell at a loss.</p>
-//             <Meme k="emerg" />
-//           </>
-//         ),
-//       },
-//       {
-//         emoji: "🌲", title: "Power of investing", teaser: "Compound interest, in slow motion.",
-//         body: (
-//           <>
-//             <p>Compound growth means your earnings start earning too. Slide the sliders and watch the forest grow.</p>
-//             <CompoundCalc />
-//             <Meme k="grow" />
-//           </>
-//         ),
-//       },
-//       {
-//         emoji: "🧺", title: "What’s an ETF?", teaser: "A basket of many companies.",
-//         body: (
-//           <>
-//             <p>An <b>ETF</b> (exchange-traded fund) bundles lots of investments into one thing you can buy with one click. Instead of betting on a single company, you own a tiny slice of many, which spreads out the risk.</p>
-//             <p className="tip">💡 Look at the <b>expense ratio</b>. It’s the yearly fee, and lower is usually better.</p>
-//           </>
-//         ),
-//       },
-//     ],
-//   },
-//   {
-//     emoji: "🔍",
-//     name: "Wise up",
-//     intro: <><b>Spot the tricks.</b> Once you see how stuff gets sold to you, it’s much easier to keep your money.</>,
-//     cards: [
-//       {
-//         emoji: "🛍️", title: "Why saving is cool", teaser: "Ads work hard. You can work smarter.",
-//         body: (
-//           <>
-//             <p>Feeds, stores and emails are built to make you feel like you’re missing out. Every impulse you skip is money that stays yours, and money that stays yours can grow.</p>
-//             <p className="tip">🖼️ Idea: add your own photos here, like a mall, a pile of packages, or a full closet.</p>
-//           </>
-//         ),
-//       },
-//       {
-//         emoji: "📊", title: "Debt, by the numbers", teaser: "Real US figures from the NY Fed.",
-//         body: (
-//           <>
-//             <PairTable rows={DEBT_ROWS} />
-//             <p className="one">Source: Federal Reserve Bank of New York, Household Debt and Credit Report.</p>
-//           </>
-//         ),
-//       },
-//       {
-//         emoji: "✂️", title: "Spend less right now", teaser: "Tiny wins you can do today.",
-//         body: (
-//           <>
-//             <p>Pick one:</p>
-//             <Checklist items={[
-//               "Cancel one subscription you forgot about",
-//               "Unsubscribe from store emails",
-//               "Delete saved cards from shopping apps",
-//               "Cook one extra meal at home this week",
-//               "Put wants on a 24-hour wish list",
-//             ]} />
-//           </>
-//         ),
-//       },
-//       {
-//         emoji: "🕵️", title: "Spot the sales trick", teaser: "Know the words that make you rush.",
-//         body: (
-//           <>
-//             <PairTable rows={SALES_TRICKS} />
-//             <Meme k="ads" />
-//           </>
-//         ),
-//       },
-//     ],
-//   },
+  {
+    emoji: "🔍",
+    name: "Wise up",
+    intro: <><b>Spot the tricks.</b> Once you see how stuff gets sold to you, it’s much easier to keep your money.</>,
+    cards: [
+      {
+        emoji: "📊", title: "Debt, by the numbers", teaser: "Real US figures from the NY Fed.",
+        body: (
+          <>
+            <PairTable rows={DEBT_ROWS} />
+            <p className="one">Source: Federal Reserve Bank of New York, Household Debt and Credit Report.</p>
+          </>
+        ),
+      },
+      {
+        emoji: "✂️", title: "Spend less right now", teaser: "Tiny wins you can do today.",
+        body: (
+          <>
+            <p>Pick one:</p>
+            <Checklist items={[
+              "Cancel one subscription you forgot about",
+              "Unsubscribe from store emails",
+              "Delete saved cards from shopping apps",
+              "Cook one extra meal at home this week",
+              "Put wants on a 24-hour wish list",
+            ]} />
+          </>
+        ),
+      },
+      {
+        emoji: "🕵️", title: "Spot the sales trick", teaser: "Know the words that make you rush.",
+        body: (
+          <>
+            <PairTable rows={SALES_TRICKS} />
+            <Meme k="ads" />
+          </>
+        ),
+      },
+    ],
+  },
   {
     emoji: "🚀",
     name: "Do it",
