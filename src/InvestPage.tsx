@@ -4,6 +4,7 @@ import logo from './assets/logo.png'
 import shGrandpa from './assets/shakygp.png'
 import chGrandpa from './assets/chillgp.png'
 import scroll from './assets/scroll.png'
+import catTexting from './assets/cat-texting.mp4'
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./InvestPage.css";
 
@@ -39,7 +40,8 @@ const STOPS: Stop[] = [
         "emoji": "💭",
         "title": "Why does everyone want money?",
         "lines": [
-          "So. Why does everyone want money? 💭",
+          "Why do you think? 🙄",
+          "Just kidding.",
           "Money can give you freedom, independence and comfort.",
           "It can also give you a quick buzz of happy.",
           "The buzz fades fast. The freedom lasts.",
@@ -60,17 +62,6 @@ const STOPS: Stop[] = [
         ],
         "tip": "Notice one thing you spent on today. Did it match what you care about?"
       },
-      {
-        "emoji": "🦫",
-        "title": "Money habits",
-        "lines": [
-          "Good news: money skills are mostly tiny habits, not big-brain stuff.",
-          "Pay yourself first: move a little to savings the day money arrives.",
-          "Automate it, so you don’t have to remember.",
-          "Check your spending once a week. Ten minutes is plenty."
-        ],
-        "tip": "Pick just one habit and do it this week."
-      }
     ]
   },
   {
@@ -472,13 +463,13 @@ export default function InvestPage() {
           <aside className="detail" aria-live="polite">
                <div className="screen">
                <div className="idle">
-               <Cat />
-               <p>Pick a card and your money friend will text you.</p>
+               <video src={catTexting} autoPlay loop muted playsInline aria-hidden="true" />
+               <p className="video-bubble">Heyy i'm a certified Dr.FinCat. I've been asked to help you but make it quick cuz im busy.</p>
                </div>
 
                <div className="chatbox" role="dialog" aria-label="Chat with Fern">
                <div className="head">
-                    <span className="av">🦊</span>
+                    <span className="av">🐱</span>
                     <div>
                     {/* <b>Fern</b>
                     <small>your money friend</small> */}
