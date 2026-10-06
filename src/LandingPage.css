@@ -1,3 +1,21 @@
+.landing-page {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  background-color: rgb(91, 141, 91);
+}
+
+.landing-page::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 100svh;
+  z-index: -1;
+  background-image: var(--landing-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 #scroll-gp-group {
   /* ⭐ the one knob: this is the scroll's width, everything else scales from it */
   --group-size: clamp(50px, 20vh, 200px);
