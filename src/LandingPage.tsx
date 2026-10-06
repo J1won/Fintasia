@@ -589,7 +589,7 @@ function LandingPage() {
                          </div>
                     )}
 
-                    {/* <div className="button-stack">
+                    <div className="button-stack">
                          <button className="big-btn" onClick={() => window.location.href='/save'}>
                               All About Saving!
                          </button>
@@ -599,7 +599,7 @@ function LandingPage() {
                          <button className="big-btn" onClick={() => window.location.href='/versionOne'}>
                               under construction
                          </button>
-                    </div> */}
+                    </div>
 
                     
 {/* 

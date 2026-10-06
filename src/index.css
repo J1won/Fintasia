@@ -115,7 +115,7 @@ code {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 12px 70px;
+  padding: 12px 70px 0;
   box-sizing: border-box;
   background-color: transparent;
 }
