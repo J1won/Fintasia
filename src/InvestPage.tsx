@@ -5,7 +5,7 @@ import shGrandpa from './assets/shakygp.png'
 import chGrandpa from './assets/chillgp.png'
 import scroll from './assets/scroll.png'
 import catTexting from './assets/cat-texting.mp4'
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, type CSSProperties, useState} from "react";
 import "./InvestPage.css";
 
 /* ---------- Types ---------- */
@@ -266,6 +266,16 @@ export default function InvestPage() {
   const [typing, setTyping] = useState(false); // Fern is "typing"
   const [draft, setDraft] = useState("");
   const [isScrollHovered, setIsScrollHovered] = useState(false);
+  const [isScrollOpen, setIsScrollOpen] = useState(false);
+  const [modalOrigin, setModalOrigin] = useState({ x: '50%', y: '50%' });
+  const openFromButton = (event: React.MouseEvent<HTMLButtonElement>, openModal: () => void) => {
+          const rect = event.currentTarget.getBoundingClientRect();
+          const x = ((rect.left + rect.width / 2) / window.innerWidth) * 100;
+          const y = ((rect.top + rect.height / 2) / window.innerHeight) * 100;
+          setModalOrigin({ x: `${x}%`, y: `${y}%` });
+          openModal();
+     };
+  const [isAccountButtonOpen, setIsAccountButtonOpen] = useState(false);
 
   const timer = useRef<number>(0);
   const msgsRef = useRef<HTMLDivElement>(null);
@@ -376,14 +386,14 @@ export default function InvestPage() {
                     <img src={logo} alt="Home reroute logo" />
                </button>
 
-               <button className="profile-button" >
+               <button className="profile-button" onClick={(event) => openFromButton(event, () => setIsAccountButtonOpen(true))}>
                     Account
                </button>
-               {/* {isButtonOneOpen && (
+               {isAccountButtonOpen && (
                     <div
                          className="scroll-modal-backdrop"
                          role="presentation"
-                         onClick={() => setIsButtonOneOpen(false)}
+                         onClick={() => setIsAccountButtonOpen(false)}
                     >
                          <section
                               className="scroll-modal"
@@ -400,7 +410,7 @@ export default function InvestPage() {
                                    className="scroll-modal-close"
                                    type="button"
                                    aria-label="Close button one window"
-                                   onClick={() => setIsButtonOneOpen(false)}
+                                   onClick={() => setIsAccountButtonOpen(false)}
                               >
                                    <span aria-hidden="true">&#215;</span>
                               </button>
@@ -412,7 +422,7 @@ export default function InvestPage() {
                               </button>
                          </section>
                     </div>
-               )} */}
+               )}
           </div>
      <div className="wrap">
 
@@ -450,14 +460,58 @@ export default function InvestPage() {
                </button>
                ))}
                </div>
-              <div id='scroll-gp-group'>
-              <button type="button">
-                <img src={scroll} alt="Financial Literacy Scroll" />
-              </button>
-              <img
-                src={isScrollHovered ? shGrandpa : chGrandpa}
-              />
-              </div>
+               <div id='scroll-gp-group'>
+                    {/* scroll grandpa */}
+                    <button
+                         type="button"
+                         onClick={(event) => openFromButton(event, () => setIsScrollOpen(true))}
+                         onMouseEnter={() => setIsScrollHovered(true)}
+                         onMouseLeave={() => setIsScrollHovered(false)}
+                    >
+                         <img src={scroll} alt="Financial Literacy Scroll" />
+                    </button>
+                    <img
+                         className={isScrollHovered ? 'grandpa-shaking' : ''}
+                         src={isScrollHovered ? shGrandpa : chGrandpa}
+                         alt={isScrollHovered ? 'shaky reaction grandpa' : 'chill grandpa'}
+                    />
+               </div>
+               {isScrollOpen && (
+                    <div
+                         className="scroll-modal-backdrop"
+                         role="presentation"
+                         onClick={() => setIsScrollOpen(false)}
+                    >
+                         <section
+                              className="scroll-modal"
+                              style={{
+                                   ['--modal-origin-x' as any]: modalOrigin.x,
+                                   ['--modal-origin-y' as any]: modalOrigin.y,
+                              }}
+                              role="dialog"
+                              aria-modal="true"
+                              aria-labelledby="scroll-modal-title"
+                              onClick={(event) => event.stopPropagation()}
+                         >
+                              <button
+                                   className="scroll-modal-close"
+                                   type="button"
+                                   aria-label="Close financial literacy window"
+                                   onClick={() => setIsScrollOpen(false)}
+                              >
+                                   <span aria-hidden="true">&#215;</span>
+                              </button>
+                              <h2 id="scroll-modal-title">Financial Literacy</h2>
+                              <p>Me and all the whimsy creatures here are so glad you're here at Fintasia!</p>
+                              <p>In order to stay here, you must follow the three most important rules of Fintasia.
+                                   1. Love yourself. and  Respect yourself. 
+                              </p>
+                              <p>
+                                   In everything we teach here, loving yourself lies at the center of it all.
+                              </p>
+                         </section>
+                    </div>
+               )}
           </div>
 
           <aside className="detail" aria-live="polite">

@@ -142,7 +142,7 @@ code {
   width: clamp(30px, 10vw, 200px);
   padding: 0;
   border: 0;
-  background: rgb(59, 128, 92);
+  background: rgb(245, 247, 178);
   box-shadow: none;
   cursor: pointer;
 }
