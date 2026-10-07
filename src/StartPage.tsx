@@ -49,10 +49,9 @@ const STOPS: Stop[] = [
         emoji: "💭",
         title: "Why does everyone want money?",
         lines: [
-          "Why do you think? 🙄",
-          "Just kidding.",
-          "Money can give you freedom, independence and comfort.",
-          "It can also give you a quick buzz of happy.",
+          "Because money can provide freedom, independence,safety, and comfort.",
+          "However, it can also give you a quick buzz of happy.",
+          "A cute toy, a fun night, a cool gadget.",
           "The buzz fades fast. The freedom lasts.",
           "Picking the long game is hard for everyone, so go easy on yourself. 💛",
           "I'll show you small, simple things you can do. No jargon, no pressure.",
@@ -433,7 +432,7 @@ export default function StartPage() {
 
   const timer = useRef<number>(0);
   const msgsRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const goRef = useRef<HTMLButtonElement>(null);
 
   const topics = STOPS[stop].topics;
@@ -749,15 +748,25 @@ export default function StartPage() {
 
                 <div className="foot">
                   <div className="ask" hidden={!asking}>
-                    <input
+                    <textarea
                       ref={inputRef}
-                      type="text"
-                      maxLength={200}
+                      rows={1}
+                      maxLength={500}
                       placeholder="Type your answer…"
                       aria-label="Your answer"
                       value={draft}
-                      onChange={(e) => setDraft(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && submit(false)}
+                      onChange={(e) => {
+                        setDraft(e.target.value);
+                        e.target.style.height = "auto";
+                        e.target.style.height = `${e.target.scrollHeight}px`;
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+                          submit(false);
+                        }
+                      }}
+                      style={{ resize: "none", overflow: "hidden" }}
                     />
                     <button
                       type="button"

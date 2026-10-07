@@ -362,21 +362,27 @@ h1 {
 .ask {
   display: flex;
   gap: 8px;
-  align-items: center;
+  align-items: flex-end;
   width: 100%;
 }
 .ask[hidden] {
   display: none;
 }
-.ask input {
+.ask textarea {
   flex: 1;
   min-width: 0;
+  min-height: 42px;
+  max-height: 140px;
   border: 2px solid var(--line);
-  border-radius: 999px;
+  border-radius: 18px;
   padding: 9px 14px;
   background: var(--card);
   color: var(--ink);
   font: inherit;
+  line-height: 1.4;
+  resize: none;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .skip {
   border: 0;
