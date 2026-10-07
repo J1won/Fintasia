@@ -16,7 +16,7 @@
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --sky1: #16314a;
     --sky2: #1d4160;
@@ -43,7 +43,7 @@
   --leaf: #6fd08c;
   --line: #3d6a50;
   --shadow: #0006;
-}
+} */
 html {
   scroll-padding-top: env(safe-area-inset-top, 0px);
 }
@@ -70,10 +70,6 @@ button {
   color: inherit;
   cursor: pointer;
 }
-/* :focus-visible {
-  outline: 3px solid var(--berry);
-  outline-offset: 3px;
-} */
 .wrap {
   max-width: 200vw;
   margin: 0 auto;
