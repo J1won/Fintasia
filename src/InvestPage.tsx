@@ -29,7 +29,7 @@ interface Topic {
   title: string;
   question?: string; // optional typed-answer question asked first
   lines: string[];
-  tip: string;
+  tip?: string;
   calculator?: boolean;
 }
 
@@ -116,27 +116,23 @@ const STOPS: Stop[] = [
   },
   {
     emoji: "🛟",
-    name: "Free Money",
+    name: "Free Money??",
     topics: [
       {
         emoji: "🌰",
-        title: "Why save?",
+        title: "Loans",
         lines: [
-          "Saving is just keeping some money instead of spending all of it.",
-          "It buys you options: a surprise bill, a job you can leave, a purchase without debt.",
-          "Future you will be so thankful 🌰",
+          "Lemme tell you something, feel free to write this down.",
+          "Money is NEVER EVER free.",
         ],
         tip: "Set up a small automatic transfer, even $5 a week.",
       },
       {
         emoji: "🛟",
-        title: "Your safety cushion",
+        title: "Credit Cards",
         lines: [
           "The best way to avoid loans is to have a cushion.",
-          "That’s emergency savings: 3 to 6 months of living costs.",
-          "Keep it in a high-yield savings account so it grows a little while it waits.",
-          "It’s for needs only. Never wants, never investing.",
-          "Then a car repair is just an annoying Tuesday, not a debt.",
+          
         ],
         tip: "Start tiny. Even $5 is a start.",
       },
@@ -184,17 +180,27 @@ const STOPS: Stop[] = [
       },
       {
         emoji: "🚀",
-        title: "Your first $5",
+        title: "Next steps",
         lines: [
-          "Ready for a first step? Let’s open a Roth IRA 🚀",
-          "It’s a retirement account you open at a brokerage.",
-          "Check that you have earned income and are under the income limit first. irs.gov has the details.",
-          "Then put in just $5 right now. Skip the coffee for one day if you need to ☕",
-          "The account is only the container. You still buy an ETF inside it, which is a basket of lots of companies.",
-          "It’s built for retirement, so taking money out early can mean taxes or penalties.",
+          "Wow! You've already completed the basics!",
+          "If you feel like you're ready to take the next step, go on ahead.",
+          "I'll take you step by step through opening a brokerage account, retirement account, and more!",
+          "Click \"Next Chapter\" found on the bottom right of the screen. Secret code: Im ready"
         ],
-        tip: "Open it, add $5, then buy one ETF inside it.",
       },
+     //  {
+     //    emoji: "🚀",
+     //    title: "Your first $5",
+     //    lines: [
+     //      "Ready for a first step? Let’s open a Roth IRA 🚀",
+     //      "It’s a retirement account you open at a brokerage.",
+     //      "Check that you have earned income and are under the income limit first. irs.gov has the details.",
+     //      "Then put in just $5 right now. Skip the coffee for one day if you need to ☕",
+     //      "The account is only the container. You still buy an ETF inside it, which is a basket of lots of companies.",
+     //      "It’s built for retirement, so taking money out early can mean taxes or penalties.",
+     //    ],
+     //    tip: "Open it, add $5, then buy one ETF inside it.",
+     //  },
     ],
   },
 ];
@@ -221,7 +227,7 @@ function buildScript(t: Topic): Msg[] {
     { kind: "h", text: `${t.emoji} ${t.title}` },
     ...(t.question ? [{ kind: "b" as const, text: t.question }] : []),
     ...t.lines.map((text) => ({ kind: "b" as const, text })),
-    { kind: "t", text: `💡 Try this: ${t.tip}` },
+    ...(t.tip ? [{ kind: "t" as const, text: `💡 Try this: ${t.tip}` }] : []),
   ];
 
   if (t.calculator) {
