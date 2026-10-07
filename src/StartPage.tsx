@@ -16,19 +16,29 @@ useEffect,
 import "./StartPage.css";
 
 /* ---------- Core types for chat messages and course content ---------- */
-type Kind = "h" | "b" | "t" | "me" | "calc";
+type Kind = "h" | "b" | "t" | "me" | "calc" | "image";
 
 interface Msg {
   kind: Kind;
   text: string;
   content?: ReactNode;
+  imageSrc?: string;
+  imageAlt?: string;
 }
+
+type ChatLine =
+  | string
+  | {
+      type: "image";
+      src: string;
+      alt?: string;
+    };
 
 interface Topic {
   emoji: string;
   title: string;
   question?: string; // optional typed-answer question asked first
-  lines: string[];
+  lines: ChatLine[];
   tip?: string;
   calculator?: boolean;
 }
@@ -50,6 +60,11 @@ const STONES: Stone[] = [
         title: "Why does everyone want money?",
         lines: [
           "Because money can provide freedom, independence, safety, and comfort.",
+          {
+            type: "image",
+            src: landingPageImage,
+            alt: "Fintasia landing page illustration",
+          },
           "However, it can also give you a quick buzz of happy.",
           "A cute toy, a fun night, a cool gadget.",
           "The buzz fades fast. But the freedom lasts.",
@@ -76,6 +91,19 @@ const STONES: Stone[] = [
     topics: [
       {
         emoji: "🪤",
+        title: "Mass Consumerism",
+        lines: [
+          "Random holiday decors. Aisles full of colorful water bottles. Luxury clothes for babies.",
+          "Tons of garbage in the dumpster grounds.",
+          "Think of something you want but don’t need. Picture the logo, the colors, the packaging.",
+          "Someone worked really hard to make you feel that pull.",
+          "Apps even remember what you looked at and show it to you again. That’s called targeted marketing.",
+          "It’s not your fault. It was designed 🙂",
+        ],
+        tip: "Next time you want something, wait 24 hours and see if the pull fades.",
+      },
+      {
+        emoji: "🪤",
         title: "Understand the traps",
         lines: [
           "Here’s a secret: companies spend millions on ads because ads work.",
@@ -97,17 +125,6 @@ const STONES: Stone[] = [
           "“Was $99, now $49” makes $49 feel like a win, even if you never needed it.",
         ],
         tip: "When you spot one, name it out loud: “that’s just a rush trick.”",
-      },
-      {
-        emoji: "🧘",
-        title: "Simplicity is your friend",
-        lines: [
-          "You don’t need 10 credit cards.",
-          "Or 10 bank accounts. Or a pile of subscriptions.",
-          "The fewer places your money lives, the easier it is to see where it goes.",
-          "And when you can see it, your shoulders relax 😌",
-        ],
-        tip: "Count your accounts and subscriptions. Keep the ones you actually use.",
       },
     ],
   },
@@ -254,7 +271,16 @@ function buildScript(t: Topic): Msg[] {
   const messages: Msg[] = [
     { kind: "h", text: `${t.emoji} ${t.title}` },
     ...(t.question ? [{ kind: "b" as const, text: t.question }] : []),
-    ...t.lines.map((text) => ({ kind: "b" as const, text })),
+    ...t.lines.map((line) =>
+      typeof line === "string"
+        ? { kind: "b" as const, text: line }
+        : {
+            kind: "image" as const,
+            text: "",
+            imageSrc: line.src,
+            imageAlt: line.alt ?? "",
+          },
+    ),
     ...(t.tip ? [{ kind: "t" as const, text: `💡 Try this: ${t.tip}` }] : []),
   ];
 
@@ -677,6 +703,21 @@ export default function StartPage() {
                     m.kind === "calc" ? (
                       <div key={`${stone}-${cur}-${i}`} className="calc-message">
                         {m.content}
+                      </div>
+                    ) : m.kind === "image" ? (
+                      <div key={`${stone}-${cur}-${i}`} className="image-message">
+                        <img
+                          src={m.imageSrc}
+                          alt={m.imageAlt ?? "Chat image"}
+                          style={{
+                            display: "block",
+                            width: "100%",
+                            maxHeight: "220px",
+                            objectFit: "cover",
+                            borderRadius: "12px",
+                            marginBottom: "8px",
+                          }}
+                        />
                       </div>
                     ) : (
                       <div key={`${stone}-${cur}-${i}`} className={`b ${m.kind}`}>
