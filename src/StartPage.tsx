@@ -13,7 +13,7 @@ useEffect,
   type ReactNode,
   useState,
 } from "react";
-import "./InvestPage.css";
+import "./StartPage.css";
 
 /* ---------- Types ---------- */
 type Kind = "h" | "b" | "t" | "me" | "calc";
@@ -400,7 +400,7 @@ function Cat() {
 }
 
 /* ---------- App ---------- */
-export default function InvestPage() {
+export default function StartPage() {
   const [stop, setStop] = useState(0); // which stepping stone
   const [cur, setCur] = useState<number | null>(null); // open topic inside that stone
   const [shown, setShown] = useState(0); // how many scripted messages are visible

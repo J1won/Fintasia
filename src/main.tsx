@@ -5,14 +5,14 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import LoginPage from './LoginPage.tsx'
 import SavePage from './SavePage.tsx'
-import InvestPage from './InvestPage.tsx'
+import StartPage from './StartPage.tsx'
 import LandingPage from './LandingPage.tsx'
 import VersionOnePage from './VersionOnePage.tsx'
 
 const pages = {
   '/': LoginPage,
   '/save': SavePage,
-  '/invest': InvestPage,
+  '/invest': StartPage,
   '/landing': LandingPage,
   '/versionOne': VersionOnePage,
 }
