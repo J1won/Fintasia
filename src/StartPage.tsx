@@ -214,6 +214,29 @@ const STOPS: Stop[] = [
 
 /* ---------- Financial Goal ---------- */
 const GOAL_KEY = "mm-goal";
+const IDLE_CONTENT = [
+  {
+    video: catTexting,
+    bubble:
+      "Heyy i'm a certified Dr.FinCat. I'm here to help you build a why behind your money.",
+  },
+  {
+    video: catTexting,
+    bubble:
+      "Smart spending is less about missing out and more about choosing what actually matters.",
+  },
+  {
+    video: catTexting,
+    bubble:
+      "Money moves fast, but your habits can protect you from the traps.",
+  },
+  {
+    video: catTexting,
+    bubble:
+      "Investing is a long game. Start small, stay curious, and build your future step by step.",
+  },
+];
+
 const loadGoal = (): string => {
   try {
     return localStorage.getItem(GOAL_KEY) ?? "";
@@ -324,6 +347,8 @@ export default function StartPage() {
   const topic = cur !== null ? topics[cur] : null;
   const script = useMemo(() => (topic ? buildScript(topic) : []), [topic]);
   const hasQuestion = !!topic?.question;
+  const idleVideo = IDLE_CONTENT[stop]?.video ?? catTexting;
+  const idleBubble = IDLE_CONTENT[stop]?.bubble ?? "";
 
   // visible messages, with the user's answer slotted in right after the question
   const visible: Msg[] = [];
@@ -576,17 +601,14 @@ export default function StartPage() {
             <div className="screen">
               <div className="idle">
                 <video
-                  src={catTexting}
+                  src={idleVideo ?? catTexting}
                   autoPlay
                   loop
                   muted
                   playsInline
                   aria-hidden="true"
                 />
-                <p className="video-bubble">
-                  Heyy i'm a certified Dr.FinCat. I've been asked to help you
-                  but make it quick cuz im busy.
-                </p>
+                <p className="video-bubble">{idleBubble}</p>
               </div>
 
               <div
