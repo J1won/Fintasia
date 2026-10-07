@@ -49,10 +49,10 @@ const STOPS: Stop[] = [
         emoji: "💭",
         title: "Why does everyone want money?",
         lines: [
-          "Because money can provide freedom, independence,safety, and comfort.",
+          "Because money can provide freedom, independence, safety, and comfort.",
           "However, it can also give you a quick buzz of happy.",
           "A cute toy, a fun night, a cool gadget.",
-          "The buzz fades fast. The freedom lasts.",
+          "The buzz fades fast. But the freedom lasts.",
           "Picking the long game is hard for everyone, so go easy on yourself. 💛",
           "I'll show you small, simple things you can do. No jargon, no pressure.",
         ],
@@ -212,7 +212,7 @@ const STOPS: Stop[] = [
   },
 ];
 
-/* ---------- Helpers ---------- */
+/* ---------- Financial Goal ---------- */
 const GOAL_KEY = "mm-goal";
 const loadGoal = (): string => {
   try {
@@ -228,7 +228,7 @@ const saveGoal = (v: string) => {
     /* storage unavailable: ignore */
   }
 };
-
+/* ---------- Text Script ---------- */
 function buildScript(t: Topic): Msg[] {
   const messages: Msg[] = [
     { kind: "h", text: `${t.emoji} ${t.title}` },
@@ -243,7 +243,7 @@ function buildScript(t: Topic): Msg[] {
 
   return messages;
 }
-
+/* ---------- Compound Interest Slider ---------- */
 const ANNUAL_RETURN = 0.07;
 
 function CompoundCalc() {
@@ -288,121 +288,6 @@ function CompoundCalc() {
         Example assumes a 7% average yearly return. This is not a promise.
       </p>
     </div>
-  );
-}
-
-/* ---------- Cat illustration ---------- */
-function Cat() {
-  return (
-    <svg
-      viewBox="0 0 300 270"
-      role="img"
-      aria-label="Cartoon cat texting on a phone"
-    >
-      <circle cx="150" cy="140" r="118" fill="#ffd54a" opacity=".35" />
-      <path
-        d="M205 232q55-6 50-56q-3-18-18-14"
-        fill="none"
-        stroke="#f4a259"
-        strokeWidth="16"
-        strokeLinecap="round"
-      />
-      <ellipse cx="150" cy="234" rx="70" ry="36" fill="#f4a259" />
-      <polygon points="98,92 104,36 142,70" fill="#f4a259" />
-      <polygon points="202,92 196,36 158,70" fill="#f4a259" />
-      <polygon points="108,80 110,52 130,70" fill="#ffb3c7" />
-      <polygon points="192,80 190,52 170,70" fill="#ffb3c7" />
-      <circle cx="150" cy="122" r="58" fill="#f4a259" />
-      <path
-        d="M150 66v14M138 68l2 12M162 68l-2 12"
-        stroke="#d9822b"
-        strokeWidth="5"
-        strokeLinecap="round"
-      />
-      <ellipse cx="127" cy="122" rx="8" ry="10" fill="#23402f" />
-      <ellipse cx="173" cy="122" rx="8" ry="10" fill="#23402f" />
-      <circle cx="130" cy="126" r="3" fill="#fff" />
-      <circle cx="176" cy="126" r="3" fill="#fff" />
-      <circle cx="112" cy="138" r="9" fill="#ff8fa8" opacity=".5" />
-      <circle cx="188" cy="138" r="9" fill="#ff8fa8" opacity=".5" />
-      <polygon points="144,136 156,136 150,144" fill="#ff7aa2" />
-      <path
-        d="M150 144q-6 8-13 3M150 144q6 8 13 3"
-        fill="none"
-        stroke="#23402f"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-      <path
-        d="M104 142l-26-4M104 148l-26 4M196 142l26-4M196 148l26 4"
-        stroke="#23402f"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      <rect x="112" y="170" width="76" height="84" rx="12" fill="#2b3a33" />
-      <rect x="118" y="178" width="64" height="68" rx="7" fill="#e8fff0" />
-      <rect
-        x="123"
-        y="184"
-        width="38"
-        height="13"
-        rx="6"
-        fill="#fff"
-        stroke="#b9e2c0"
-      />
-      <rect x="141" y="202" width="36" height="13" rx="6" fill="#3f9d5b" />
-      <rect
-        x="123"
-        y="220"
-        width="24"
-        height="13"
-        rx="6"
-        fill="#fff"
-        stroke="#b9e2c0"
-      />
-      <circle cx="130" cy="226.5" r="2" fill="#4d6b58" />
-      <circle cx="135" cy="226.5" r="2" fill="#4d6b58" />
-      <circle cx="140" cy="226.5" r="2" fill="#4d6b58" />
-      <circle
-        cx="110"
-        cy="214"
-        r="14"
-        fill="#f4a259"
-        stroke="#d9822b"
-        strokeWidth="2"
-      />
-      <circle
-        cx="190"
-        cy="214"
-        r="14"
-        fill="#f4a259"
-        stroke="#d9822b"
-        strokeWidth="2"
-      />
-      <rect x="196" y="22" width="88" height="38" rx="16" fill="#fff" />
-      <polygon points="208,58 218,58 206,72" fill="#fff" />
-      <text
-        x="240"
-        y="47"
-        textAnchor="middle"
-        fontSize="17"
-        fill="#23402f"
-        fontFamily="Fredoka, sans-serif"
-      >
-        meow? 💬
-      </text>
-      <rect x="14" y="76" width="76" height="34" rx="15" fill="#3f9d5b" />
-      <text
-        x="52"
-        y="98"
-        textAnchor="middle"
-        fontSize="15"
-        fill="#fff"
-        fontFamily="Fredoka, sans-serif"
-      >
-        save $5!
-      </text>
-    </svg>
   );
 }
 
@@ -608,9 +493,6 @@ export default function StartPage() {
                   </span>
                 </button>
               ))}
-            </div>
-            <div className="hero">
-              <Cat />
             </div>
             <div className="list">
               {topics.map((t, i) => (
