@@ -768,20 +768,22 @@ export default function StartPage() {
                       }}
                       style={{ resize: "none", overflow: "hidden" }}
                     />
-                    <button
-                      type="button"
-                      className="pill"
-                      onClick={() => submit(false)}
-                    >
-                      Send
-                    </button>
-                    <button
-                      type="button"
-                      className="skip"
-                      onClick={() => submit(true)}
-                    >
-                      Skip
-                    </button>
+                    <div className="ask-actions">
+                      <button
+                        type="button"
+                        className="skip"
+                        onClick={() => submit(true)}
+                      >
+                        Skip
+                      </button>
+                      <button
+                        type="button"
+                        className="pill"
+                        onClick={() => submit(false)}
+                      >
+                        Send
+                      </button>
+                    </div>
                   </div>
                   <button
                     type="button"
