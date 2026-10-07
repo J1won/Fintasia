@@ -224,21 +224,17 @@
   font-size: 1rem;
   font-weight: 600;
   white-space: nowrap;
-  color: #44027c;
-  background: linear-gradient(135deg, #e0c3fc 0%, #d9b8f5 50%, #c9a3ec 100%);
+  color: #4d4f12;
+  background: linear-gradient(135deg, #fcfdd8 0%, #f5f7b2 50%, #edf29a 100%);
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(190, 140, 230, 0.4),
-              0 0 20px rgba(220, 180, 250, 0.3);
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .sparkle-btn:hover {
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 6px 20px rgba(190, 140, 230, 0.55),
-              0 0 30px rgba(220, 180, 250, 0.5);
 }
 
 .sparkle-btn:active {
