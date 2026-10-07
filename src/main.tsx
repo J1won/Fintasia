@@ -12,7 +12,7 @@ import VersionOnePage from './VersionOnePage.tsx'
 const pages = {
   '/': LoginPage,
   '/save': SavePage,
-  '/invest': StartPage,
+  '/start': StartPage,
   '/landing': LandingPage,
   '/versionOne': VersionOnePage,
 }

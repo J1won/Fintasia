@@ -123,18 +123,26 @@ const STOPS: Stop[] = [
         title: "Loans",
         lines: [
           "Lemme tell you something, feel free to write this down.",
-          "Money is NEVER EVER free.",
+          "There is no such thing as free money in the real world. Only loaned money",
+          "Loans = debt + interest",
+          "Interest is the rate at which the debt increases until it's paid off.",
+          "Many harmful companies loan money at high interest rates making it hard to pay off.",
         ],
-        tip: "Set up a small automatic transfer, even $5 a week.",
+        tip: "If an interest is higher than 10%, think carefully about other options.",
       },
       {
         emoji: "🛟",
         title: "Credit Cards",
         lines: [
-          "The best way to avoid loans is to have a cushion.",
+          "Credit cards are one of the most sneakiest loans in existence.",
+          "Credit cards are loaned money that must be paid off end of month.",
+          "If it is not paid off, credit card interest often are more than 30%.",
+          "Cash back and rewards are used as ways to blind people from the downsides.",
+          "But the highest credit card rewards only go up to 5%.",
+          "Let's do the math. Spend $100 on a card. You get free $5 as reward. You accidentally forget to pay off your card end of month and get a $30 interest fee. That's 6 months of rewards!!"
           
         ],
-        tip: "Start tiny. Even $5 is a start.",
+        tip: "ALWAYS pay off your card. Set up card autopay to avoid mistakes.",
       },
       {
         emoji: "🦔",
@@ -472,7 +480,7 @@ export default function StartPage() {
     timer.current = window.setTimeout(() => {
       setShown((s) => s + 1);
       setTyping(false);
-    }, 650);
+    }, 350);
   };
 
   const next = () => {

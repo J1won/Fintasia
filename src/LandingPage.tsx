@@ -460,8 +460,8 @@ function LandingPage() {
                          <button className="big-btn" onClick={() => window.location.href='/save'}>
                               All About Saving!
                          </button>
-                         <button className="big-btn" onClick={() => window.location.href='/invest'}>
-                              All About Investing!
+                         <button className="big-btn" onClick={() => window.location.href='/start'}>
+                              All About Starting!
                          </button>
                          <button className="big-btn" onClick={() => window.location.href='/versionOne'}>
                               under construction
