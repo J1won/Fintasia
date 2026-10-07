@@ -102,29 +102,8 @@ function PairTable({ rows }: { rows: [string, string][] }) {
     </table>
   );
 }
-
 /* ---------- Content ---------- */
 const STOPS: Stop[] = [
-  {
-    emoji: "💰",
-    name: "Free Money",
-    intro: <><b>Beware of free money.</b> Money is never free.</>,
-    cards: [
-      {
-        emoji: "🪙", title: "What is a loan?", teaser: "Debt + Interest.",
-        body: (
-          <>
-            <p>
-              Debt is money you owe someone else.<br />
-              Interest is the rate at which your debt increases until it is paid off.<br />
-              Many harmful or predatory companies loan money at high interest rates making the debt grow faster than you can pay off.
-            </p>
-            
-          </>
-        ),
-      },
-    ],
-  },
   {
     emoji: "🛟",
     name: "Save & grow",

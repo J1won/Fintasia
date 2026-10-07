@@ -360,7 +360,7 @@ h1 {
   gap: 8px;
   align-items: flex-end;
   width: 100%;
-  padding: 0px 5px 0px 0px;
+  padding: 5px 5px 5px 5px;
 }
 .ask[hidden] {
   display: none;

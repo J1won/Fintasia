@@ -15,7 +15,7 @@ useEffect,
 } from "react";
 import "./StartPage.css";
 
-/* ---------- Types ---------- */
+/* ---------- Core types for chat messages and course content ---------- */
 type Kind = "h" | "b" | "t" | "me" | "calc";
 
 interface Msg {
@@ -39,7 +39,7 @@ interface Stone {
   topics: Topic[];
 }
 
-/* ---------- Data: four stepping stones, three circle topics each ---------- */
+/* ---------- Course data: four stepping stones, each with topic cards ---------- */
 const STONES: Stone[] = [
   {
     emoji: "🌱",
@@ -63,12 +63,10 @@ const STONES: Stone[] = [
         title: "What is your financial goal?",
         question: "More detailed the better! (View the answer in your profile)",
         lines: [
-          "Let’s start at the very beginning: what even is money? 🪙",
-          "It’s a tool we trade for the things we need and want.",
-          "It’s also a way to store your work for later. The hours you work today can become something you use next year.",
-          "Money isn’t good or bad. What matters is what you point it at.",
+          "That's a wonderful start.",
+          "Continue learning and keep in mind your end goal!",
         ],
-        tip: "Notice one thing you spent on today. Did it match what you care about?",
+        tip: "Write your financial goal somewhere you can see it everyday. Maybe the bathroom mirror or the wall next to your desk!",
       },
     ],
   },
@@ -123,7 +121,7 @@ const STONES: Stone[] = [
         lines: [
           "Lemme tell you something, feel free to write this down.",
           "There is no such thing as free money in the real world. Only loaned money",
-          "Loans = debt + interest",
+          "Loan = debt + interest",
           "Interest is the rate at which the debt increases until it's paid off.",
           "Many harmful companies loan money at high interest rates making it hard to pay off.",
         ],
@@ -212,7 +210,7 @@ const STONES: Stone[] = [
   },
 ];
 
-/* ---------- Financial Goal ---------- */
+/* ---------- Idle media for each stone ---------- */
 const GOAL_KEY = "mm-goal";
 const IDLE_CONTENT = [
   {
@@ -326,6 +324,9 @@ export default function StartPage() {
   const [isScrollHovered, setIsScrollHovered] = useState(false);
   const [isScrollOpen, setIsScrollOpen] = useState(false);
   const [modalOrigin, setModalOrigin] = useState({ x: "50%", y: "50%" });
+  const [accountGoal, setAccountGoal] = useState(() => loadGoal());
+  const [goalDraft, setGoalDraft] = useState("");
+  const [isEditingGoal, setIsEditingGoal] = useState(false);
   const openFromButton = (
     event: React.MouseEvent<HTMLButtonElement>,
     openModal: () => void,
@@ -337,6 +338,14 @@ export default function StartPage() {
     openModal();
   };
   const [isAccountButtonOpen, setIsAccountButtonOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isAccountButtonOpen) return;
+    const nextGoal = loadGoal();
+    setAccountGoal(nextGoal);
+    setGoalDraft(nextGoal);
+    setIsEditingGoal(false);
+  }, [isAccountButtonOpen]);
 
   const timer = useRef<number>(0);
   const msgsRef = useRef<HTMLDivElement>(null);
@@ -358,6 +367,7 @@ export default function StartPage() {
       visible.push({ kind: "me", text: answer });
   });
 
+  // Cancel any pending "Fern is typing" timeout before changing the topic or closing the chat.
   const stopTimer = () => window.clearTimeout(timer.current);
 
   const openTopic = (s: number, i: number) => {
@@ -405,26 +415,21 @@ export default function StartPage() {
     if (!asking || typing || (!skip && !v)) return;
     if (!skip) {
       saveGoal(v);
+      setAccountGoal(v);
+      setGoalDraft(v);
       setAnswer(v);
     }
     setAsking(false);
     reveal();
   };
 
-  // keep the newest message in view
+  // Keep the newest message in view as the chat grows.
   useEffect(() => {
     msgsRef.current?.scrollTo({
       top: msgsRef.current.scrollHeight,
       behavior: "smooth",
     });
   }, [shown, typing, answer, cur]);
-
-  // focus the input when asked, or the button when a normal topic opens
-  useEffect(() => {
-    if (cur === null) return;
-    if (asking) inputRef.current?.focus({ preventScroll: true });
-    else if (shown === 2) goRef.current?.focus({ preventScroll: true });
-  }, [cur, asking, shown]);
 
   // Escape closes the chat
   useEffect(() => {
@@ -446,6 +451,7 @@ export default function StartPage() {
           ? "Next stone →"
           : "Back to start ↺";
 
+  //  ------ HTML Element  ---------------
   return (
     <div
       className="landing-page"
@@ -490,11 +496,50 @@ export default function StartPage() {
                 <span aria-hidden="true">&#215;</span>
               </button>
 
-              <h2 id="button-one-modal-title">Button One</h2>
-              <p>Explore your next financial move with confidence.</p>
-              <button onClick={() => (window.location.href = "/")}>
-                Log Out
-              </button>
+              <h2 id="button-one-modal-title">Account</h2>
+              <p>Here’s your saved financial goal.</p>
+
+              {isEditingGoal ? (
+                <textarea
+                  value={goalDraft}
+                  rows={4}
+                  maxLength={500}
+                  onChange={(event) => setGoalDraft(event.target.value)}
+                  style={{ width: "100%", resize: "vertical" }}
+                />
+              ) : (
+                <p>{accountGoal || "No financial goal saved yet."}</p>
+              )}
+
+              <div style={{ display: "flex", gap: "12px", marginTop: "16px" }}>
+                {isEditingGoal ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const nextGoal = goalDraft.trim();
+                      saveGoal(nextGoal);
+                      setAccountGoal(nextGoal);
+                      setIsEditingGoal(false);
+                    }}
+                  >
+                    Save
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setGoalDraft(accountGoal);
+                      setIsEditingGoal(true);
+                    }}
+                  >
+                    Edit
+                  </button>
+                )}
+
+                <button type="button" onClick={() => (window.location.href = "/")}>
+                  Log Out
+                </button>
+              </div>
             </section>
           </div>
         )}
