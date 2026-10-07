@@ -33,14 +33,14 @@ interface Topic {
   calculator?: boolean;
 }
 
-interface Stop {
+interface Stone {
   emoji: string;
   name: string;
   topics: Topic[];
 }
 
 /* ---------- Data: four stepping stones, three circle topics each ---------- */
-const STOPS: Stop[] = [
+const STONES: Stone[] = [
   {
     emoji: "🌱",
     name: "Basics",
@@ -316,7 +316,7 @@ function CompoundCalc() {
 
 /* ---------- App ---------- */
 export default function StartPage() {
-  const [stop, setStop] = useState(0); // which stepping stone
+  const [stone, setStone] = useState(0); // which stepping stone
   const [cur, setCur] = useState<number | null>(null); // open topic inside that stone
   const [shown, setShown] = useState(0); // how many scripted messages are visible
   const [answer, setAnswer] = useState<string | null>(null); // user's typed answer
@@ -343,12 +343,12 @@ export default function StartPage() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const goRef = useRef<HTMLButtonElement>(null);
 
-  const topics = STOPS[stop].topics;
+  const topics = STONES[stone].topics;
   const topic = cur !== null ? topics[cur] : null;
   const script = useMemo(() => (topic ? buildScript(topic) : []), [topic]);
   const hasQuestion = !!topic?.question;
-  const idleVideo = IDLE_CONTENT[stop]?.video ?? catTexting;
-  const idleBubble = IDLE_CONTENT[stop]?.bubble ?? "";
+  const idleVideo = IDLE_CONTENT[stone]?.video ?? catTexting;
+  const idleBubble = IDLE_CONTENT[stone]?.bubble ?? "";
 
   // visible messages, with the user's answer slotted in right after the question
   const visible: Msg[] = [];
@@ -362,8 +362,8 @@ export default function StartPage() {
 
   const openTopic = (s: number, i: number) => {
     stopTimer();
-    const q = STOPS[s].topics[i].question;
-    setStop(s);
+    const q = STONES[s].topics[i].question;
+    setStone(s);
     setCur(i);
     setShown(2);
     setAnswer(null);
@@ -379,9 +379,9 @@ export default function StartPage() {
     setTyping(false);
   };
 
-  const goStop = (i: number) => {
+  const goStone = (i: number) => {
     closeChat();
-    setStop(i);
+    setStone(i);
   };
 
   const reveal = () => {
@@ -395,8 +395,8 @@ export default function StartPage() {
   const next = () => {
     if (typing || cur === null) return;
     if (shown < script.length) return reveal();
-    if (cur < topics.length - 1) openTopic(stop, cur + 1);
-    else if (stop < STOPS.length - 1) openTopic(stop + 1, 0);
+    if (cur < topics.length - 1) openTopic(stone, cur + 1);
+    else if (stone < STONES.length - 1) openTopic(stone + 1, 0);
     else closeChat();
   };
 
@@ -442,7 +442,7 @@ export default function StartPage() {
       ? "Keep going 👉"
       : cur !== null && cur < topics.length - 1
         ? "Next topic →"
-        : stop < STOPS.length - 1
+        : stone < STONES.length - 1
           ? "Next stone →"
           : "Back to start ↺";
 
@@ -503,14 +503,14 @@ export default function StartPage() {
         <div className={`app${cur !== null ? " chatting" : ""}`}>
           <div>
             <div className="trail" role="tablist" aria-label="Stepping stones">
-              {STOPS.map((s, i) => (
+              {STONES.map((s, i) => (
                 <button
                   key={s.name}
                   type="button"
-                  className="stop"
+                  className="stone"
                   role="tab"
-                  aria-selected={stop === i}
-                  onClick={() => goStop(i)}
+                  aria-selected={stone === i}
+                  onClick={() => goStone(i)}
                 >
                   <span className="d">{s.emoji}</span>
                   <span className="l">
@@ -526,7 +526,7 @@ export default function StartPage() {
                   type="button"
                   className={`card${cur === i ? " on" : ""}`}
                   aria-pressed={cur === i}
-                  onClick={() => i !== cur && openTopic(stop, i)}
+                  onClick={() => i !== cur && openTopic(stone, i)}
                 >
                   <span className="em">{t.emoji}</span>
                   <h3>{t.title}</h3>
@@ -630,11 +630,11 @@ export default function StartPage() {
                 <div className="msgs" ref={msgsRef}>
                   {visible.map((m, i) => (
                     m.kind === "calc" ? (
-                      <div key={`${stop}-${cur}-${i}`} className="calc-message">
+                      <div key={`${stone}-${cur}-${i}`} className="calc-message">
                         {m.content}
                       </div>
                     ) : (
-                      <div key={`${stop}-${cur}-${i}`} className={`b ${m.kind}`}>
+                      <div key={`${stone}-${cur}-${i}`} className={`b ${m.kind}`}>
                         {m.text}
                       </div>
                     )
