@@ -94,6 +94,20 @@ h1 {
   gap: clamp(24px, 4vw, 56px);
   align-items: stretch;
 }
+.next-page-button {
+  position: absolute;
+  right: clamp(70px, 1vw, 18px);
+  bottom: clamp(64px, 1.8vw, 28px);
+  z-index: 3;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(245, 247, 178);
+  box-shadow: 0 4px 0 rgba(39, 49, 28, 0.18);
+  padding: 0.6rem 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
 .app > div:first-child {
   display: flex;
   flex-direction: column;

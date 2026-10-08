@@ -139,12 +139,14 @@ code {
 }
 
 .profile-button {
-  width: clamp(30px, 10vw, 200px);
-  padding: 0;
+  width: clamp(120px, 10vw, 200px);
+  padding: 0.6rem 1rem;
   border: 0;
+  border-radius: 999px;
   background: rgb(245, 247, 178);
-  box-shadow: none;
+  box-shadow: 0 4px 0 rgba(39, 49, 28, 0.18);
   cursor: pointer;
+  font-weight: 700;
 }
 
 .landing-page {

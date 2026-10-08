@@ -571,6 +571,10 @@ export default function StartPage() {
         )}
       </div>
       <div className="wrap">
+        <button type="button" className="next-page-button" onClick={next}>
+          Start
+        </button>
+        
         <div className={`app${cur !== null ? " chatting" : ""}`}>
           <div>
             <div className="trail" role="tablist" aria-label="Stepping stones">
