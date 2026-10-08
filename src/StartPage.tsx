@@ -571,10 +571,6 @@ export default function StartPage() {
         )}
       </div>
       <div className="wrap">
-        <button type="button" className="next-page-button" onClick={next}>
-          Start
-        </button>
-        
         <div className={`app${cur !== null ? " chatting" : ""}`}>
           <div>
             <div className="trail" role="tablist" aria-label="Stepping stones">
@@ -608,6 +604,9 @@ export default function StartPage() {
                 </button>
               ))}
             </div>
+            <button type="button" className="next-page-button" onClick={next}>
+                Next Steps...
+            </button>
             <div id="scroll-gp-group">
               {/* scroll grandpa */}
               <button

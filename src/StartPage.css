@@ -96,8 +96,8 @@ h1 {
 }
 .next-page-button {
   position: absolute;
-  right: clamp(70px, 1vw, 18px);
-  bottom: clamp(64px, 1.8vw, 28px);
+  right: 70px;
+  bottom: 150px;
   z-index: 3;
   border: 0;
   border-radius: 999px;
@@ -174,7 +174,8 @@ h1 {
 .detail {
   position: sticky;
   top: calc(env(safe-area-inset-top, 0px) + 16px);
-  height: min(76vh, 630px);
+  /* height: min(76vh, 630px); */
+  height: 560px;
   width: min(100%, 350px);
   justify-self: center;
   display: flex;
