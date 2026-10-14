@@ -139,9 +139,9 @@ const STONES: Stone[] = [
           "There is no such thing as free money in the real world. Only loaned money",
           "Loan = debt + interest",
           "Interest is the rate at which the debt increases until it's paid off.",
-          "Many harmful companies loan money at high interest rates making it hard to pay off.",
+          "Many predatory companies loan money at high interest rates making it hard to pay off.",
         ],
-        tip: "If an interest is higher than 10%, think carefully about other options.",
+        tip: "If an interest is higher than 10%, STOP and think carefully about other options. Please.",
       },
       {
         emoji: "🛟",
@@ -155,21 +155,21 @@ const STONES: Stone[] = [
           "Let's do the math. Spend $100 on a card. You get free $5 as reward. You accidentally forget to pay off your card end of month and get a $30 interest fee. That's 6 months of rewards!!"
           
         ],
-        tip: "ALWAYS pay off your card. Set up card autopay to avoid mistakes.",
+        tip: "ALWAYS pay off your card. Set up card AUTOPAY to avoid mistakes.",
       },
-      {
-        emoji: "🦔",
-        title: "Let’s talk loans",
-        lines: [
-          "Gentle but honest: money is never free.",
-          "Payday loans, private loans, car loans, credit cards… they can feel like help today.",
-          "But they cost interest, and interest can snowball because debt grows on top of itself.",
-          "My rule of thumb: borrow only as a last resort.",
-          "If the interest is over 10%, stop and look closer.",
-          "Payday loans especially. Be super careful with those.",
-        ],
-        tip: "Before any loan, ask: what’s the total I’ll pay back?",
-      },
+      // {
+      //   emoji: "🦔",
+      //   title: "Let’s talk loans",
+      //   lines: [
+      //     "Gentle but honest: money is never free.",
+      //     "Payday loans, private loans, car loans, credit cards… they can feel like help today.",
+      //     "But they cost interest, and interest can snowball because debt grows on top of itself.",
+      //     "My rule of thumb: borrow only as a last resort.",
+      //     "If the interest is over 10%, stop and look closer.",
+      //     "Payday loans especially. Be super careful with those.",
+      //   ],
+      //   tip: "Before any loan, ask: what’s the total I’ll pay back?",
+      // },
     ],
   },
   {
