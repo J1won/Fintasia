@@ -5,6 +5,8 @@ import shGrandpa from "./assets/shakygp.png";
 import chGrandpa from "./assets/chillgp.png";
 import scroll from "./assets/scroll.png";
 import catTexting from "./assets/cat-texting.mp4";
+import moneyCat from "./assets/moneyCat.png";
+import drCat from "./assets/drCertified.mp4"
 import {
 useEffect,
   useMemo,
@@ -59,29 +61,28 @@ const STONES: Stone[] = [
         emoji: "💭",
         title: "Why does everyone want money?",
         lines: [
-          "Because money can provide freedom, independence, safety, and comfort.",
           {
             type: "image",
-            src: landingPageImage,
-            alt: "Fintasia landing page illustration",
+            src: moneyCat,
+            alt: "Cat with money",
           },
-          "However, it can also give you a quick buzz of happy.",
+          "Because money can provide freedom, independence, safety, and comfort.",
+          "But, it can also give you a quick buzz of happy.",
           "A cute toy, a fun night, a cool gadget.",
           "The buzz fades fast. But the freedom lasts.",
           "Picking the long game is hard for everyone, so go easy on yourself. 💛",
           "I'll show you small, simple things you can do. No jargon, no pressure.",
         ],
-        tip: "Write down one money goal. The more detail, the better: “In 5 years I want ___ so I can ___.”",
       },
       {
         emoji: "🪙",
         title: "What is your financial goal?",
         question: "More detailed the better! (View the answer in your profile)",
         lines: [
-          "That's a wonderful start.",
+          "Wonderful start.",
           "Continue learning and keep in mind your end goal!",
         ],
-        tip: "Write your financial goal somewhere you can see it everyday. Maybe the bathroom mirror or the wall next to your desk!",
+        tip: "Write your financial goal somewhere you can see it everyday. Maybe the bathroom mirror or next to your desk!",
       },
     ],
   },
@@ -93,14 +94,12 @@ const STONES: Stone[] = [
         emoji: "🪤",
         title: "Mass Consumerism",
         lines: [
-          "Random holiday decors. Aisles full of colorful water bottles. Luxury clothes for babies.",
-          "Tons of garbage in the dumpster grounds.",
-          "Think of something you want but don’t need. Picture the logo, the colors, the packaging.",
-          "Someone worked really hard to make you feel that pull.",
-          "Apps even remember what you looked at and show it to you again. That’s called targeted marketing.",
-          "It’s not your fault. It was designed 🙂",
+          "Closets bulging. Drawers overflowing. Clothes forgotten.",
+          "Toys piling up, collecting dust.",
+          "Mass production. Smokestacks burning. Chemicals dumped.",
+          "In 2018, the US made 292 million tons of trash. That’s about 4.9 pounds per person, every day. Half of it, 146 million tons, went to landfills.",
+          "The reality is, we buy things we don’t need. It hurts our planet, our wallet, and our peace of mind.",
         ],
-        tip: "Next time you want something, wait 24 hours and see if the pull fades.",
       },
       {
         emoji: "🪤",
@@ -111,21 +110,21 @@ const STONES: Stone[] = [
           "Think of something you want but don’t need. Picture the logo, the colors, the packaging.",
           "Someone worked really hard to make you feel that pull.",
           "Apps even remember what you looked at and show it to you again. That’s called targeted marketing.",
-          "It’s not your fault. It was designed 🙂",
+          "And hate to tell ya, marketing is only gonna get better.",
         ],
         tip: "Next time you want something, wait 24 hours and see if the pull fades.",
       },
-      {
-        emoji: "🕵️",
-        title: "Spot the sales tricks",
-        lines: [
-          "Stores know some magic words 🪄",
-          "“Almost sold out!” and “Back in stock!” make things feel rare, so you rush.",
-          "“Ends tonight” is a countdown so you can’t think.",
-          "“Was $99, now $49” makes $49 feel like a win, even if you never needed it.",
-        ],
-        tip: "When you spot one, name it out loud: “that’s just a rush trick.”",
-      },
+      // {
+      //   emoji: "🕵️",
+      //   title: "Spot the sales tricks",
+      //   lines: [
+      //     "Stores know some magic words 🪄",
+      //     "“Almost sold out!” and “Back in stock!” make things feel rare, so you rush.",
+      //     "“Ends tonight” is a countdown so you can’t think.",
+      //     "“Was $99, now $49” makes $49 feel like a win, even if you never needed it.",
+      //   ],
+      //   tip: "When you spot one, name it out loud: “that’s just a rush trick.”",
+      // },
     ],
   },
   {
@@ -231,9 +230,9 @@ const STONES: Stone[] = [
 const GOAL_KEY = "mm-goal";
 const IDLE_CONTENT = [
   {
-    video: catTexting,
+    video: drCat,
     bubble:
-      "Heyy i'm a certified Dr.FinCat. I'm here to help you build a why behind your money.",
+      "Did I hear someone call me? Lol. Don't worry boo boo, I'll teach you everything you need to know about finance.",
   },
   {
     video: catTexting,
@@ -470,7 +469,7 @@ export default function StartPage() {
 
   const buttonLabel =
     shown < script.length
-      ? "Keep going 👉"
+      ? "next"
       : cur !== null && cur < topics.length - 1
         ? "Next topic →"
         : stone < STONES.length - 1
