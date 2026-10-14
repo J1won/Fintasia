@@ -126,7 +126,7 @@ h1 {
   min-height: 76px;
   height: auto;
   border: 0;
-  background: var(--card);
+  background: #fbe7b8;
   border-radius: 16px;
   box-shadow: 0 5px 0 var(--shadow);
   padding: 14px 18px;
@@ -325,6 +325,7 @@ h1 {
   gap: 9px;
 }
 .b {
+  text-align: left;
   max-width: 88%;
   padding: 10px 15px;
   border-radius: 20px 20px 20px 6px;

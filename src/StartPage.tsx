@@ -6,7 +6,9 @@ import chGrandpa from "./assets/chillgp.png";
 import scroll from "./assets/scroll.png";
 import catTexting from "./assets/cat-texting.mp4";
 import moneyCat from "./assets/moneyCat.png";
-import drCat from "./assets/drCertified.mp4"
+import drCat from "./assets/drCertified.mp4";
+import proudFace from "./assets/proudFace.png";
+
 import {
 useEffect,
   useMemo,
@@ -58,7 +60,7 @@ const STONES: Stone[] = [
     name: "Basics",
     topics: [
       {
-        emoji: "💭",
+        emoji: "",
         title: "Why does everyone want money?",
         lines: [
           {
@@ -68,14 +70,20 @@ const STONES: Stone[] = [
           },
           "Because money can provide freedom, independence, safety, and comfort.",
           "But, it can also give you a quick buzz of happy.",
-          "A cute toy, a fun night, a cool gadget.",
+          "A cute toy, a fun night, a cool gadget, or a yummy snack.",
           "The buzz fades fast. But the freedom lasts.",
-          "Picking the long game is hard for everyone, so go easy on yourself. 💛",
-          "I'll show you small, simple things you can do. No jargon, no pressure.",
+          "Picking the long game is hard but feeling regret is harder so choose your battles.",
+          "Hey look on the bright side, you're here! And that's you choosing your future!",
+          {
+            type: "image",
+            src: proudFace,
+            alt: "Proud face",
+          },
+          "And I'm proud of you.",
         ],
       },
       {
-        emoji: "🪙",
+        emoji: "",
         title: "What is your financial goal?",
         question: "More detailed the better! (View the answer in your profile)",
         lines: [
@@ -91,24 +99,26 @@ const STONES: Stone[] = [
     name: "Spending",
     topics: [
       {
-        emoji: "🪤",
+        emoji: "",
         title: "Mass Consumerism",
         lines: [
+          "Imagine this.",
           "Closets bulging. Drawers overflowing. Clothes forgotten.",
           "Toys piling up, collecting dust.",
           "Mass production. Smokestacks burning. Chemicals dumped.",
           "In 2018, the US made 292 million tons of trash. That’s about 4.9 pounds per person, every day. Half of it, 146 million tons, went to landfills.",
-          "The reality is, we buy things we don’t need. It hurts our planet, our wallet, and our peace of mind.",
+          "The reality is, we impulsively buy things we don’t need. It hurts our planet, our wallet, and our peace of mind.",
         ],
+        tip: "Next time you want to impulsively buy something, imagine it fully covered in human poop and decide if you would wash it off or leave it."
       },
       {
-        emoji: "🪤",
+        emoji: "",
         title: "Understand the traps",
         lines: [
-          "Here’s a secret: companies spend millions on ads because ads work.",
+          "Here’s a secret: Companies spend milllllions on ads. Because they work.",
           "Researchers have studied for decades how to get people to spend.",
           "Think of something you want but don’t need. Picture the logo, the colors, the packaging.",
-          "Someone worked really hard to make you feel that pull.",
+          "Someone worked really hard to make you feel that urge to buy.",
           "Apps even remember what you looked at and show it to you again. That’s called targeted marketing.",
           "And hate to tell ya, marketing is only gonna get better.",
         ],
@@ -132,7 +142,7 @@ const STONES: Stone[] = [
     name: "Free Money??",
     topics: [
       {
-        emoji: "🌰",
+        emoji: "",
         title: "Loans",
         lines: [
           "Lemme tell you something, feel free to write this down.",
@@ -144,7 +154,7 @@ const STONES: Stone[] = [
         tip: "If an interest is higher than 10%, STOP and think carefully about other options. Please.",
       },
       {
-        emoji: "🛟",
+        emoji: "",
         title: "Credit Cards",
         lines: [
           "Credit cards are one of the most sneakiest loans in existence.",
@@ -158,7 +168,7 @@ const STONES: Stone[] = [
         tip: "ALWAYS pay off your card. Set up card AUTOPAY to avoid mistakes.",
       },
       // {
-      //   emoji: "🦔",
+      //   emoji: "",
       //   title: "Let’s talk loans",
       //   lines: [
       //     "Gentle but honest: money is never free.",
@@ -177,7 +187,7 @@ const STONES: Stone[] = [
     name: "Face the World",
     topics: [
       {
-        emoji: "🌳",
+        emoji: "",
         title: "Why invest?",
         lines: [
           "Prices tend to creep up over time, so cash sitting still slowly buys less.",
@@ -188,7 +198,7 @@ const STONES: Stone[] = [
         tip: "Build your emergency cushion first, then invest what you can forget.",
       },
       {
-        emoji: "🌲",
+        emoji: "",
         title: "Compound interest",
         lines: [
           "Here’s the cool part: growth can grow.",
@@ -200,7 +210,7 @@ const STONES: Stone[] = [
         tip: "Try a compound interest calculator with your own numbers.",
       },
       {
-        emoji: "🚀",
+        emoji: "",
         title: "Next steps",
         lines: [
           "Wow! You've already completed the basics!",
@@ -280,7 +290,7 @@ function buildScript(t: Topic): Msg[] {
             imageAlt: line.alt ?? "",
           },
     ),
-    ...(t.tip ? [{ kind: "t" as const, text: `💡 Try this: ${t.tip}` }] : []),
+    ...(t.tip ? [{ kind: "t" as const, text: `💡 Tip: ${t.tip}` }] : []),
   ];
 
   if (t.calculator) {
