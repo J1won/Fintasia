@@ -109,7 +109,7 @@ const STONES: Stone[] = [
           "Closets bulging. Drawers overflowing. Clothes forgotten.",
           "Toys piling up, collecting dust.",
           "Mass production. Smokestacks burning. Chemicals dumped.",
-          "In 2018, the US made 292 million tons of trash. That’s about 4.9 pounds per person, every day. Half of it, 146 million tons, went to landfills.",
+          "In 2018, the US made 292 million tons of trash. That’s about 4.9 pounds per person, every day. 146 million tons of it went to landfills.",
           "The reality is, we impulsively buy things we don’t need. It hurts our planet, our wallet, and our peace of mind.",
         ],
         tip: "Next time you want to impulsively buy something, imagine it fully covered in human poop and decide if you would wash it off or leave it."
@@ -440,7 +440,7 @@ export default function StartPage() {
     if (typing || cur === null) return;
     if (shown < script.length) return reveal();
     if (cur < topics.length - 1) openTopic(stone, cur + 1);
-    else if (stone < STONES.length - 1) openTopic(stone + 1, 0);
+    else if (stone < STONES.length - 1) goStone(stone + 1);
     else closeChat();
   };
 
@@ -478,12 +478,12 @@ export default function StartPage() {
 
   const buttonLabel =
     shown < script.length
-      ? "next"
+      ? "ok."
       : cur !== null && cur < topics.length - 1
-        ? "Next topic →"
+        ? "cont. →"
         : stone < STONES.length - 1
           ? "Next stone →"
-          : "Back to start ↺";
+          : "Run it back ↺";
 
   //  ------ HTML Element  ---------------
   return (
@@ -691,6 +691,13 @@ export default function StartPage() {
                   aria-hidden="true"
                 />
                 {idleBubble && <p className="video-bubble">{idleBubble}</p>}
+                <button
+                  type="button"
+                  className="idle-continue"
+                  onClick={() => openTopic(stone, 0)}
+                >
+                  Continue
+                </button>
               </div>
 
               <div

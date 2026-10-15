@@ -270,6 +270,19 @@ button {
   font-weight: 600;
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
 }
+.idle-continue {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 18px;
+  background: var(--leaf);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 0 var(--shadow);
+}
 .chatbox {
   display: none;
   flex: 1;
