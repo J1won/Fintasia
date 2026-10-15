@@ -614,7 +614,7 @@ export default function StartPage() {
               ))}
             </div>
             <button type="button" className="next-page-button" onClick={() => (window.location.href = "/action")}>
-                Next Steps...
+                Next Chapter...
             </button>
             <div id="scroll-gp-group">
               {/* scroll grandpa */}

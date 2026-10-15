@@ -197,7 +197,7 @@ function ActionPage() {
     <>
     <div className="landing-page" style={{ "--landing-image": `url(${landingPageImage})` } as CSSProperties}>
       <div className='nav-bar'>
-            <button className="logo-button" onClick={() => navigate('/landing')}>
+            <button className="logo-button" onClick={() => window.location.href='/start'}>
                 <img src={logo} alt="Home reroute logo" />
             </button>
 
