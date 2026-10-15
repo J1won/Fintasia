@@ -6,14 +6,12 @@ import './index.css'
 import LoginPage from './LoginPage.tsx'
 import SavePage from './SavePage.tsx'
 import StartPage from './StartPage.tsx'
-import LandingPage from './LandingPage.tsx'
 import VersionOnePage from './VersionOnePage.tsx'
 
 const pages = {
   '/': LoginPage,
   '/save': SavePage,
   '/start': StartPage,
-  '/landing': LandingPage,
   '/versionOne': VersionOnePage,
 }
 

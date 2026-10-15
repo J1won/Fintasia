@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
             onChange={(e) => setLoginPassword(e.target.value)}
             className="input"
           />
-          <button type="submit" className='sparkle-btn' onClick={() => window.location.href='/landing'}>
+          <button type="submit" className='sparkle-btn' onClick={() => window.location.href='/start'}>
             Sign In
           </button>
           <button type="button" className='sparkle-btn' onClick={() => setAuthMode("none")}>
@@ -108,7 +108,7 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
             onChange={(e) => setSignupPasswordTwo(e.target.value)}
             className="input"
           />
-          <button type="submit" className='sparkle-btn' onClick={() => window.location.href='/login'}>
+          <button type="submit" className='sparkle-btn' onClick={() => window.location.href='/start'}>
             Create Account
           </button>
           <button type="button" className='sparkle-btn' onClick={() => setAuthMode("none")}>

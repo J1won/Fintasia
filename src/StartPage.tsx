@@ -613,7 +613,7 @@ export default function StartPage() {
                 </button>
               ))}
             </div>
-            <button type="button" className="next-page-button" onClick={next}>
+            <button type="button" className="next-page-button" onClick={() => (window.location.href = "/landing")}>
                 Next Steps...
             </button>
             <div id="scroll-gp-group">
