@@ -4,13 +4,13 @@ import { BrowserRouter } from 'react-router-dom'
 
 import './index.css'
 import LoginPage from './LoginPage.tsx'
-import SavePage from './SavePage.tsx'
+import ActionPage from './ActionPage.tsx'
 import StartPage from './StartPage.tsx'
 import VersionOnePage from './VersionOnePage.tsx'
 
 const pages = {
   '/': LoginPage,
-  '/save': SavePage,
+  '/action': ActionPage,
   '/start': StartPage,
   '/versionOne': VersionOnePage,
 }
