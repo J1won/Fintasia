@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties} from "react";
 import './LandingPage.css'
 import landingPageImage from './assets/landingPageImage.png'
 import logo from './assets/logo.png'
@@ -201,7 +201,7 @@ function ActionPage() {
                 <img src={logo} alt="Home reroute logo" />
             </button>
 
-            <button className="profile-button" onClick={(event) => openFromButton(event, () => setIsButtonOneOpen(true))}>
+            <button className="profile-button" >
                 Account
             </button>
       </div>

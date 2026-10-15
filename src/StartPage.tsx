@@ -13,7 +13,7 @@ import battleCat from "./assets/battle-cat.mp4";
 import burglarCat from "./assets/burglar-cat.mp4";
 
 import {
-useEffect,
+  useEffect,
   useMemo,
   useRef,
   type CSSProperties,
@@ -142,7 +142,7 @@ const STONES: Stone[] = [
   },
   {
     emoji: "🛟",
-    name: "Free Money??",
+    name: "Free Money",
     topics: [
       {
         emoji: "",
@@ -254,6 +254,8 @@ const IDLE_CONTENT = [
   },
   {
     video: burglarCat,
+    bubble:
+      "Somebody say free money??",
   },
   {
     video: battleCat,
@@ -357,6 +359,8 @@ export default function StartPage() {
   const [draft, setDraft] = useState("");
   const [isScrollHovered, setIsScrollHovered] = useState(false);
   const [isScrollOpen, setIsScrollOpen] = useState(false);
+  const [isReadConfirmOpen, setIsReadConfirmOpen] = useState(false);
+  const [hasAcknowledgedReading, setHasAcknowledgedReading] = useState(false);
   const [modalOrigin, setModalOrigin] = useState({ x: "50%", y: "50%" });
   const [accountGoal, setAccountGoal] = useState(() => loadGoal());
   const [goalDraft, setGoalDraft] = useState("");
@@ -612,9 +616,63 @@ export default function StartPage() {
                 </button>
               ))}
             </div>
-            <button type="button" className="next-page-button" onClick={() => (window.location.href = "/action")}>
-                Next Chapter...
+            <button
+              type="button"
+              className="next-page-button"
+              onClick={(event) =>
+                openFromButton(event, () => {
+                  setHasAcknowledgedReading(false);
+                  setIsReadConfirmOpen(true);
+                })
+              }
+            >
+              Next Chapter...
             </button>
+            {isReadConfirmOpen && (
+              <div
+                className="read-confirm-backdrop"
+                role="presentation"
+                onClick={() => setIsReadConfirmOpen(false)}
+              >
+                <section
+                  className="read-confirm-modal"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="read-confirm-title"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <button
+                    type="button"
+                    className="read-confirm-close"
+                    aria-label="Close confirmation"
+                    onClick={() => setIsReadConfirmOpen(false)}
+                  >
+                    <span aria-hidden="true">&#215;</span>
+                  </button>
+                  <h2 id="read-confirm-title">
+                    I have read ALL the text messages
+                  </h2>
+                  <label className="read-confirm-agreement">
+                    <input
+                      type="checkbox"
+                      checked={hasAcknowledgedReading}
+                      onChange={(event) =>
+                        setHasAcknowledgedReading(event.target.checked)
+                      }
+                    />
+                    <span>i agree</span>
+                  </label>
+                  <button
+                    type="button"
+                    className="read-confirm-continue"
+                    disabled={!hasAcknowledgedReading}
+                    onClick={() => (window.location.href = "/action")}
+                  >
+                    Continue to next chapter
+                  </button>
+                </section>
+              </div>
+            )}
             <div id="scroll-gp-group">
               {/* scroll grandpa */}
               <button
