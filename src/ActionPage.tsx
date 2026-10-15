@@ -236,7 +236,7 @@ function ActionPage() {
         <div className="modal" ref={modalRef} role="dialog" aria-modal="true" aria-labelledby="modal-title">
           {active && (
             <>
-              <button type="button" className="x" ref={closeRef} aria-label="Close" onClick={closeModal}>✕</button>
+              <button type="button" className="x-modal" ref={closeRef} aria-label="Close" onClick={closeModal}>✕</button>
  
               {view === "tasks" ? (
                 <>

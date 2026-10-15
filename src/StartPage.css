@@ -75,7 +75,7 @@ button {
   margin: 0 auto;
   padding: 0 16px 0px;
 }
-h1 {
+/* h1 {
   font-size: clamp(2rem, 7vw, 2.7rem);
   margin: 6px 0 2px;
   font-weight: 600;
@@ -84,7 +84,7 @@ h1 {
 .sub {
   margin: 0 0 18px;
   color: var(--muted);
-}
+} */
 .app {
   display: grid;
   grid-template-columns: minmax(320px, 420px) 350px;
@@ -160,7 +160,7 @@ h1 {
   color: #3a2e00;
   outline: 3px solid var(--leaf);
 }
-.hero {
+/* .hero {
   display: none;
   text-align: center;
   margin: 0 0 14px;
@@ -169,7 +169,7 @@ h1 {
   width: 210px;
   max-width: 70%;
   height: auto;
-}
+} */
 .detail {
   position: sticky;
   top: calc(env(safe-area-inset-top, 0px) + 16px);
@@ -238,10 +238,10 @@ h1 {
   overflow: hidden;
   text-align: center;
 }
-.idle svg {
+/* .idle svg {
   width: min(100%, 300px);
   height: auto;
-}
+} */
 .idle video {
   position: absolute;
   inset: 0;
@@ -293,11 +293,11 @@ h1 {
   background: var(--card);
   box-shadow: 0 2px 0 var(--shadow);
 }
-.head .av {
+.head .avatar {
   font-size: 1.8rem;
   line-height: 1;
 }
-.head small {
+/* .head small {
   display: block;
   color: var(--muted);
   line-height: 1.1;
@@ -305,8 +305,8 @@ h1 {
 .head b {
   display: block;
   line-height: 1.2;
-}
-.x {
+} */
+.x-chat {
   margin-left: auto;
   border: 0;
   background: var(--line);
@@ -323,7 +323,8 @@ h1 {
   flex-direction: column;
   gap: 9px;
 }
-.b {
+/* text bubble */
+.mBubble {
   text-align: left;
   max-width: 88%;
   padding: 10px 15px;
@@ -332,40 +333,40 @@ h1 {
   box-shadow: 0 3px 0 var(--shadow);
   animation: pop 0.25s ease-out;
 }
-.b.h {
+.mBubble.mHeading {
   background: var(--leaf);
   color: #fff;
   font-weight: 600;
   margin-top: 2px;
 }
-.b.me {
+.mBubble.mResponse {
   align-self: flex-end;
   background: var(--leaf);
   color: #fff;
   border-radius: 20px 20px 6px 20px;
 }
-.calc-message {
+.mCalc-message {
   width: 100%;
 }
-.calc {
+.mCalc {
   padding: 12px;
   border-radius: 16px;
   background: var(--card);
   box-shadow: 0 3px 0 var(--shadow);
 }
-.calc label {
+.mCalc label {
   display: block;
   margin: 6px 0 2px;
   font-size: 0.9rem;
 }
-.calc input[type="range"] {
+.mCalc input[type="range"] {
   width: 100%;
   accent-color: var(--leaf);
 }
-.calc-result {
+.mCalc-result {
   margin: 10px 0 6px;
 }
-.calc-disclaimer {
+.mCalc-disclaimer {
   margin: 0;
   color: var(--muted);
   font-size: 0.8rem;
@@ -418,7 +419,7 @@ h1 {
   line-height: 1;
   margin-top: auto;
 }
-.b.t {
+.mBubble.mTip {
   background: var(--sun);
   color: #3a2e00;
 }
@@ -525,9 +526,9 @@ h1 {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  .hero {
+  /* .hero {
     display: block;
-  }
+  } */
   .list {
     flex-direction: row;
     flex-wrap: wrap;

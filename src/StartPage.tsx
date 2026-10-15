@@ -8,6 +8,9 @@ import catTexting from "./assets/cat-texting.mp4";
 import moneyCat from "./assets/moneyCat.png";
 import drCat from "./assets/drCertified.mp4";
 import proudFace from "./assets/proudFace.png";
+import financiallyLiterateCat from "./assets/financial-dab-cat.mp4";
+import battleCat from "./assets/battle-cat.mp4";
+import burglarCat from "./assets/burglar-cat.mp4";
 
 import {
 useEffect,
@@ -20,7 +23,7 @@ useEffect,
 import "./StartPage.css";
 
 /* ---------- Core types for chat messages and course content ---------- */
-type Kind = "h" | "b" | "t" | "me" | "calc" | "image";
+type Kind = "mHeading" | "mBubble" | "mTip" | "mResponse" | "mCalc" | "mImage";
 
 interface Msg {
   kind: Kind;
@@ -61,7 +64,7 @@ const STONES: Stone[] = [
     topics: [
       {
         emoji: "",
-        title: "Why does everyone want money?",
+        title: "Why does everybody want money?",
         lines: [
           {
             type: "image",
@@ -151,7 +154,7 @@ const STONES: Stone[] = [
           "Interest is the rate at which the debt increases until it's paid off.",
           "Many predatory companies loan money at high interest rates making it hard to pay off.",
         ],
-        tip: "If an interest is higher than 10%, STOP and think carefully about other options. Please.",
+        tip: "If an interest is higher than 10%, STOP and think *carefully* about other options.",
       },
       {
         emoji: "",
@@ -245,19 +248,15 @@ const IDLE_CONTENT = [
       "Did I hear someone call me? Lol. Don't worry boo boo, I'll teach you everything you need to know about finance.",
   },
   {
-    video: catTexting,
+    video: financiallyLiterateCat,
     bubble:
-      "Smart spending is less about missing out and more about choosing what actually matters.",
+      "Let's be smart about spending.",
   },
   {
-    video: catTexting,
-    bubble:
-      "Money moves fast, but your habits can protect you from the traps.",
+    video: burglarCat,
   },
   {
-    video: catTexting,
-    bubble:
-      "Investing is a long game. Start small, stay curious, and build your future step by step.",
+    video: battleCat,
   },
 ];
 
@@ -268,33 +267,33 @@ const loadGoal = (): string => {
     return "";
   }
 };
-const saveGoal = (v: string) => {
+const saveGoal = (userGoal: string) => {
   try {
-    localStorage.setItem(GOAL_KEY, v);
+    localStorage.setItem(GOAL_KEY, userGoal);
   } catch {
     /* storage unavailable: ignore */
   }
 };
 /* ---------- Text Script ---------- */
-function buildScript(t: Topic): Msg[] {
+function buildScript(tt: Topic): Msg[] {
   const messages: Msg[] = [
-    { kind: "h", text: `${t.emoji} ${t.title}` },
-    ...(t.question ? [{ kind: "b" as const, text: t.question }] : []),
-    ...t.lines.map((line) =>
+    { kind: "mHeading", text: `${tt.emoji} ${tt.title}` },
+    ...(tt.question ? [{ kind: "mBubble" as const, text: tt.question }] : []),
+    ...tt.lines.map((line) =>
       typeof line === "string"
-        ? { kind: "b" as const, text: line }
+        ? { kind: "mBubble" as const, text: line }
         : {
-            kind: "image" as const,
+            kind: "mImage" as const,
             text: "",
             imageSrc: line.src,
             imageAlt: line.alt ?? "",
           },
     ),
-    ...(t.tip ? [{ kind: "t" as const, text: `💡 Tip: ${t.tip}` }] : []),
+    ...(tt.tip ? [{ kind: "mTip" as const, text: `💡 Tip: ${tt.tip}` }] : []),
   ];
 
-  if (t.calculator) {
-    messages.push({ kind: "calc", text: "", content: <CompoundCalc /> });
+  if (tt.calculator) {
+    messages.push({ kind: "mCalc", text: "", content: <CompoundCalc /> });
   }
 
   return messages;
@@ -312,7 +311,7 @@ function CompoundCalc() {
     monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
 
   return (
-    <div className="calc">
+    <div className="mCalc">
       <label htmlFor="monthly-contribution">
         Monthly contribution: <b>${monthly}</b>
       </label>
@@ -336,11 +335,11 @@ function CompoundCalc() {
         value={years}
         onChange={(event) => setYears(Number(event.target.value))}
       />
-      <p className="calc-result">
+      <p className="mCalc-result">
         You would contribute <b>${(monthly * months).toLocaleString()}</b> and
         could have around <b>${Math.round(futureValue).toLocaleString()}</b>.
       </p>
-      <p className="calc-disclaimer">
+      <p className="mCalc-disclaimer">
         Example assumes a 7% average yearly return. This is not a promise.
       </p>
     </div>
@@ -396,20 +395,20 @@ export default function StartPage() {
 
   // visible messages, with the user's answer slotted in right after the question
   const visible: Msg[] = [];
-  script.slice(0, shown).forEach((m, i) => {
-    visible.push(m);
+  script.slice(0, shown).forEach((currMsg, i) => {
+    visible.push(currMsg);
     if (hasQuestion && i === 1 && answer)
-      visible.push({ kind: "me", text: answer });
+      visible.push({ kind: "mResponse", text: answer });
   });
 
   // Cancel any pending "Fern is typing" timeout before changing the topic or closing the chat.
   const stopTimer = () => window.clearTimeout(timer.current);
 
-  const openTopic = (s: number, i: number) => {
+  const openTopic = (stone: number, card: number) => {
     stopTimer();
-    const q = STONES[s].topics[i].question;
-    setStone(s);
-    setCur(i);
+    const q = STONES[stone].topics[card].question;
+    setStone(stone);
+    setCur(card);
     setShown(2);
     setAnswer(null);
     setTyping(false);
@@ -424,9 +423,9 @@ export default function StartPage() {
     setTyping(false);
   };
 
-  const goStone = (i: number) => {
+  const goStone = (stone: number) => {
     closeChat();
-    setStone(i);
+    setStone(stone);
   };
 
   const reveal = () => {
@@ -446,13 +445,13 @@ export default function StartPage() {
   };
 
   const submit = (skip: boolean) => {
-    const v = draft.trim();
-    if (!asking || typing || (!skip && !v)) return;
+    const input = draft.trim();
+    if (!asking || typing || (!skip && !input)) return;
     if (!skip) {
-      saveGoal(v);
-      setAccountGoal(v);
-      setGoalDraft(v);
-      setAnswer(v);
+      saveGoal(input);
+      setAccountGoal(input);
+      setGoalDraft(input);
+      setAnswer(input);
     }
     setAsking(false);
     reveal();
@@ -583,33 +582,33 @@ export default function StartPage() {
         <div className={`app${cur !== null ? " chatting" : ""}`}>
           <div>
             <div className="trail" role="tablist" aria-label="Stepping stones">
-              {STONES.map((s, i) => (
+              {STONES.map((ss, ii) => (
                 <button
-                  key={s.name}
+                  key={ss.name}
                   type="button"
                   className="stone"
                   role="tab"
-                  aria-selected={stone === i}
-                  onClick={() => goStone(i)}
+                  aria-selected={stone === ii}
+                  onClick={() => goStone(ii)}
                 >
-                  <span className="d">{s.emoji}</span>
+                  <span className="d">{ss.emoji}</span>
                   <span className="l">
-                    {i + 1}. {s.name}
+                    {ii + 1}. {ss.name}
                   </span>
                 </button>
               ))}
             </div>
             <div className="list">
-              {topics.map((t, i) => (
+              {topics.map((tt, ii) => (
                 <button
-                  key={t.title}
+                  key={tt.title}
                   type="button"
-                  className={`card${cur === i ? " on" : ""}`}
-                  aria-pressed={cur === i}
-                  onClick={() => i !== cur && openTopic(stone, i)}
+                  className={`card${cur === ii ? " on" : ""}`}
+                  aria-pressed={cur === ii}
+                  onClick={() => ii !== cur && openTopic(stone, ii)}
                 >
-                  <span className="em">{t.emoji}</span>
-                  <h3>{t.title}</h3>
+                  <span className="em">{tt.emoji}</span>
+                  <h3>{tt.title}</h3>
                 </button>
               ))}
             </div>
@@ -691,7 +690,7 @@ export default function StartPage() {
                   playsInline
                   aria-hidden="true"
                 />
-                <p className="video-bubble">{idleBubble}</p>
+                {idleBubble && <p className="video-bubble">{idleBubble}</p>}
               </div>
 
               <div
@@ -700,27 +699,27 @@ export default function StartPage() {
                 aria-label="Chat with Fern"
               >
                 <div className="head">
-                  <span className="av">🐱</span>
+                  <span className="avatar">🐱</span>
                   <div>
                     {/* <b>Fern</b>
                     <small>your money friend</small> */}
                   </div>
-                  <button type="button" className="x" onClick={closeChat}>
+                  <button type="button" className="x-chat" onClick={closeChat}>
                     ✕ Close
                   </button>
                 </div>
 
                 <div className="msgs" ref={msgsRef}>
-                  {visible.map((m, i) => (
-                    m.kind === "calc" ? (
-                      <div key={`${stone}-${cur}-${i}`} className="calc-message">
-                        {m.content}
+                  {visible.map((mm, ii) => (
+                    mm.kind === "mCalc" ? (
+                      <div key={`${stone}-${cur}-${ii}`} className="mCalc-message">
+                        {mm.content}
                       </div>
-                    ) : m.kind === "image" ? (
-                      <div key={`${stone}-${cur}-${i}`} className="image-message">
+                    ) : mm.kind === "mImage" ? (
+                      <div key={`${stone}-${cur}-${ii}`} className="image-message">
                         <img
-                          src={m.imageSrc}
-                          alt={m.imageAlt ?? "Chat image"}
+                          src={mm.imageSrc}
+                          alt={mm.imageAlt ?? "Chat image"}
                           style={{
                             display: "block",
                             width: "100%",
@@ -732,13 +731,13 @@ export default function StartPage() {
                         />
                       </div>
                     ) : (
-                      <div key={`${stone}-${cur}-${i}`} className={`b ${m.kind}`}>
-                        {m.text}
+                      <div key={`${stone}-${cur}-${ii}`} className={`mBubble ${mm.kind}`}>
+                        {mm.text}
                       </div>
                     )
                   ))}
                   {typing && (
-                    <div className="b">
+                    <div className="mBubble">
                       <span className="dots">
                         <span />
                         <span />
@@ -757,14 +756,14 @@ export default function StartPage() {
                       placeholder="Type your answer…"
                       aria-label="Your answer"
                       value={draft}
-                      onChange={(e) => {
-                        setDraft(e.target.value);
-                        e.target.style.height = "auto";
-                        e.target.style.height = `${e.target.scrollHeight}px`;
+                      onChange={(ee) => {
+                        setDraft(ee.target.value);
+                        ee.target.style.height = "auto";
+                        ee.target.style.height = `${ee.target.scrollHeight}px`;
                       }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
+                      onKeyDown={(ee) => {
+                        if (ee.key === "Enter" && !ee.shiftKey) {
+                          ee.preventDefault();
                           submit(false);
                         }
                       }}
