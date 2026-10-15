@@ -12,6 +12,7 @@ import financiallyLiterateCat from "./assets/financial-dab-cat.mp4";
 import battleCat from "./assets/battle-cat.mp4";
 import burglarCat from "./assets/burglar-cat.mp4";
 
+import { useNavigate } from 'react-router-dom';
 import {
   useEffect,
   useMemo,
@@ -350,6 +351,8 @@ function CompoundCalc() {
 
 /* ---------- App ---------- */
 export default function StartPage() {
+  const navigate = useNavigate();
+
   const [stone, setStone] = useState(0); // which stepping stone
   const [cur, setCur] = useState<number | null>(null); // open topic inside that stone
   const [shown, setShown] = useState(0); // how many scripted messages are visible
@@ -574,7 +577,7 @@ export default function StartPage() {
                   </button>
                 )}
 
-                <button type="button" onClick={() => (window.location.href = "/")}>
+                <button type="button" onClick={() => navigate('/')}>
                   Log Out
                 </button>
               </div>
@@ -666,7 +669,7 @@ export default function StartPage() {
                     type="button"
                     className="read-confirm-continue"
                     disabled={!hasAcknowledgedReading}
-                    onClick={() => (window.location.href = "/action")}
+                    onClick={() => navigate('/action')}
                   >
                     Continue to next chapter
                   </button>
