@@ -128,7 +128,7 @@ button {
   animation: read-confirm-pop 0.22s ease-out both;
 }
 .read-confirm-modal h2 {
-  margin: 0 32px 24px 0;
+  margin: 0 20px 20px 20px;
   font-size: 1.35rem;
   line-height: 1.25;
 }
@@ -150,6 +150,7 @@ button {
 }
 .read-confirm-agreement {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   margin-bottom: 22px;
