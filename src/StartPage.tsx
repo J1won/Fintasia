@@ -4,7 +4,7 @@ import shGrandpa from "./assets/shakygp.png";
 import chGrandpa from "./assets/chillgp.png";
 import scroll from "./assets/scroll.png";
 import catTexting from "./assets/cat-texting.mp4";
-import moneyCat from "./assets/moneyCat.png";
+import moneyCat from "./assets/moneyCat2.png";
 import drCat from "./assets/drCertified.mp4";
 import proudFace from "./assets/proudFace.png";
 import financiallyLiterateCat from "./assets/financial-dab-cat.mp4";
@@ -712,9 +712,10 @@ export default function StartPage() {
                           alt={mm.imageAlt ?? "Chat image"}
                           style={{
                             display: "block",
-                            width: "100%",
+                            maxWidth: "100%",
                             maxHeight: "220px",
-                            objectFit: "cover",
+                            width: "auto",
+                            height: "auto",
                             borderRadius: "12px",
                             marginBottom: "8px",
                           }}
