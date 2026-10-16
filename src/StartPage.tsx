@@ -344,7 +344,6 @@ function buildScript(tt: Topic): Msg[] {
             imageAlt: line.alt ?? "",
           },
     ),
-    ...(tt.tip ? [{ kind: "kTip" as const, text: `💡 Tip: ${tt.tip}` }] : []),
   ];
 
   if (tt.calculator) {
