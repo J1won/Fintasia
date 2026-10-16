@@ -133,7 +133,7 @@ const STONES: Stone[] = [
         lines: [
           {
             type: "heading",
-            text: "Mass Consumerism",
+            text: "Mass Consumer Culture",
           },
           "Imagine this.",
           "Closets bulging. Drawers overflowing. Clothes forgotten.",
@@ -151,7 +151,7 @@ const STONES: Stone[] = [
         lines: [
           {
             type: "heading",
-            text: "Understand the traps",
+            text: "Marketing traps",
           },
           "Here’s a secret: Companies spend milllllions on ads. Because they work.",
           "Researchers have studied for decades how to get people to spend.",
@@ -747,7 +747,7 @@ export default function StartPage() {
                   className="idle-continue"
                   onClick={() => openTopic(stone, 0)}
                 >
-                  Continue
+                  Start
                 </button>
               </div>
 
@@ -757,7 +757,7 @@ export default function StartPage() {
                 aria-label="Chat with Fern"
               >
                 <div className="head">
-                  <span className="avatar">🐱</span>
+                  <span className="avatar">🤓</span>
                   <div>
                     {/* <b>Fern</b>
                     <small>your money friend</small> */}
