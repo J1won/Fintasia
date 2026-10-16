@@ -6,7 +6,7 @@ import scroll from "./assets/scroll.png";
 import catTexting from "./assets/cat-texting.mp4";
 import moneyCat from "./assets/moneyCat2.png";
 import drCat from "./assets/drCertified.mp4";
-import proudFace from "./assets/proudFace.png";
+import proudFace from "./assets/proudFace2.jpg";
 import financiallyLiterateCat from "./assets/financial-dab-cat.mp4";
 import battleCat from "./assets/battle-cat.mp4";
 import burglarCat from "./assets/burglar-cat.mp4";
@@ -710,6 +710,12 @@ export default function StartPage() {
                         <img
                           src={mm.imageSrc}
                           alt={mm.imageAlt ?? "Chat image"}
+                          onLoad={() =>
+                            msgsRef.current?.scrollTo({
+                              top: msgsRef.current.scrollHeight,
+                              behavior: "smooth",
+                            })
+                          }
                           style={{
                             display: "block",
                             maxWidth: "100%",
