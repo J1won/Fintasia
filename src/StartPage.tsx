@@ -1,6 +1,5 @@
 import "./LandingPage.css";
 import landingPageImage from "./assets/landingPageImage.png";
-import logo from "./assets/logo.png";
 import shGrandpa from "./assets/shakygp.png";
 import chGrandpa from "./assets/chillgp.png";
 import scroll from "./assets/scroll.png";
@@ -22,6 +21,7 @@ import {
   useState,
 } from "react";
 import "./StartPage.css";
+import Spanner from "./Spanner";
 
 /* ---------- Core types for chat messages and course content ---------- */
 type Kind = "mHeading" | "mBubble" | "mTip" | "mResponse" | "mCalc" | "mImage";
@@ -220,7 +220,7 @@ const STONES: Stone[] = [
           "Wow! You've already completed the basics!",
           "If you feel like you're ready to take the next step, go on ahead.",
           "I'll take you step by step through opening a brokerage account, retirement account, and more!",
-          "Click \"Next Chapter\" found on the bottom right of the screen. Secret code: Im ready"
+          "Click \"Next Chapter\" found on the bottom right of the screen."
         ],
       },
      //  {
@@ -361,6 +361,7 @@ export default function StartPage() {
   const [draft, setDraft] = useState("");
   const [isScrollHovered, setIsScrollHovered] = useState(false);
   const [isScrollOpen, setIsScrollOpen] = useState(false);
+  const [isAccountButtonOpen, setIsAccountButtonOpen] = useState(false);
   const [isReadConfirmOpen, setIsReadConfirmOpen] = useState(false);
   const [hasAcknowledgedReading, setHasAcknowledgedReading] = useState(false);
   const [modalOrigin, setModalOrigin] = useState({ x: "50%", y: "50%" });
@@ -377,7 +378,9 @@ export default function StartPage() {
     setModalOrigin({ x: `${x}%`, y: `${y}%` });
     openModal();
   };
-  const [isAccountButtonOpen, setIsAccountButtonOpen] = useState(false);
+  
+
+  
 
   useEffect(() => {
     if (!isAccountButtonOpen) return;
@@ -497,19 +500,11 @@ export default function StartPage() {
       className="landing-page"
       style={{ "--landing-image": `url(${landingPageImage})` } as CSSProperties}
     >
-      <div className="nav-bar">
-        <button className="logo-button">
-          <img src={logo} alt="Home reroute logo" />
-        </button>
-
-        <button
-          className="profile-button"
-          onClick={(event) =>
-            openFromButton(event, () => setIsAccountButtonOpen(true))
-          }
-        >
-          Account
-        </button>
+      <Spanner
+        onAccountClick={(event) =>
+          openFromButton(event, () => setIsAccountButtonOpen(true))
+        }
+      />
         {isAccountButtonOpen && (
           <div
             className="scroll-modal-backdrop"
@@ -583,7 +578,6 @@ export default function StartPage() {
             </section>
           </div>
         )}
-      </div>
       <div className="wrap">
         <div className={`app${cur !== null ? " chatting" : ""}`}>
           <div>
