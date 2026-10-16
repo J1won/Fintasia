@@ -10,6 +10,15 @@ import proudFace from "./assets/proudFace2.jpg";
 import financiallyLiterateCat from "./assets/financial-dab-cat.mp4";
 import battleCat from "./assets/battle-cat.mp4";
 import burglarCat from "./assets/burglar-cat.mp4";
+import dogParadise from "./assets/dogParadise.jpg";
+import dogWarning from "./assets/dogWarning.jpg";
+import happyDoggy from "./assets/happyDoggy.jpg";
+import sad1 from "./assets/cryingWoman.jpg";
+import sad2 from "./assets/cryingBarbie.jpg";
+import sad3 from "./assets/sadParadise.jpg";
+import poopPretty from "./assets/poopPretty.jpg";
+import lifeFunds from "./assets/costsMoney.jpg";
+
 
 import { useNavigate } from 'react-router-dom';
 import {
@@ -88,14 +97,19 @@ const STONES: Stone[] = [
           },
           {
             type: "image",
-            src: moneyCat,
-            alt: "Cat with money",
+            src: dogParadise,
+            alt: "dog in paradise",
             text: "Because money can provide freedom, independence, safety, and comfort.",
           },
           "But, it can also give you a quick buzz of happy.",
           "A cute toy, a fun night, a cool gadget, or a yummy snack.",
           "The buzz fades fast. But the freedom lasts.",
-          "Picking the long game is hard but feeling regret is harder so choose your battles.",
+          {
+            type: "image",
+            src: dogWarning,
+            alt: "dog warning",
+            text: "Picking the long game is hard but feeling regret is harder so choose your battles.",
+          },
           "Hey look on the bright side, you're here! And that's you choosing your future!",
           {
             type: "image",
@@ -115,7 +129,12 @@ const STONES: Stone[] = [
             type: "question",
             text: "More detailed the better! (View the answer in your profile)",
           },
-          "Wonderful start.",
+          {
+            type: "image",
+            src: happyDoggy,
+            alt: "dog happy",
+            text: "Wonderful start.",
+          },
           "Continue learning and keep in mind your end goal!",
           {
             type: "tip",
@@ -140,11 +159,31 @@ const STONES: Stone[] = [
           "Toys piling up, collecting dust.",
           "Mass production. Smokestacks burning. Chemicals dumped.",
           "In 2018, the US made 292 million tons of trash. That’s about 4.9 pounds per person, every day. 146 million tons of it went to landfills.",
+          {
+            type: "image",
+            src: sad1,
+            alt: "crying woman",
+          },
+          {
+            type: "image",
+            src: sad2,
+            alt: "crying barbie",
+          },
+          {
+            type: "image",
+            src: sad3,
+            alt: "crying happy guy",
+          },
           "The reality is, we impulsively buy things we don’t need. It hurts our planet, our wallet, and our peace of mind.",
           {
             type: "tip",
             text: "Next time you want to impulsively buy something, imagine it fully covered in human poop and decide if you would wash it off or leave it.",
-          }
+          },
+          {
+            type: "image",
+            src: poopPretty,
+            alt: "poop is serving",
+          },
         ],
       },
       {
@@ -159,6 +198,12 @@ const STONES: Stone[] = [
           "Someone worked really hard to make you feel that urge to buy.",
           "Apps even remember what you looked at and show it to you again. That’s called targeted marketing.",
           "And hate to tell ya, marketing is only gonna get better.",
+          {
+            type: "image",
+            src: happyDoggy,
+            alt: "dog happy",
+            text: "We gotta be strong, soldiers.",
+          },
           {
             type: "tip",
             text: "Next time you want something, wait 24 hours and see if the pull fades.",
@@ -217,6 +262,11 @@ const STONES: Stone[] = [
           {
             type: "heading",
             text: "Something called life",
+          },
+          {
+            type: "image",
+            src: lifeFunds,
+            alt: "Life is expensive",
           },
           "Life can be scary and unpredictable. Losing some money along the way is normal.",
           "More than half of households get hit with a surprise expense or income loss every year.",
