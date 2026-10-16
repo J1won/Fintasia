@@ -24,7 +24,14 @@ import "./StartPage.css";
 import Spanner from "./Spanner";
 
 /* ---------- Core types for chat messages and course content ---------- */
-type Kind = "mHeading" | "mBubble" | "mTip" | "mResponse" | "mCalc" | "mImage";
+type Kind =
+  | "mHeading"
+  | "mBubble"
+  | "mQuestion"
+  | "mTip"
+  | "mResponse"
+  | "mCalc"
+  | "mImage";
 
 interface Msg {
   kind: Kind;
@@ -41,12 +48,15 @@ type ChatLine =
       src: string;
       alt?: string;
       text?: string;
+    }
+  | {
+      type: "question";
+      text: string;
     };
 
 interface Topic {
   emoji: string;
   title: string;
-  question?: string; // optional typed-answer question asked first
   lines: ChatLine[];
   tip?: string;
   calculator?: boolean;
@@ -90,8 +100,11 @@ const STONES: Stone[] = [
       {
         emoji: "",
         title: "What is your financial goal?",
-        question: "More detailed the better! (View the answer in your profile)",
         lines: [
+          {
+            type: "question",
+            text: "More detailed the better! (View the answer in your profile)",
+          },
           "Wonderful start.",
           "Continue learning and keep in mind your end goal!",
         ],
@@ -296,11 +309,12 @@ const saveGoal = (userGoal: string) => {
 function buildScript(tt: Topic): Msg[] {
   const messages: Msg[] = [
     { kind: "mHeading", text: `${tt.emoji} ${tt.title}` },
-    ...(tt.question ? [{ kind: "mBubble" as const, text: tt.question }] : []),
     ...tt.lines.map((line) =>
       typeof line === "string"
         ? { kind: "mBubble" as const, text: line }
-        : {
+        : line.type === "question"
+          ? { kind: "mQuestion" as const, text: line.text }
+          : {
             kind: "mImage" as const,
             text: line.text ?? "",
             imageSrc: line.src,
@@ -393,8 +407,6 @@ export default function StartPage() {
   };
   
 
-  
-
   const timer = useRef<number>(0);
   const msgsRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -403,15 +415,14 @@ export default function StartPage() {
   const topics = STONES[stone].topics;
   const topic = cur !== null ? topics[cur] : null;
   const script = useMemo(() => (topic ? buildScript(topic) : []), [topic]);
-  const hasQuestion = !!topic?.question;
   const idleVideo = IDLE_CONTENT[stone]?.video ?? catTexting;
   const idleBubble = IDLE_CONTENT[stone]?.bubble ?? "";
 
   // visible messages, with the user's answer slotted in right after the question
   const visible: Msg[] = [];
-  script.slice(0, shown).forEach((currMsg, i) => {
+  script.slice(0, shown).forEach((currMsg) => {
     visible.push(currMsg);
-    if (hasQuestion && i === 1 && answer)
+    if (currMsg.kind === "mQuestion" && answer)
       visible.push({ kind: "mResponse", text: answer });
   });
 
@@ -420,14 +431,12 @@ export default function StartPage() {
 
   const openTopic = (stone: number, card: number) => {
     stopTimer();
-    const q = STONES[stone].topics[card].question;
     setStone(stone);
     setCur(card);
     setShown(1);
     setAnswer(null);
     setTyping(false);
-    setAsking(!!q);
-    setDraft(q ? loadGoal() : "");
+    setAsking(false);
   };
 
   const closeChat = () => {
@@ -447,6 +456,10 @@ export default function StartPage() {
     timer.current = window.setTimeout(() => {
       setShown((s) => s + 1);
       setTyping(false);
+      if (script[shown]?.kind === "mQuestion") {
+        setDraft(loadGoal());
+        setAsking(true);
+      }
     }, 350);
   };
 
