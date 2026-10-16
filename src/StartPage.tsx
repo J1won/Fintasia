@@ -40,6 +40,7 @@ type ChatLine =
       type: "image";
       src: string;
       alt?: string;
+      text?: string;
     };
 
 interface Topic {
@@ -71,8 +72,8 @@ const STONES: Stone[] = [
             type: "image",
             src: moneyCat,
             alt: "Cat with money",
+            text: "Because money can provide freedom, independence, safety, and comfort.",
           },
-          "Because money can provide freedom, independence, safety, and comfort.",
           "But, it can also give you a quick buzz of happy.",
           "A cute toy, a fun night, a cool gadget, or a yummy snack.",
           "The buzz fades fast. But the freedom lasts.",
@@ -301,7 +302,7 @@ function buildScript(tt: Topic): Msg[] {
         ? { kind: "mBubble" as const, text: line }
         : {
             kind: "mImage" as const,
-            text: "",
+            text: line.text ?? "",
             imageSrc: line.src,
             imageAlt: line.alt ?? "",
           },
@@ -422,7 +423,7 @@ export default function StartPage() {
     const q = STONES[stone].topics[card].question;
     setStone(stone);
     setCur(card);
-    setShown(2);
+    setShown(1);
     setAnswer(null);
     setTyping(false);
     setAsking(!!q);
@@ -489,7 +490,7 @@ export default function StartPage() {
 
   const buttonLabel =
     shown < script.length
-      ? "ok."
+      ? ">>"
       : cur !== null && cur < topics.length - 1
         ? "cont. →"
         : stone < STONES.length - 1
@@ -706,7 +707,10 @@ export default function StartPage() {
                         {mm.content}
                       </div>
                     ) : mm.kind === "mImage" ? (
-                      <div key={`${stone}-${cur}-${ii}`} className="image-message">
+                      <div
+                        key={`${stone}-${cur}-${ii}`}
+                        className={mm.text ? "mBubble mImage" : "image-message"}
+                      >
                         <img
                           src={mm.imageSrc}
                           alt={mm.imageAlt ?? "Chat image"}
@@ -723,9 +727,10 @@ export default function StartPage() {
                             width: "auto",
                             height: "auto",
                             borderRadius: "12px",
-                            marginBottom: "8px",
+                            marginBottom: mm.text ? "8px" : 0,
                           }}
                         />
+                        {mm.text && <span>{mm.text}</span>}
                       </div>
                     ) : (
                       <div key={`${stone}-${cur}-${ii}`} className={`mBubble ${mm.kind}`}>
