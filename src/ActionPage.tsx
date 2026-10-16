@@ -204,12 +204,14 @@ function ActionPage() {
                 <img src={logo} alt="Home reroute logo" />
             </button>
 
-            <button className="profile-button" >
+            <button
+              className="profile-button"
+            >
                 Account
             </button>
       </div>
       <div className="wrap">
-        <p className="sub">Click on your preferred action item and check boxes as you go!</p>
+        <p className="sub"><b>Click on your preferred action item and check boxes as you go!</b></p>
  
         <div className="circles">
           {ITEMS.map((item) => {

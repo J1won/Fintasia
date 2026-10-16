@@ -61,7 +61,7 @@ interface Stone {
 const STONES: Stone[] = [
   {
     emoji: "🌱",
-    name: "Basics",
+    name: "Money",
     topics: [
       {
         emoji: "",
@@ -188,11 +188,11 @@ const STONES: Stone[] = [
   },
   {
     emoji: "🌳",
-    name: "Face the World",
+    name: "Protection",
     topics: [
       {
         emoji: "",
-        title: "Why invest?",
+        title: "Something called life",
         lines: [
           "Prices tend to creep up over time, so cash sitting still slowly buys less.",
           "Investing means putting money into things that can grow over many years, like a basket of companies.",
@@ -203,7 +203,7 @@ const STONES: Stone[] = [
       },
       {
         emoji: "",
-        title: "Compound interest",
+        title: "Emergency fund",
         lines: [
           "Here’s the cool part: growth can grow.",
           "With compound interest, your earnings start earning too.",
@@ -250,16 +250,15 @@ const IDLE_CONTENT = [
   },
   {
     video: financiallyLiterateCat,
-    bubble:
-      "Let's be smart about spending.",
+    bubble: "Let's be smart about spending.",
   },
   {
     video: burglarCat,
-    bubble:
-      "Somebody say free money??",
+    bubble: "Somebody say free money??",
   },
   {
     video: battleCat,
+    bubble: "Thy must protect thyself..."
   },
 ];
 
@@ -743,14 +742,18 @@ export default function StartPage() {
           <aside className="detail" aria-live="polite">
             <div className="screen">
               <div className="idle">
-                <video
-                  src={idleVideo ?? catTexting}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  aria-hidden="true"
-                />
+                {cur === null &&
+                !isAccountButtonOpen &&
+                !isScrollOpen &&
+                !isReadConfirmOpen && (
+                  <video
+                    src={idleVideo ?? catTexting}
+                    autoPlay
+                    loop
+                    playsInline
+                    aria-hidden="true"
+                  />
+                )}  
                 {idleBubble && <p className="video-bubble">{idleBubble}</p>}
                 <button
                   type="button"
