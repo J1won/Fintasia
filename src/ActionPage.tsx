@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, type CSSProperties} from "react";
-import { useNavigate } from "react-router-dom";
 import './LandingPage.css'
 import landingPageImage from './assets/landingPageImage.png'
 import Spanner from "./Spanner";
@@ -99,15 +98,6 @@ const ITEMS: Item[] = [
  
 /* ---------- Helpers ---------- */
 const STORAGE_KEY = "mm-actions";
-const GOAL_KEY = "mm-goal";
-
-const loadGoal = () => {
-  try {
-    return localStorage.getItem(GOAL_KEY) ?? "";
-  } catch {
-    return "";
-  }
-};
  
 const loadDone = (): Done => {
   try {
@@ -127,38 +117,13 @@ function CongratsMedia({ media }: { media?: Media }) {
  
 /* ---------- App ---------- */
 function ActionPage() {
-  const navigate = useNavigate();
   const [done, setDone] = useState<Done>(loadDone);
   const [activeId, setActiveId] = useState<string | null>(null); // last opened item (kept so the modal can animate out)
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<"tasks" | "celebrate">("tasks");
-  const [isAccountButtonOpen, setIsAccountButtonOpen] = useState(false);
-  const [accountGoal, setAccountGoal] = useState(() => loadGoal());
-  const [goalDraft, setGoalDraft] = useState("");
-  const [isEditingGoal, setIsEditingGoal] = useState(false);
- 
   const lastFocus = useRef<HTMLElement | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-    const [modalOrigin, setModalOrigin] = useState({ x: "50%", y: "50%" });
-  const openFromButton = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    openModal: () => void,
-  ) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = ((rect.left + rect.width / 2) / window.innerWidth) * 100;
-    const y = ((rect.top + rect.height / 2) / window.innerHeight) * 100;
-    setModalOrigin({ x: `${x}%`, y: `${y}%` });
-    openModal();
-  };
-
-  useEffect(() => {
-    if (!isAccountButtonOpen) return;
-    const nextGoal = loadGoal();
-    setAccountGoal(nextGoal);
-    setGoalDraft(nextGoal);
-    setIsEditingGoal(false);
-  }, [isAccountButtonOpen]);
  
   const active = ITEMS.find((it) => it.id === activeId) ?? null;
  
@@ -230,84 +195,7 @@ function ActionPage() {
   return (
     <>
     <div className="landing-page" style={{ "--landing-image": `url(${landingPageImage})` } as CSSProperties}>
-      <Spanner
-        onAccountClick={(event) =>
-          openFromButton(event, () => setIsAccountButtonOpen(true))
-        }
-      />
-      {isAccountButtonOpen && (
-        <div
-          className="scroll-modal-backdrop"
-          role="presentation"
-          onClick={() => setIsAccountButtonOpen(false)}
-        >
-          <section
-            className="scroll-modal"
-            style={{
-              ["--modal-origin-x" as any]: modalOrigin.x,
-              ["--modal-origin-y" as any]: modalOrigin.y,
-            }}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="action-account-modal-title"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              className="scroll-modal-close"
-              type="button"
-              aria-label="Close account window"
-              onClick={() => setIsAccountButtonOpen(false)}
-            >
-              <span aria-hidden="true">&#215;</span>
-            </button>
-            <h2 id="action-account-modal-title">Account</h2>
-            <p>Here’s your saved financial goal.</p>
-            {isEditingGoal ? (
-              <textarea
-                value={goalDraft}
-                rows={4}
-                maxLength={500}
-                onChange={(event) => setGoalDraft(event.target.value)}
-                style={{ width: "100%", resize: "vertical" }}
-              />
-            ) : (
-              <p>{accountGoal || "No financial goal saved yet."}</p>
-            )}
-            <div style={{ display: "flex", gap: "12px", marginTop: "16px" }}>
-              {isEditingGoal ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    const nextGoal = goalDraft.trim();
-                    try {
-                      localStorage.setItem(GOAL_KEY, nextGoal);
-                    } catch {
-                      // Keep the edited value in component state if storage is unavailable.
-                    }
-                    setAccountGoal(nextGoal);
-                    setIsEditingGoal(false);
-                  }}
-                >
-                  Save
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setGoalDraft(accountGoal);
-                    setIsEditingGoal(true);
-                  }}
-                >
-                  Edit
-                </button>
-              )}
-              <button type="button" onClick={() => navigate("/")}>
-                Log Out
-              </button>
-            </div>
-          </section>
-        </div>
-      )}
+      <Spanner />
       <div className="wrap">
         <p className="sub"><b>Click on your preferred action item and check boxes as you go!</b></p>
  

@@ -361,13 +361,10 @@ export default function StartPage() {
   const [draft, setDraft] = useState("");
   const [isScrollHovered, setIsScrollHovered] = useState(false);
   const [isScrollOpen, setIsScrollOpen] = useState(false);
-  const [isAccountButtonOpen, setIsAccountButtonOpen] = useState(false);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [isReadConfirmOpen, setIsReadConfirmOpen] = useState(false);
   const [hasAcknowledgedReading, setHasAcknowledgedReading] = useState(false);
   const [modalOrigin, setModalOrigin] = useState({ x: "50%", y: "50%" });
-  const [accountGoal, setAccountGoal] = useState(() => loadGoal());
-  const [goalDraft, setGoalDraft] = useState("");
-  const [isEditingGoal, setIsEditingGoal] = useState(false);
   const openFromButton = (
     event: React.MouseEvent<HTMLButtonElement>,
     openModal: () => void,
@@ -381,14 +378,6 @@ export default function StartPage() {
   
 
   
-
-  useEffect(() => {
-    if (!isAccountButtonOpen) return;
-    const nextGoal = loadGoal();
-    setAccountGoal(nextGoal);
-    setGoalDraft(nextGoal);
-    setIsEditingGoal(false);
-  }, [isAccountButtonOpen]);
 
   const timer = useRef<number>(0);
   const msgsRef = useRef<HTMLDivElement>(null);
@@ -458,8 +447,6 @@ export default function StartPage() {
     if (!asking || typing || (!skip && !input)) return;
     if (!skip) {
       saveGoal(input);
-      setAccountGoal(input);
-      setGoalDraft(input);
       setAnswer(input);
     }
     setAsking(false);
@@ -500,84 +487,7 @@ export default function StartPage() {
       className="landing-page"
       style={{ "--landing-image": `url(${landingPageImage})` } as CSSProperties}
     >
-      <Spanner
-        onAccountClick={(event) =>
-          openFromButton(event, () => setIsAccountButtonOpen(true))
-        }
-      />
-        {isAccountButtonOpen && (
-          <div
-            className="scroll-modal-backdrop"
-            role="presentation"
-            onClick={() => setIsAccountButtonOpen(false)}
-          >
-            <section
-              className="scroll-modal"
-              style={{
-                ["--modal-origin-x" as any]: modalOrigin.x,
-                ["--modal-origin-y" as any]: modalOrigin.y,
-              }}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="button-one-modal-title"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <button
-                className="scroll-modal-close"
-                type="button"
-                aria-label="Close button one window"
-                onClick={() => setIsAccountButtonOpen(false)}
-              >
-                <span aria-hidden="true">&#215;</span>
-              </button>
-
-              <h2 id="button-one-modal-title">Account</h2>
-              <p>Here’s your saved financial goal.</p>
-
-              {isEditingGoal ? (
-                <textarea
-                  value={goalDraft}
-                  rows={4}
-                  maxLength={500}
-                  onChange={(event) => setGoalDraft(event.target.value)}
-                  style={{ width: "100%", resize: "vertical" }}
-                />
-              ) : (
-                <p>{accountGoal || "No financial goal saved yet."}</p>
-              )}
-
-              <div style={{ display: "flex", gap: "12px", marginTop: "16px" }}>
-                {isEditingGoal ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const nextGoal = goalDraft.trim();
-                      saveGoal(nextGoal);
-                      setAccountGoal(nextGoal);
-                      setIsEditingGoal(false);
-                    }}
-                  >
-                    Save
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setGoalDraft(accountGoal);
-                      setIsEditingGoal(true);
-                    }}
-                  >
-                    Edit
-                  </button>
-                )}
-
-                <button type="button" onClick={() => navigate('/')}>
-                  Log Out
-                </button>
-              </div>
-            </section>
-          </div>
-        )}
+      <Spanner onAccountModalChange={setIsAccountModalOpen} />
       <div className="wrap">
         <div className={`app${cur !== null ? " chatting" : ""}`}>
           <div>
@@ -737,7 +647,7 @@ export default function StartPage() {
             <div className="screen">
               <div className="idle">
                 {cur === null &&
-                !isAccountButtonOpen &&
+                !isAccountModalOpen &&
                 !isScrollOpen &&
                 !isReadConfirmOpen && (
                   <video
