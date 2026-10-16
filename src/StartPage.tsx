@@ -25,13 +25,13 @@ import Spanner from "./Spanner";
 
 /* ---------- Core types for chat messages and course content ---------- */
 type Kind =
-  | "mHeading"
-  | "mBubble"
-  | "mQuestion"
-  | "mTip"
-  | "mResponse"
-  | "mCalc"
-  | "mImage";
+  | "kHeading"
+  | "kBubble"
+  | "kQuestion"
+  | "kTip"
+  | "kResponse"
+  | "kCalc"
+  | "kImage";
 
 interface Msg {
   kind: Kind;
@@ -42,7 +42,11 @@ interface Msg {
 }
 
 type ChatLine =
-  | string
+    string
+  | {
+      type: "heading";
+      text: string;
+    } 
   | {
       type: "image";
       src: string;
@@ -52,11 +56,13 @@ type ChatLine =
   | {
       type: "question";
       text: string;
+    }
+  | {
+      type: "tip";
+      text: string;
     };
 
 interface Topic {
-  emoji: string;
-  title: string;
   lines: ChatLine[];
   tip?: string;
   calculator?: boolean;
@@ -75,9 +81,11 @@ const STONES: Stone[] = [
     name: "Money",
     topics: [
       {
-        emoji: "",
-        title: "Why does everybody want money?",
         lines: [
+          {
+            type: "heading",
+            text: "Why does everybody want money?",
+          },
           {
             type: "image",
             src: moneyCat,
@@ -98,17 +106,22 @@ const STONES: Stone[] = [
         ],
       },
       {
-        emoji: "",
-        title: "What is your financial goal?",
         lines: [
+          {
+            type: "heading",
+            text: "What is your financial goal?",
+          },
           {
             type: "question",
             text: "More detailed the better! (View the answer in your profile)",
           },
           "Wonderful start.",
           "Continue learning and keep in mind your end goal!",
+          {
+            type: "tip",
+            text: "Write your financial goal somewhere you can see it everyday. Maybe the bathroom mirror or next to your desk!",
+          }
         ],
-        tip: "Write your financial goal somewhere you can see it everyday. Maybe the bathroom mirror or next to your desk!",
       },
     ],
   },
@@ -117,42 +130,41 @@ const STONES: Stone[] = [
     name: "Spending",
     topics: [
       {
-        emoji: "",
-        title: "Mass Consumerism",
         lines: [
+          {
+            type: "heading",
+            text: "Mass Consumerism",
+          },
           "Imagine this.",
           "Closets bulging. Drawers overflowing. Clothes forgotten.",
           "Toys piling up, collecting dust.",
           "Mass production. Smokestacks burning. Chemicals dumped.",
           "In 2018, the US made 292 million tons of trash. That’s about 4.9 pounds per person, every day. 146 million tons of it went to landfills.",
           "The reality is, we impulsively buy things we don’t need. It hurts our planet, our wallet, and our peace of mind.",
+          {
+            type: "tip",
+            text: "Next time you want to impulsively buy something, imagine it fully covered in human poop and decide if you would wash it off or leave it.",
+          }
         ],
-        tip: "Next time you want to impulsively buy something, imagine it fully covered in human poop and decide if you would wash it off or leave it."
       },
       {
-        emoji: "",
-        title: "Understand the traps",
         lines: [
+          {
+            type: "heading",
+            text: "Understand the traps",
+          },
           "Here’s a secret: Companies spend milllllions on ads. Because they work.",
           "Researchers have studied for decades how to get people to spend.",
           "Think of something you want but don’t need. Picture the logo, the colors, the packaging.",
           "Someone worked really hard to make you feel that urge to buy.",
           "Apps even remember what you looked at and show it to you again. That’s called targeted marketing.",
           "And hate to tell ya, marketing is only gonna get better.",
+          {
+            type: "tip",
+            text: "Next time you want something, wait 24 hours and see if the pull fades.",
+          }
         ],
-        tip: "Next time you want something, wait 24 hours and see if the pull fades.",
       },
-      // {
-      //   emoji: "🕵️",
-      //   title: "Spot the sales tricks",
-      //   lines: [
-      //     "Stores know some magic words 🪄",
-      //     "“Almost sold out!” and “Back in stock!” make things feel rare, so you rush.",
-      //     "“Ends tonight” is a countdown so you can’t think.",
-      //     "“Was $99, now $49” makes $49 feel like a win, even if you never needed it.",
-      //   ],
-      //   tip: "When you spot one, name it out loud: “that’s just a rush trick.”",
-      // },
     ],
   },
   {
@@ -160,44 +172,40 @@ const STONES: Stone[] = [
     name: "Free Money",
     topics: [
       {
-        emoji: "",
-        title: "Loans",
         lines: [
+          {
+            type: "heading",
+            text: "Loans",
+          },
           "Lemme tell you something, feel free to write this down.",
           "There is no such thing as free money in the real world. Only loaned money",
           "Loan = debt + interest",
           "Interest is the rate at which the debt increases until it's paid off.",
           "Many predatory companies loan money at high interest rates making it hard to pay off.",
+          {
+            type: "tip",
+            text: "If an interest is higher than 10%, STOP and think *carefully* about other options.",
+          },
         ],
-        tip: "If an interest is higher than 10%, STOP and think *carefully* about other options.",
       },
       {
-        emoji: "",
-        title: "Credit Cards",
         lines: [
+          {
+            type: "heading",
+            text: "Credit Cards",
+          },
           "Credit cards are one of the most sneakiest loans in existence.",
           "Credit cards are loaned money that must be paid off end of month.",
           "If it is not paid off, credit card interest often are more than 30%.",
           "Cash back and rewards are used as ways to blind people from the downsides.",
           "But the highest credit card rewards only go up to 5%.",
-          "Let's do the math. Spend $100 on a card. You get free $5 as reward. You accidentally forget to pay off your card end of month and get a $30 interest fee. That's 6 months of rewards!!"
-          
+          "Let's do the math. Spend $100 on a card. You get free $5 as reward. You accidentally forget to pay off your card end of month and get a $30 interest fee. That's 6 months of rewards!!",
+          {
+            type: "tip",
+            text: "ALWAYS pay off your card. Set up card AUTOPAY to avoid mistakes.",
+          },
         ],
-        tip: "ALWAYS pay off your card. Set up card AUTOPAY to avoid mistakes.",
       },
-      // {
-      //   emoji: "",
-      //   title: "Let’s talk loans",
-      //   lines: [
-      //     "Gentle but honest: money is never free.",
-      //     "Payday loans, private loans, car loans, credit cards… they can feel like help today.",
-      //     "But they cost interest, and interest can snowball because debt grows on top of itself.",
-      //     "My rule of thumb: borrow only as a last resort.",
-      //     "If the interest is over 10%, stop and look closer.",
-      //     "Payday loans especially. Be super careful with those.",
-      //   ],
-      //   tip: "Before any loan, ask: what’s the total I’ll pay back?",
-      // },
     ],
   },
   {
@@ -205,21 +213,27 @@ const STONES: Stone[] = [
     name: "Protection",
     topics: [
       {
-        emoji: "",
-        title: "Something called life",
         lines: [
+          {
+            type: "heading",
+            text: "Something called life",
+          },
           "Life can be scary and unpredictable. Losing some money along the way is normal.",
           "More than half of households get hit with a surprise expense or income loss every year.",
           "Car trouble is the top offender, then home repairs, hospital trips, and lost paychecks.",
           "About 4 in 10 adults can’t cover a surprise $400 with cash.",
-          
+          {
+            type: "tip",
+            text: "Setting aside money for life is a must.",
+          },
         ],
-        tip: "Setting aside money for life is a must.",
       },
       {
-        emoji: "",
-        title: "Emergency fund",
         lines: [
+          {
+            type: "heading",
+            text: "Emergency fund",
+          },
           "Emergency savings protects you from life’s surprises and from predatory loan companies.",
           "It should be at least 3 months of your living expenses.",
           "Use a *high-yield savings account*, so your money grows while it waits.",
@@ -227,13 +241,17 @@ const STONES: Stone[] = [
           "A sale is not an emergency.",
           "Hot stock tip” is not an emergency.",
           "New sneakers are definitely not an emergency.",
+          {
+            type: "tip",
+            text: "Build your emergency cushion first, before anything else.",
+          },
         ],
-        tip: "Build your emergency cushion first, before anything else.",
       },
       // {
       //   emoji: "",
       //   title: "Emergency fund",
       //   lines: [
+      
       //     "Here’s the cool part: growth can grow.",
       //     "With compound interest, your earnings start earning too.",
       //     "Pretend $25 a month at a 7% yearly average for 30 years: you’d put in $9,000 and it could grow to around $30,000. Just an example, not a promise.",
@@ -243,9 +261,11 @@ const STONES: Stone[] = [
       //   tip: "Try a compound interest calculator with your own numbers.",
       // },
       {
-        emoji: "",
-        title: "Next steps",
         lines: [
+          {
+            type: "heading",
+            text: "Next steps",
+          },
           "Wow! You've already completed the basics!",
           "If you feel like you're ready to take the next step, go on ahead.",
           "I'll take you step by step through opening a brokerage account, retirement account, and more!",
@@ -308,27 +328,36 @@ const saveGoal = (userGoal: string) => {
 /* ---------- Text Script ---------- */
 function buildScript(tt: Topic): Msg[] {
   const messages: Msg[] = [
-    { kind: "mHeading", text: `${tt.emoji} ${tt.title}` },
     ...tt.lines.map((line) =>
       typeof line === "string"
-        ? { kind: "mBubble" as const, text: line }
-        : line.type === "question"
-          ? { kind: "mQuestion" as const, text: line.text }
-          : {
-            kind: "mImage" as const,
+        ? { kind: "kBubble" as const, text: line }
+        : line.type === "heading"
+          ? { kind: "kHeading" as const, text: line.text }
+          : line.type === "question"
+            ? { kind: "kQuestion" as const, text: line.text }
+            : line.type === "tip"
+              ? { kind: "kTip" as const, text: line.text }
+              : {
+            kind: "kImage" as const,
             text: line.text ?? "",
             imageSrc: line.src,
             imageAlt: line.alt ?? "",
           },
     ),
-    ...(tt.tip ? [{ kind: "mTip" as const, text: `💡 Tip: ${tt.tip}` }] : []),
+    ...(tt.tip ? [{ kind: "kTip" as const, text: `💡 Tip: ${tt.tip}` }] : []),
   ];
 
   if (tt.calculator) {
-    messages.push({ kind: "mCalc", text: "", content: <CompoundCalc /> });
+    messages.push({ kind: "kCalc", text: "", content: <CompoundCalc /> });
   }
 
   return messages;
+}
+
+function lineHeader(line?: ChatLine): string | undefined {
+  if (line === undefined) return undefined;
+  if (typeof line === "string") return line;
+  return line.text;               // string for most shapes, string | undefined for image
 }
 /* ---------- Compound Interest Slider ---------- */
 const ANNUAL_RETURN = 0.07;
@@ -343,7 +372,7 @@ function CompoundCalc() {
     monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
 
   return (
-    <div className="mCalc">
+    <div className="kCalc">
       <label htmlFor="monthly-contribution">
         Monthly contribution: <b>${monthly}</b>
       </label>
@@ -367,11 +396,11 @@ function CompoundCalc() {
         value={years}
         onChange={(event) => setYears(Number(event.target.value))}
       />
-      <p className="mCalc-result">
+      <p className="kCalc-result">
         You would contribute <b>${(monthly * months).toLocaleString()}</b> and
         could have around <b>${Math.round(futureValue).toLocaleString()}</b>.
       </p>
-      <p className="mCalc-disclaimer">
+      <p className="kCalc-disclaimer">
         Example assumes a 7% average yearly return. This is not a promise.
       </p>
     </div>
@@ -422,8 +451,8 @@ export default function StartPage() {
   const visible: Msg[] = [];
   script.slice(0, shown).forEach((currMsg) => {
     visible.push(currMsg);
-    if (currMsg.kind === "mQuestion" && answer)
-      visible.push({ kind: "mResponse", text: answer });
+    if (currMsg.kind === "kQuestion" && answer)
+      visible.push({ kind: "kResponse", text: answer });
   });
 
   // Cancel any pending "Fern is typing" timeout before changing the topic or closing the chat.
@@ -456,7 +485,7 @@ export default function StartPage() {
     timer.current = window.setTimeout(() => {
       setShown((s) => s + 1);
       setTyping(false);
-      if (script[shown]?.kind === "mQuestion") {
+      if (script[shown]?.kind === "kQuestion") {
         setDraft(loadGoal());
         setAsking(true);
       }
@@ -538,19 +567,45 @@ export default function StartPage() {
               ))}
             </div>
             <div className="list">
-              {topics.map((tt, ii) => (
-                <button
+              {topics.map((tt, ii) => {
+                const firstText = lineHeader(tt.lines.at(0));   // JS zone: statements allowed
+
+                return (                                      // this return belongs to the map callback
+                  <button
+                    key={firstText ?? ii}
+                    type="button"
+                    className={`card${cur === ii ? " on" : ""}`}
+                    aria-pressed={cur === ii}
+                    onClick={() => {
+                      if (ii !== cur) openTopic(stone, ii);
+                    }}
+                  >
+                    <h3>{firstText}</h3>
+                  </button>
+                );
+              })}
+              </div>
+                
+                {/* <button
                   key={tt.title}
+                  const headLine = tt.lines.at(0)
+                  const firstText =
+                  typeof headLine === "string"
+                    ? headLine
+                    : typeof headLine.text === "string"
+                      ? headLine.text
+                      : undefined;
+                  key={tt.lines.at(0)?.text}
                   type="button"
                   className={`card${cur === ii ? " on" : ""}`}
                   aria-pressed={cur === ii}
                   onClick={() => ii !== cur && openTopic(stone, ii)}
                 >
-                  <span className="em">{tt.emoji}</span>
-                  <h3>{tt.title}</h3>
-                </button>
-              ))}
-            </div>
+              //     <span className="em">{tt.emoji}</span>
+              //     <h3>{tt.title}</h3>
+              //   </button>
+              // ))} */}
+            
             <button
               type="button"
               className="next-page-button"
@@ -715,14 +770,14 @@ export default function StartPage() {
 
                 <div className="msgs" ref={msgsRef}>
                   {visible.map((mm, ii) => (
-                    mm.kind === "mCalc" ? (
-                      <div key={`${stone}-${cur}-${ii}`} className="mCalc-message">
+                    mm.kind === "kCalc" ? (
+                      <div key={`${stone}-${cur}-${ii}`} className="kCalc-message">
                         {mm.content}
                       </div>
-                    ) : mm.kind === "mImage" ? (
+                    ) : mm.kind === "kImage" ? (
                       <div
                         key={`${stone}-${cur}-${ii}`}
-                        className={mm.text ? "mBubble mImage" : "image-message"}
+                        className={mm.text ? "kBubble kImage" : "image-message"}
                       >
                         <img
                           src={mm.imageSrc}
@@ -746,13 +801,13 @@ export default function StartPage() {
                         {mm.text && <span>{mm.text}</span>}
                       </div>
                     ) : (
-                      <div key={`${stone}-${cur}-${ii}`} className={`mBubble ${mm.kind}`}>
+                      <div key={`${stone}-${cur}-${ii}`} className={`kBubble ${mm.kind}`}>
                         {mm.text}
                       </div>
                     )
                   ))}
                   {typing && (
-                    <div className="mBubble">
+                    <div className="kBubble">
                       <span className="dots">
                         <span />
                         <span />
