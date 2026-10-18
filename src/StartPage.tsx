@@ -594,7 +594,7 @@ export default function StartPage() {
       className="landing-page"
       style={{ "--landing-image": `url(${landingPageImage})` } as CSSProperties}
     >
-      <Spanner onAccountModalChange={setIsAccountModalOpen} />
+      <Spanner onAccountModalClick={setIsAccountModalOpen} />
       <div className="wrap">
         <div className={`app${cur !== null ? " chatting" : ""}`}>
           <div>
