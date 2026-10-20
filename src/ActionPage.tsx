@@ -5,6 +5,15 @@ import Spanner from "./Spanner";
 import "./VersionOnePage.css";
 import "./ActionPage.css";
 
+// const { data, error } = await supabase
+//   .from("user_task_progress")
+//   .upsert({
+//     user_id: user.id,
+//     action_key: "build_emergency_fund",
+//     completed: true
+//   }, {
+//     onConflict: "user_id,action_key"
+//   });
 
 /* ---------- Types ---------- */
 interface Media {
