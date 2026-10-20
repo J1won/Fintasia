@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { SubmitEvent } from 'react'
 import './LoginPage.css'
 import welcomeLogo from './assets/welcomeLogo.png'
+import { useNavigate } from 'react-router-dom';
 
 type AuthMode = "none" | "login" | "signup";
  
@@ -21,6 +22,7 @@ interface HeaderProps {
 }
  
 const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
+  const navigate = useNavigate();
   const [authMode, setAuthMode] = useState<AuthMode>("none");
 
   // Login form state 
@@ -75,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
             onChange={(e) => setLoginPassword(e.target.value)}
             className="input"
           />
-          <button type="submit" className='sparkle-btn' onClick={() => window.location.href='/start'}>
+          <button type="submit" className='sparkle-btn' onClick={() => navigate('/start')}>
             Sign In
           </button>
           <button type="button" className='sparkle-btn' onClick={() => setAuthMode("none")}>
@@ -108,7 +110,7 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
             onChange={(e) => setSignupPasswordTwo(e.target.value)}
             className="input"
           />
-          <button type="submit" className='sparkle-btn' onClick={() => window.location.href='/start'}>
+          <button type="submit" className='sparkle-btn' onClick={() => navigate('/start')}>
             Create Account
           </button>
           <button type="button" className='sparkle-btn' onClick={() => setAuthMode("none")}>

@@ -1,17 +1,25 @@
 import "./LandingPage.css";
 import landingPageImage from "./assets/landingPageImage.png";
-import logo from "./assets/logo.png";
 import shGrandpa from "./assets/shakygp.png";
 import chGrandpa from "./assets/chillgp.png";
 import scroll from "./assets/scroll.png";
 import catTexting from "./assets/cat-texting.mp4";
-import moneyCat from "./assets/moneyCat.png";
 import drCat from "./assets/drCertified.mp4";
-import proudFace from "./assets/proudFace.png";
+import proudFace from "./assets/proudFace2.jpg";
 import financiallyLiterateCat from "./assets/financial-dab-cat.mp4";
 import battleCat from "./assets/battle-cat.mp4";
 import burglarCat from "./assets/burglar-cat.mp4";
+import dogParadise from "./assets/dogParadise.jpg";
+import dogWarning from "./assets/dogWarning.jpg";
+import happyDoggy from "./assets/happyDoggy.jpg";
+import sad1 from "./assets/cryingWoman.jpg";
+import sad2 from "./assets/cryingBarbie.jpg";
+import sad3 from "./assets/sadParadise.jpg";
+import poopPretty from "./assets/poopPretty.jpg";
+import lifeFunds from "./assets/costsMoney.jpg";
 
+
+import { useNavigate } from 'react-router-dom';
 import {
   useEffect,
   useMemo,
@@ -21,9 +29,17 @@ import {
   useState,
 } from "react";
 import "./StartPage.css";
+import Spanner from "./Spanner";
 
 /* ---------- Core types for chat messages and course content ---------- */
-type Kind = "mHeading" | "mBubble" | "mTip" | "mResponse" | "mCalc" | "mImage";
+type Kind =
+  | "kHeading"
+  | "kBubble"
+  | "kQuestion"
+  | "kTip"
+  | "kResponse"
+  | "kCalc"
+  | "kImage";
 
 interface Msg {
   kind: Kind;
@@ -34,17 +50,27 @@ interface Msg {
 }
 
 type ChatLine =
-  | string
+    string
+  | {
+      type: "heading";
+      text: string;
+    } 
   | {
       type: "image";
       src: string;
       alt?: string;
+      text?: string;
+    }
+  | {
+      type: "question";
+      text: string;
+    }
+  | {
+      type: "tip";
+      text: string;
     };
 
 interface Topic {
-  emoji: string;
-  title: string;
-  question?: string; // optional typed-answer question asked first
   lines: ChatLine[];
   tip?: string;
   calculator?: boolean;
@@ -60,22 +86,29 @@ interface Stone {
 const STONES: Stone[] = [
   {
     emoji: "🌱",
-    name: "Basics",
+    name: "Money",
     topics: [
       {
-        emoji: "",
-        title: "Why does everybody want money?",
         lines: [
           {
-            type: "image",
-            src: moneyCat,
-            alt: "Cat with money",
+            type: "heading",
+            text: "Why does everybody want money?",
           },
-          "Because money can provide freedom, independence, safety, and comfort.",
+          {
+            type: "image",
+            src: dogParadise,
+            alt: "dog in paradise",
+            text: "Because money can provide freedom, independence, safety, and comfort.",
+          },
           "But, it can also give you a quick buzz of happy.",
           "A cute toy, a fun night, a cool gadget, or a yummy snack.",
           "The buzz fades fast. But the freedom lasts.",
-          "Picking the long game is hard but feeling regret is harder so choose your battles.",
+          {
+            type: "image",
+            src: dogWarning,
+            alt: "dog warning",
+            text: "Picking the long game is hard but feeling regret is harder so choose your battles.",
+          },
           "Hey look on the bright side, you're here! And that's you choosing your future!",
           {
             type: "image",
@@ -86,14 +119,27 @@ const STONES: Stone[] = [
         ],
       },
       {
-        emoji: "",
-        title: "What is your financial goal?",
-        question: "More detailed the better! (View the answer in your profile)",
         lines: [
-          "Wonderful start.",
+          {
+            type: "heading",
+            text: "What is your financial goal?",
+          },
+          {
+            type: "question",
+            text: "More detailed the better! (View the answer in your profile)",
+          },
+          {
+            type: "image",
+            src: happyDoggy,
+            alt: "dog happy",
+            text: "Wonderful start.",
+          },
           "Continue learning and keep in mind your end goal!",
+          {
+            type: "tip",
+            text: "Write your financial goal somewhere you can see it everyday. Maybe the bathroom mirror or next to your desk!",
+          }
         ],
-        tip: "Write your financial goal somewhere you can see it everyday. Maybe the bathroom mirror or next to your desk!",
       },
     ],
   },
@@ -102,42 +148,67 @@ const STONES: Stone[] = [
     name: "Spending",
     topics: [
       {
-        emoji: "",
-        title: "Mass Consumerism",
         lines: [
+          {
+            type: "heading",
+            text: "Mass Consumer Culture",
+          },
           "Imagine this.",
           "Closets bulging. Drawers overflowing. Clothes forgotten.",
           "Toys piling up, collecting dust.",
           "Mass production. Smokestacks burning. Chemicals dumped.",
           "In 2018, the US made 292 million tons of trash. That’s about 4.9 pounds per person, every day. 146 million tons of it went to landfills.",
+          {
+            type: "image",
+            src: sad1,
+            alt: "crying woman",
+          },
+          {
+            type: "image",
+            src: sad2,
+            alt: "crying barbie",
+          },
+          {
+            type: "image",
+            src: sad3,
+            alt: "crying happy guy",
+          },
           "The reality is, we impulsively buy things we don’t need. It hurts our planet, our wallet, and our peace of mind.",
+          {
+            type: "tip",
+            text: "Next time you want to impulsively buy something, imagine it fully covered in human poop and decide if you would wash it off or leave it.",
+          },
+          {
+            type: "image",
+            src: poopPretty,
+            alt: "poop is serving",
+          },
         ],
-        tip: "Next time you want to impulsively buy something, imagine it fully covered in human poop and decide if you would wash it off or leave it."
       },
       {
-        emoji: "",
-        title: "Understand the traps",
         lines: [
+          {
+            type: "heading",
+            text: "Marketing traps",
+          },
           "Here’s a secret: Companies spend milllllions on ads. Because they work.",
           "Researchers have studied for decades how to get people to spend.",
           "Think of something you want but don’t need. Picture the logo, the colors, the packaging.",
           "Someone worked really hard to make you feel that urge to buy.",
           "Apps even remember what you looked at and show it to you again. That’s called targeted marketing.",
           "And hate to tell ya, marketing is only gonna get better.",
+          {
+            type: "image",
+            src: happyDoggy,
+            alt: "dog happy",
+            text: "We gotta be strong, soldiers.",
+          },
+          {
+            type: "tip",
+            text: "Next time you want something, wait 24 hours and see if the pull fades.",
+          }
         ],
-        tip: "Next time you want something, wait 24 hours and see if the pull fades.",
       },
-      // {
-      //   emoji: "🕵️",
-      //   title: "Spot the sales tricks",
-      //   lines: [
-      //     "Stores know some magic words 🪄",
-      //     "“Almost sold out!” and “Back in stock!” make things feel rare, so you rush.",
-      //     "“Ends tonight” is a countdown so you can’t think.",
-      //     "“Was $99, now $49” makes $49 feel like a win, even if you never needed it.",
-      //   ],
-      //   tip: "When you spot one, name it out loud: “that’s just a rush trick.”",
-      // },
     ],
   },
   {
@@ -145,81 +216,109 @@ const STONES: Stone[] = [
     name: "Free Money",
     topics: [
       {
-        emoji: "",
-        title: "Loans",
         lines: [
+          {
+            type: "heading",
+            text: "Loans",
+          },
           "Lemme tell you something, feel free to write this down.",
           "There is no such thing as free money in the real world. Only loaned money",
           "Loan = debt + interest",
           "Interest is the rate at which the debt increases until it's paid off.",
           "Many predatory companies loan money at high interest rates making it hard to pay off.",
+          {
+            type: "tip",
+            text: "If an interest is higher than 10%, STOP and think *carefully* about other options.",
+          },
         ],
-        tip: "If an interest is higher than 10%, STOP and think *carefully* about other options.",
       },
       {
-        emoji: "",
-        title: "Credit Cards",
         lines: [
+          {
+            type: "heading",
+            text: "Credit Cards",
+          },
           "Credit cards are one of the most sneakiest loans in existence.",
           "Credit cards are loaned money that must be paid off end of month.",
           "If it is not paid off, credit card interest often are more than 30%.",
           "Cash back and rewards are used as ways to blind people from the downsides.",
           "But the highest credit card rewards only go up to 5%.",
-          "Let's do the math. Spend $100 on a card. You get free $5 as reward. You accidentally forget to pay off your card end of month and get a $30 interest fee. That's 6 months of rewards!!"
-          
+          "Let's do the math. Spend $100 on a card. You get free $5 as reward. You accidentally forget to pay off your card end of month and get a $30 interest fee. That's 6 months of rewards!!",
+          {
+            type: "tip",
+            text: "ALWAYS pay off your card. Set up card AUTOPAY to avoid mistakes.",
+          },
         ],
-        tip: "ALWAYS pay off your card. Set up card AUTOPAY to avoid mistakes.",
       },
-      // {
-      //   emoji: "",
-      //   title: "Let’s talk loans",
-      //   lines: [
-      //     "Gentle but honest: money is never free.",
-      //     "Payday loans, private loans, car loans, credit cards… they can feel like help today.",
-      //     "But they cost interest, and interest can snowball because debt grows on top of itself.",
-      //     "My rule of thumb: borrow only as a last resort.",
-      //     "If the interest is over 10%, stop and look closer.",
-      //     "Payday loans especially. Be super careful with those.",
-      //   ],
-      //   tip: "Before any loan, ask: what’s the total I’ll pay back?",
-      // },
     ],
   },
   {
     emoji: "🌳",
-    name: "Face the World",
+    name: "Protection",
     topics: [
       {
-        emoji: "",
-        title: "Why invest?",
         lines: [
-          "Prices tend to creep up over time, so cash sitting still slowly buys less.",
-          "Investing means putting money into things that can grow over many years, like a basket of companies.",
-          "It goes up and down though, so it’s only for money you won’t need for years.",
-          "That’s why invested money is forgotten money, not emergency money.",
+          {
+            type: "heading",
+            text: "Something called life",
+          },
+          {
+            type: "image",
+            src: lifeFunds,
+            alt: "Life is expensive",
+          },
+          "Life can be scary and unpredictable. Losing some money along the way is normal.",
+          "More than half of households get hit with a surprise expense or income loss every year.",
+          "Car trouble is the top offender, then home repairs, hospital trips, and lost paychecks.",
+          "About 4 in 10 adults can’t cover a surprise $400 with cash.",
+          {
+            type: "tip",
+            text: "Setting aside money for life is a must.",
+          },
         ],
-        tip: "Build your emergency cushion first, then invest what you can forget.",
       },
       {
-        emoji: "",
-        title: "Compound interest",
         lines: [
-          "Here’s the cool part: growth can grow.",
-          "With compound interest, your earnings start earning too.",
-          "Pretend $25 a month at a 7% yearly average for 30 years: you’d put in $9,000 and it could grow to around $30,000. Just an example, not a promise.",
-          "Starting early matters most. A tree needs time 🌳",
+          {
+            type: "heading",
+            text: "Emergency fund",
+          },
+          "Emergency savings protects you from life’s surprises and from predatory loan companies.",
+          "It should be at least 3 months of your living expenses.",
+          "Use a *high-yield savings account*, so your money grows while it waits.",
+          "Only touch for for NEEDS. Never wants. Never investments.",
+          "A sale is not an emergency.",
+          "Hot stock tip” is not an emergency.",
+          "New sneakers are definitely not an emergency.",
+          {
+            type: "tip",
+            text: "Build your emergency cushion first, before anything else.",
+          },
         ],
-        calculator: true,
-        tip: "Try a compound interest calculator with your own numbers.",
       },
+      // {
+      //   emoji: "",
+      //   title: "Emergency fund",
+      //   lines: [
+      
+      //     "Here’s the cool part: growth can grow.",
+      //     "With compound interest, your earnings start earning too.",
+      //     "Pretend $25 a month at a 7% yearly average for 30 years: you’d put in $9,000 and it could grow to around $30,000. Just an example, not a promise.",
+      //     "Starting early matters most. A tree needs time 🌳",
+      //   ],
+      //   calculator: true,
+      //   tip: "Try a compound interest calculator with your own numbers.",
+      // },
       {
-        emoji: "",
-        title: "Next steps",
         lines: [
+          {
+            type: "heading",
+            text: "Next steps",
+          },
           "Wow! You've already completed the basics!",
           "If you feel like you're ready to take the next step, go on ahead.",
           "I'll take you step by step through opening a brokerage account, retirement account, and more!",
-          "Click \"Next Chapter\" found on the bottom right of the screen. Secret code: Im ready"
+          "Click \"Next Chapter\" found on the bottom right of the screen."
         ],
       },
      //  {
@@ -249,16 +348,15 @@ const IDLE_CONTENT = [
   },
   {
     video: financiallyLiterateCat,
-    bubble:
-      "Let's be smart about spending.",
+    bubble: "Let's be smart about spending.",
   },
   {
     video: burglarCat,
-    bubble:
-      "Somebody say free money??",
+    bubble: "Somebody say free money??",
   },
   {
     video: battleCat,
+    bubble: "Thy must protect thyself..."
   },
 ];
 
@@ -279,26 +377,35 @@ const saveGoal = (userGoal: string) => {
 /* ---------- Text Script ---------- */
 function buildScript(tt: Topic): Msg[] {
   const messages: Msg[] = [
-    { kind: "mHeading", text: `${tt.emoji} ${tt.title}` },
-    ...(tt.question ? [{ kind: "mBubble" as const, text: tt.question }] : []),
     ...tt.lines.map((line) =>
       typeof line === "string"
-        ? { kind: "mBubble" as const, text: line }
-        : {
-            kind: "mImage" as const,
-            text: "",
+        ? { kind: "kBubble" as const, text: line }
+        : line.type === "heading"
+          ? { kind: "kHeading" as const, text: line.text }
+          : line.type === "question"
+            ? { kind: "kQuestion" as const, text: line.text }
+            : line.type === "tip"
+              ? { kind: "kTip" as const, text: line.text }
+              : {
+            kind: "kImage" as const,
+            text: line.text ?? "",
             imageSrc: line.src,
             imageAlt: line.alt ?? "",
           },
     ),
-    ...(tt.tip ? [{ kind: "mTip" as const, text: `💡 Tip: ${tt.tip}` }] : []),
   ];
 
   if (tt.calculator) {
-    messages.push({ kind: "mCalc", text: "", content: <CompoundCalc /> });
+    messages.push({ kind: "kCalc", text: "", content: <CompoundCalc /> });
   }
 
   return messages;
+}
+
+function lineHeader(line?: ChatLine): string | undefined {
+  if (line === undefined) return undefined;
+  if (typeof line === "string") return line;
+  return line.text;               // string for most shapes, string | undefined for image
 }
 /* ---------- Compound Interest Slider ---------- */
 const ANNUAL_RETURN = 0.07;
@@ -313,7 +420,7 @@ function CompoundCalc() {
     monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
 
   return (
-    <div className="mCalc">
+    <div className="kCalc">
       <label htmlFor="monthly-contribution">
         Monthly contribution: <b>${monthly}</b>
       </label>
@@ -337,11 +444,11 @@ function CompoundCalc() {
         value={years}
         onChange={(event) => setYears(Number(event.target.value))}
       />
-      <p className="mCalc-result">
+      <p className="kCalc-result">
         You would contribute <b>${(monthly * months).toLocaleString()}</b> and
         could have around <b>${Math.round(futureValue).toLocaleString()}</b>.
       </p>
-      <p className="mCalc-disclaimer">
+      <p className="kCalc-disclaimer">
         Example assumes a 7% average yearly return. This is not a promise.
       </p>
     </div>
@@ -350,6 +457,8 @@ function CompoundCalc() {
 
 /* ---------- App ---------- */
 export default function StartPage() {
+  const navigate = useNavigate();
+
   const [stone, setStone] = useState(0); // which stepping stone
   const [cur, setCur] = useState<number | null>(null); // open topic inside that stone
   const [shown, setShown] = useState(0); // how many scripted messages are visible
@@ -359,12 +468,10 @@ export default function StartPage() {
   const [draft, setDraft] = useState("");
   const [isScrollHovered, setIsScrollHovered] = useState(false);
   const [isScrollOpen, setIsScrollOpen] = useState(false);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [isReadConfirmOpen, setIsReadConfirmOpen] = useState(false);
   const [hasAcknowledgedReading, setHasAcknowledgedReading] = useState(false);
   const [modalOrigin, setModalOrigin] = useState({ x: "50%", y: "50%" });
-  const [accountGoal, setAccountGoal] = useState(() => loadGoal());
-  const [goalDraft, setGoalDraft] = useState("");
-  const [isEditingGoal, setIsEditingGoal] = useState(false);
   const openFromButton = (
     event: React.MouseEvent<HTMLButtonElement>,
     openModal: () => void,
@@ -375,15 +482,7 @@ export default function StartPage() {
     setModalOrigin({ x: `${x}%`, y: `${y}%` });
     openModal();
   };
-  const [isAccountButtonOpen, setIsAccountButtonOpen] = useState(false);
-
-  useEffect(() => {
-    if (!isAccountButtonOpen) return;
-    const nextGoal = loadGoal();
-    setAccountGoal(nextGoal);
-    setGoalDraft(nextGoal);
-    setIsEditingGoal(false);
-  }, [isAccountButtonOpen]);
+  
 
   const timer = useRef<number>(0);
   const msgsRef = useRef<HTMLDivElement>(null);
@@ -393,16 +492,15 @@ export default function StartPage() {
   const topics = STONES[stone].topics;
   const topic = cur !== null ? topics[cur] : null;
   const script = useMemo(() => (topic ? buildScript(topic) : []), [topic]);
-  const hasQuestion = !!topic?.question;
   const idleVideo = IDLE_CONTENT[stone]?.video ?? catTexting;
   const idleBubble = IDLE_CONTENT[stone]?.bubble ?? "";
 
   // visible messages, with the user's answer slotted in right after the question
   const visible: Msg[] = [];
-  script.slice(0, shown).forEach((currMsg, i) => {
+  script.slice(0, shown).forEach((currMsg) => {
     visible.push(currMsg);
-    if (hasQuestion && i === 1 && answer)
-      visible.push({ kind: "mResponse", text: answer });
+    if (currMsg.kind === "kQuestion" && answer)
+      visible.push({ kind: "kResponse", text: answer });
   });
 
   // Cancel any pending "Fern is typing" timeout before changing the topic or closing the chat.
@@ -410,14 +508,12 @@ export default function StartPage() {
 
   const openTopic = (stone: number, card: number) => {
     stopTimer();
-    const q = STONES[stone].topics[card].question;
     setStone(stone);
     setCur(card);
-    setShown(2);
+    setShown(1);
     setAnswer(null);
     setTyping(false);
-    setAsking(!!q);
-    setDraft(q ? loadGoal() : "");
+    setAsking(false);
   };
 
   const closeChat = () => {
@@ -437,6 +533,10 @@ export default function StartPage() {
     timer.current = window.setTimeout(() => {
       setShown((s) => s + 1);
       setTyping(false);
+      if (script[shown]?.kind === "kQuestion") {
+        setDraft(loadGoal());
+        setAsking(true);
+      }
     }, 350);
   };
 
@@ -453,8 +553,6 @@ export default function StartPage() {
     if (!asking || typing || (!skip && !input)) return;
     if (!skip) {
       saveGoal(input);
-      setAccountGoal(input);
-      setGoalDraft(input);
       setAnswer(input);
     }
     setAsking(false);
@@ -482,7 +580,7 @@ export default function StartPage() {
 
   const buttonLabel =
     shown < script.length
-      ? "ok."
+      ? ">>"
       : cur !== null && cur < topics.length - 1
         ? "cont. →"
         : stone < STONES.length - 1
@@ -495,93 +593,7 @@ export default function StartPage() {
       className="landing-page"
       style={{ "--landing-image": `url(${landingPageImage})` } as CSSProperties}
     >
-      <div className="nav-bar">
-        <button className="logo-button">
-          <img src={logo} alt="Home reroute logo" />
-        </button>
-
-        <button
-          className="profile-button"
-          onClick={(event) =>
-            openFromButton(event, () => setIsAccountButtonOpen(true))
-          }
-        >
-          Account
-        </button>
-        {isAccountButtonOpen && (
-          <div
-            className="scroll-modal-backdrop"
-            role="presentation"
-            onClick={() => setIsAccountButtonOpen(false)}
-          >
-            <section
-              className="scroll-modal"
-              style={{
-                ["--modal-origin-x" as any]: modalOrigin.x,
-                ["--modal-origin-y" as any]: modalOrigin.y,
-              }}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="button-one-modal-title"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <button
-                className="scroll-modal-close"
-                type="button"
-                aria-label="Close button one window"
-                onClick={() => setIsAccountButtonOpen(false)}
-              >
-                <span aria-hidden="true">&#215;</span>
-              </button>
-
-              <h2 id="button-one-modal-title">Account</h2>
-              <p>Here’s your saved financial goal.</p>
-
-              {isEditingGoal ? (
-                <textarea
-                  value={goalDraft}
-                  rows={4}
-                  maxLength={500}
-                  onChange={(event) => setGoalDraft(event.target.value)}
-                  style={{ width: "100%", resize: "vertical" }}
-                />
-              ) : (
-                <p>{accountGoal || "No financial goal saved yet."}</p>
-              )}
-
-              <div style={{ display: "flex", gap: "12px", marginTop: "16px" }}>
-                {isEditingGoal ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const nextGoal = goalDraft.trim();
-                      saveGoal(nextGoal);
-                      setAccountGoal(nextGoal);
-                      setIsEditingGoal(false);
-                    }}
-                  >
-                    Save
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setGoalDraft(accountGoal);
-                      setIsEditingGoal(true);
-                    }}
-                  >
-                    Edit
-                  </button>
-                )}
-
-                <button type="button" onClick={() => (window.location.href = "/")}>
-                  Log Out
-                </button>
-              </div>
-            </section>
-          </div>
-        )}
-      </div>
+      <Spanner onAccountModalClick={setIsAccountModalOpen} />
       <div className="wrap">
         <div className={`app${cur !== null ? " chatting" : ""}`}>
           <div>
@@ -603,19 +615,45 @@ export default function StartPage() {
               ))}
             </div>
             <div className="list">
-              {topics.map((tt, ii) => (
-                <button
+              {topics.map((tt, ii) => {
+                const firstText = lineHeader(tt.lines.at(0));   // JS zone: statements allowed
+
+                return (                                      // this return belongs to the map callback
+                  <button
+                    key={firstText ?? ii}
+                    type="button"
+                    className={`card${cur === ii ? " on" : ""}`}
+                    aria-pressed={cur === ii}
+                    onClick={() => {
+                      if (ii !== cur) openTopic(stone, ii);
+                    }}
+                  >
+                    <h3>{firstText}</h3>
+                  </button>
+                );
+              })}
+              </div>
+                
+                {/* <button
                   key={tt.title}
+                  const headLine = tt.lines.at(0)
+                  const firstText =
+                  typeof headLine === "string"
+                    ? headLine
+                    : typeof headLine.text === "string"
+                      ? headLine.text
+                      : undefined;
+                  key={tt.lines.at(0)?.text}
                   type="button"
                   className={`card${cur === ii ? " on" : ""}`}
                   aria-pressed={cur === ii}
                   onClick={() => ii !== cur && openTopic(stone, ii)}
                 >
-                  <span className="em">{tt.emoji}</span>
-                  <h3>{tt.title}</h3>
-                </button>
-              ))}
-            </div>
+              //     <span className="em">{tt.emoji}</span>
+              //     <h3>{tt.title}</h3>
+              //   </button>
+              // ))} */}
+            
             <button
               type="button"
               className="next-page-button"
@@ -666,7 +704,7 @@ export default function StartPage() {
                     type="button"
                     className="read-confirm-continue"
                     disabled={!hasAcknowledgedReading}
-                    onClick={() => (window.location.href = "/action")}
+                    onClick={() => navigate('/action')}
                   >
                     Continue to next chapter
                   </button>
@@ -740,21 +778,25 @@ export default function StartPage() {
           <aside className="detail" aria-live="polite">
             <div className="screen">
               <div className="idle">
-                <video
-                  src={idleVideo ?? catTexting}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  aria-hidden="true"
-                />
+                {cur === null &&
+                !isAccountModalOpen &&
+                !isScrollOpen &&
+                !isReadConfirmOpen && (
+                  <video
+                    src={idleVideo ?? catTexting}
+                    autoPlay
+                    loop
+                    playsInline
+                    aria-hidden="true"
+                  />
+                )}  
                 {idleBubble && <p className="video-bubble">{idleBubble}</p>}
                 <button
                   type="button"
                   className="idle-continue"
                   onClick={() => openTopic(stone, 0)}
                 >
-                  Continue
+                  Start
                 </button>
               </div>
 
@@ -764,7 +806,7 @@ export default function StartPage() {
                 aria-label="Chat with Fern"
               >
                 <div className="head">
-                  <span className="avatar">🐱</span>
+                  <span className="avatar">🤓</span>
                   <div>
                     {/* <b>Fern</b>
                     <small>your money friend</small> */}
@@ -776,33 +818,44 @@ export default function StartPage() {
 
                 <div className="msgs" ref={msgsRef}>
                   {visible.map((mm, ii) => (
-                    mm.kind === "mCalc" ? (
-                      <div key={`${stone}-${cur}-${ii}`} className="mCalc-message">
+                    mm.kind === "kCalc" ? (
+                      <div key={`${stone}-${cur}-${ii}`} className="kCalc-message">
                         {mm.content}
                       </div>
-                    ) : mm.kind === "mImage" ? (
-                      <div key={`${stone}-${cur}-${ii}`} className="image-message">
+                    ) : mm.kind === "kImage" ? (
+                      <div
+                        key={`${stone}-${cur}-${ii}`}
+                        className={mm.text ? "kBubble kImage" : "image-message"}
+                      >
                         <img
                           src={mm.imageSrc}
                           alt={mm.imageAlt ?? "Chat image"}
+                          onLoad={() =>
+                            msgsRef.current?.scrollTo({
+                              top: msgsRef.current.scrollHeight,
+                              behavior: "smooth",
+                            })
+                          }
                           style={{
                             display: "block",
-                            width: "100%",
+                            maxWidth: "100%",
                             maxHeight: "220px",
-                            objectFit: "cover",
+                            width: "auto",
+                            height: "auto",
                             borderRadius: "12px",
-                            marginBottom: "8px",
+                            marginBottom: mm.text ? "8px" : 0,
                           }}
                         />
+                        {mm.text && <span>{mm.text}</span>}
                       </div>
                     ) : (
-                      <div key={`${stone}-${cur}-${ii}`} className={`mBubble ${mm.kind}`}>
+                      <div key={`${stone}-${cur}-${ii}`} className={`kBubble ${mm.kind}`}>
                         {mm.text}
                       </div>
                     )
                   ))}
                   {typing && (
-                    <div className="mBubble">
+                    <div className="kBubble">
                       <span className="dots">
                         <span />
                         <span />

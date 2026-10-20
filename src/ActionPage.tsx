@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties} from "react";
 import './LandingPage.css'
 import landingPageImage from './assets/landingPageImage.png'
-import logo from './assets/logo.png'
+import Spanner from "./Spanner";
 import "./VersionOnePage.css";
 import "./ActionPage.css";
 
@@ -121,7 +121,6 @@ function ActionPage() {
   const [activeId, setActiveId] = useState<string | null>(null); // last opened item (kept so the modal can animate out)
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<"tasks" | "celebrate">("tasks");
- 
   const lastFocus = useRef<HTMLElement | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -196,17 +195,9 @@ function ActionPage() {
   return (
     <>
     <div className="landing-page" style={{ "--landing-image": `url(${landingPageImage})` } as CSSProperties}>
-      <div className='nav-bar'>
-            <button className="logo-button" onClick={() => window.location.href='/start'}>
-                <img src={logo} alt="Home reroute logo" />
-            </button>
-
-            <button className="profile-button" >
-                Account
-            </button>
-      </div>
+      <Spanner />
       <div className="wrap">
-        <p className="sub">Click on your preferred action item and check boxes as you go!</p>
+        <p className="sub"><b>Click on your preferred action item and check boxes as you go!</b></p>
  
         <div className="circles">
           {ITEMS.map((item) => {
@@ -310,13 +301,13 @@ function ActionPage() {
 //                     <h1></h1>
 
 //                     <div className="button-stack">
-//                          <button className="big-btn" onClick={() => window.location.href='/action'}>
+//                          <button className="big-btn" onClick={() => navigate('/action')}>
 //                               All About Saving!
 //                          </button>
-//                          <button className="big-btn" onClick={() => window.location.href='/start'}>
+//                          <button className="big-btn" onClick={() => navigate('/start')}>
 //                               All About Starting!
 //                          </button>
-//                          <button className="big-btn" onClick={() => window.location.href='/versionOne'}>
+//                          <button className="big-btn" onClick={() => navigate('/versionOne')}>
 //                               under construction
 //                          </button>
 //                     </div>

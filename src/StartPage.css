@@ -128,7 +128,7 @@ button {
   animation: read-confirm-pop 0.22s ease-out both;
 }
 .read-confirm-modal h2 {
-  margin: 0 32px 24px 0;
+  margin: 0 20px 20px 20px;
   font-size: 1.35rem;
   line-height: 1.25;
 }
@@ -150,6 +150,7 @@ button {
 }
 .read-confirm-agreement {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   margin-bottom: 22px;
@@ -418,7 +419,7 @@ button {
   gap: 9px;
 }
 /* text bubble */
-.mBubble {
+.kBubble {
   text-align: left;
   max-width: 88%;
   padding: 10px 15px;
@@ -427,40 +428,40 @@ button {
   box-shadow: 0 3px 0 var(--shadow);
   animation: pop 0.25s ease-out;
 }
-.mBubble.mHeading {
+.kBubble.kHeading {
   background: var(--leaf);
   color: #fff;
   font-weight: 600;
   margin-top: 2px;
 }
-.mBubble.mResponse {
+.kBubble.kResponse {
   align-self: flex-end;
   background: var(--leaf);
   color: #fff;
   border-radius: 20px 20px 6px 20px;
 }
-.mCalc-message {
+.kCalc-message {
   width: 100%;
 }
-.mCalc {
+.kCalc {
   padding: 12px;
   border-radius: 16px;
   background: var(--card);
   box-shadow: 0 3px 0 var(--shadow);
 }
-.mCalc label {
+.kCalc label {
   display: block;
   margin: 6px 0 2px;
   font-size: 0.9rem;
 }
-.mCalc input[type="range"] {
+.kCalc input[type="range"] {
   width: 100%;
   accent-color: var(--leaf);
 }
-.mCalc-result {
+.kCalc-result {
   margin: 10px 0 6px;
 }
-.mCalc-disclaimer {
+.kCalc-disclaimer {
   margin: 0;
   color: var(--muted);
   font-size: 0.8rem;
@@ -513,7 +514,7 @@ button {
   line-height: 1;
   margin-top: auto;
 }
-.mBubble.mTip {
+.kBubble.kTip {
   background: var(--sun);
   color: #3a2e00;
 }
@@ -552,7 +553,7 @@ button {
 }
 .trail {
   display: flex;
-  gap: 6px;
+  gap: 16px;
   max-width: 560px;
   margin: 0 auto 16px;
   position: relative;
@@ -567,14 +568,13 @@ button {
 }
 .stone {
   position: relative;
-  flex: 1;
   background: none;
   border: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 9px;
 }
 .stone .d {
   width: clamp(44px, 11vw, 56px);
@@ -593,6 +593,10 @@ button {
   box-shadow: 0 2px 0 var(--shadow);
 }
 .stone .l {
+  background-color: #cfe9d4;
+  border-radius: 999px;
+  padding: 6px 14px;
+  white-space: nowrap;
   font-size: 0.82rem;
   font-weight: 500;
   line-height: 1.15;
