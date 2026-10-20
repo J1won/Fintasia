@@ -6,12 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from './lib/supabase'
 
 const MIN_PASSWORD_LENGTH = 6
-// Supabase Auth needs an email, so the username is turned into a private fake one
-const USERNAME_DOMAIN = "fintasia.app"
-const USERNAME_PATTERN = /^[a-z0-9_.-]{3,20}$/
 
-const toEmail = (username: string) =>
-  `${username.trim().toLowerCase()}@${USERNAME_DOMAIN}`;
+const USERNAME_PATTERN = /^[a-z0-9_.-]{3,20}$/
 
 type AuthMode = "none" | "login" | "signup";
  
@@ -102,8 +98,8 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
       {authMode === "login" && (
         <form className="loginForm" onSubmit={handleLoginSubmit}>
           <input
-            type="text"
-            placeholder="Username"
+            type="email"
+            placeholder="Email"
             value={loginUsername}
             onChange={(e) => setLoginUsername(e.target.value)}
             className="input"
@@ -135,8 +131,8 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
       {authMode === "signup" && (
         <form className="loginForm" onSubmit={handleSignupSubmit}>
           <input
-            type="text"
-            placeholder="Username"
+            type="email"
+            placeholder="Email"
             value={signupUsername}
             onChange={(e) => setSignupUsername(e.target.value)}
             className="input"
@@ -179,7 +175,7 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
 function LoginPage() {
   const handleLogin = async (creds: LoginCreds): Promise<AuthResult> => {
     const { error } = await supabase.auth.signInWithPassword({
-      email: toEmail(creds.username),
+      email: creds.username,
       password: creds.password,
     });
     if (error) return { error: "Wrong username or password." };
@@ -199,7 +195,7 @@ function LoginPage() {
       return { error: "The passwords don't match." };
     }
     const { error } = await supabase.auth.signUp({
-      email: toEmail(details.username),
+      email: details.username,
       password: details.password,
     });
     if (error) {
