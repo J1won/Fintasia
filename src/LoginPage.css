@@ -218,6 +218,12 @@
   gap: 10px;
 }
 
+.auth-error {
+  color: #d62839;
+  font-weight: 600;
+  margin: 0;
+}
+
 .sparkle-btn {
   position: relative;
   padding: 12px 32px;

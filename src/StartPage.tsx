@@ -1,4 +1,5 @@
 import "./LandingPage.css";
+import { supabase } from './lib/supabase';
 import landingPageImage from "./assets/landingPageImage.png";
 import shGrandpa from "./assets/shakygp.png";
 import chGrandpa from "./assets/chillgp.png";
