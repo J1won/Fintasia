@@ -213,7 +213,7 @@ button {
   padding: 14px 18px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 4px;
   text-align: center;
@@ -236,6 +236,15 @@ button {
   line-height: 1.2;
   overflow-wrap: anywhere;
   text-align: center;
+}
+.list > button.card h3::before {
+  content: "";                 /* must stay, but empty */
+  display: inline-block;
+  width: 1.1em;                /* icon size: change this to scale it */
+  height: 1.1em;
+  margin-right: 0.4em;
+  vertical-align: -0.15em;
+  background: url('./assets/tabImage.png') no-repeat center / contain;
 }
 .list > button.card.on {
   background: var(--sun);
