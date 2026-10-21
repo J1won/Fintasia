@@ -214,14 +214,40 @@
 
 #authArea form {
   display: flex;
+  flex-wrap: wrap;        /* lets the message take its own line */
   align-items: center;
   gap: 10px;
 }
 
 .auth-error {
+  position: absolute;
+  bottom: 100%;            /* sits just above the form */
+  left: 20px;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;                /* space between the icon and the text */
+  white-space: nowrap;
   color: #d62839;
+  font-size: 0.8rem;       /* smaller text */
   font-weight: 600;
-  margin: 0;
+}
+
+/* red circle with a white "!" */
+.auth-error::before {
+  content: "!";
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  background: #d62839;
+  color: #fff;
+  font-size: 0.85em;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .sparkle-btn {

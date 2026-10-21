@@ -118,6 +118,11 @@ const Header = ({ onLogin, onSignup }: HeaderProps) => {
       {/* /////////// Login Creds Welcome Page /////////////// */}
       {authMode === "login" && (
         <form className="loginForm" onSubmit={handleLoginSubmit}>
+          {errorMsg && (
+            <p className="auth-error" role="alert">
+              {errorMsg}
+            </p>
+          )}
           <input
             type="email"
             placeholder="Email"
@@ -141,17 +146,17 @@ const Header = ({ onLogin, onSignup }: HeaderProps) => {
           <button type="button" className='sparkle-btn' onClick={() => switchMode("none")} disabled={isBusy}>
             Cancel
           </button>
-          {errorMsg && (
-            <p className="auth-error" role="alert">
-              {errorMsg}
-            </p>
-          )}
         </form>
       )}
 
       {/* Signup Form */}
       {authMode === "signup" && (
         <form className="loginForm" onSubmit={handleSignupSubmit}>
+          {errorMsg && (
+            <p className="auth-error" role="alert">
+              {errorMsg}
+            </p>
+          )}
           <input
             type="email"
             placeholder="Email"
@@ -184,11 +189,6 @@ const Header = ({ onLogin, onSignup }: HeaderProps) => {
           <button type="button" className='sparkle-btn' onClick={() => switchMode("none")} disabled={isBusy}>
             Cancel
           </button>
-          {errorMsg && (
-            <p className="auth-error" role="alert">
-              {errorMsg}
-            </p>
-          )}
         </form>
       )}
     </header>
