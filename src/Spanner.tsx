@@ -1,5 +1,6 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type SyntheticEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from './lib/supabase';
 import logo from "./assets/logo.png";
 import "./Spanner.css";
 
@@ -151,39 +152,50 @@ export default function Spanner({
     }
   };
 
-  const submitPassword = async (event: FormEvent) => {
-    event.preventDefault();
-    setPasswordNotice(null);
-    if (newPassword.length < MIN_PASSWORD_LENGTH) {
+  const submitPassword = async (event: SyntheticEvent) => {
+  event.preventDefault();
+  setPasswordNotice(null);
+
+  if (newPassword.length < MIN_PASSWORD_LENGTH) {
+    setPasswordNotice({
+      tone: "err",
+      text: `Use at least ${MIN_PASSWORD_LENGTH} characters.`,
+    });
+    return;
+  }
+  if (newPassword !== confirmPassword) {
+    setPasswordNotice({ tone: "err", text: "The passwords don't match." });
+    return;
+  }
+
+  setIsSavingPassword(true);
+  try {
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+    });
+
+    if (error) {
+      const sameAsOld =
+        error.code === "same_password" ||
+        /different from the old password/i.test(error.message);
       setPasswordNotice({
         tone: "err",
-        text: `Use at least ${MIN_PASSWORD_LENGTH} characters.`,
+        text: sameAsOld
+          ? "Choose a password you haven't used before."
+          : error.message,
       });
       return;
     }
-    if (newPassword !== confirmPassword) {
-      setPasswordNotice({ tone: "err", text: "The passwords don't match." });
-      return;
-    }
-    if (!onChangePassword) {
-      setPasswordNotice({
-        tone: "err",
-        text: "Password change isn't connected yet.",
-      });
-      return;
-    }
-    setIsSavingPassword(true);
-    try {
-      await onChangePassword(newPassword);
-      setNewPassword("");
-      setConfirmPassword("");
-      setPasswordNotice({ tone: "ok", text: "Password changed." });
-    } catch (err) {
-      setPasswordNotice({ tone: "err", text: errorText(err) });
-    } finally {
-      setIsSavingPassword(false);
-    }
-  };
+
+    setNewPassword("");
+    setConfirmPassword("");
+    setPasswordNotice({ tone: "ok", text: "Password changed." });
+  } catch (err) {
+    setPasswordNotice({ tone: "err", text: errorText(err) });
+  } finally {
+    setIsSavingPassword(false);
+  }
+};
 
   return (
     <>
