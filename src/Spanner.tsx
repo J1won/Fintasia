@@ -224,8 +224,8 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 							{editingGoal ? (
 								<textarea value={goalDraft} rows={4} maxLength={500}
 									onChange={event => setGoalDraft(event.target.value)}
-									style={{ width: "100%", resize: "vertical" }} />
-							) : <p>{goal || "No financial goal saved yet."}</p>}
+									style={{ width: "100%", resize: "none" }} />
+							) : <p className="goal-display">{goal || "No financial goal saved yet."}</p>}
 
 							<div className="account-modal-actions">
 								<button type="button" disabled={savingGoal}
