@@ -210,6 +210,28 @@ const STONES: Stone[] = [
           }
         ],
       },
+      {
+        lines: [
+          {
+            type: "heading",
+            text: "Laziness traps",
+          },
+          "I dont wanna cook. Food delivery",
+          "I dont wanna commute. Uber",
+          "Choosing more expensive but easier options is a common human urge.",
+          "It comes down to how much do you value saving your money for a greater reward later in life.",
+          // {
+          //   type: "image",
+          //   src: happyDoggy,
+          //   alt: "dog happy",
+          //   text: "We gotta be strong, soldiers.",
+          // },
+          // {
+          //   type: "tip",
+          //   text: "Next time you want something, wait 24 hours and see if the pull fades.",
+          // }
+        ],
+      },
     ],
   },
   {
