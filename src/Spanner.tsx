@@ -226,13 +226,14 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 									onChange={event => setGoalDraft(event.target.value)}
 									style={{ width: "100%", resize: "vertical" }} />
 							) : <p>{goal || "No financial goal saved yet."}</p>}
+
 							<div className="account-modal-actions">
 								<button type="button" disabled={savingGoal}
 									onClick={editingGoal ? saveGoal : () => { setGoalDraft(goal); setEditingGoal(true); }}>
 									{editingGoal ? (savingGoal ? "Saving…" : "Save") : "Edit"}
 								</button>
+								<NoticeText notice={goalNotice} />
 							</div>
-							<NoticeText notice={goalNotice} />
 						</div>
 
 						<div className="account-section">
@@ -253,8 +254,8 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 								<button type="submit" disabled={savingPassword || !newPassword || !confirmPassword}>
 									{savingPassword ? "Changing…" : "Change password"}
 								</button>
+								<NoticeText notice={passwordNotice} />
 							</div>
-							<NoticeText notice={passwordNotice} />
 						</form>
 
 						<div className="account-modal-actions">

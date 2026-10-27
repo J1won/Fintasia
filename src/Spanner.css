@@ -145,6 +145,7 @@
 .account-section > label {
 	font-size: 0.85rem;
 	color: #4e7a58;
+     font-weight: 600;
 }
 
 /* The checkbox sits in its own soft green box */
@@ -179,9 +180,12 @@
 
 .account-modal-actions {
 	display: flex;
-	flex-wrap: wrap;
+	align-items: end;
 	gap: 12px;
-	margin-top: 4px;
+}
+
+.account-modal-actions .account-note {
+	margin: 0;
 }
 
 .account-modal-actions button {
@@ -285,7 +289,7 @@
 
 .account-note {
 	font-size: 0.9rem;
-	font-weight: 600;
+	font-weight: 200;
 }
 
 .account-note.ok {
