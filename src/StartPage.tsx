@@ -593,7 +593,7 @@ export default function StartPage() {
 
   const closeChat = () => {
     stopTimer();
-    setStone(0);
+    setCur(null);
     setAsking(false);
     setTyping(false);
   };
@@ -620,6 +620,7 @@ export default function StartPage() {
     if (shown < script.length) return reveal();
     if (cur < topics.length - 1) openTopic(stone, cur + 1);
     else if (stone < STONES.length - 1) goStone(stone + 1);
+    else if (stone == STONES.length - 1) goStone(0);
     else closeChat();
   };
 
