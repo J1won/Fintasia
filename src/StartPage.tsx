@@ -1,6 +1,6 @@
 import "./LandingPage.css";
 import { supabase } from './lib/supabase';
-import landingPageImage from "./assets/landingPageImage.png";
+import landingPageImage from "./assets/landingPageImage.jpg";
 import shGrandpa from "./assets/shakygp.png";
 import chGrandpa from "./assets/chillgp.png";
 import scroll from "./assets/scroll.png";
@@ -18,6 +18,17 @@ import sad2 from "./assets/cryingBarbie.jpg";
 import sad3 from "./assets/sadParadise.jpg";
 import poopPretty from "./assets/poopPretty.jpg";
 import lifeFunds from "./assets/costsMoney.jpg";
+import congratsDog from "./assets/congratsdog.png";
+import judge1 from "./assets/judge1.png";
+import judge2 from "./assets/judge2.png";
+import judge3 from "./assets/judge3.png";
+import noMoney from "./assets/noMoney.png";
+import catPoor from "./assets/catPoor.jpg";
+import ohShizzle from "./assets/ohShizzle.png";
+import parking from "./assets/parking.png";
+import smirk from "./assets/smirk.png";
+import dogSatisfied from "./assets/dogSatisfied.jpg";
+
 
 
 import { useNavigate } from 'react-router-dom';
@@ -131,8 +142,8 @@ const STONES: Stone[] = [
           },
           {
             type: "image",
-            src: happyDoggy,
-            alt: "dog happy",
+            src: smirk,
+            alt: "smirkingJesse",
             text: "Wonderful start.",
           },
           "Continue learning and keep in mind your end goal!",
@@ -200,8 +211,8 @@ const STONES: Stone[] = [
           "And hate to tell ya, marketing is only gonna get better.",
           {
             type: "image",
-            src: happyDoggy,
-            alt: "dog happy",
+            src: dogSatisfied,
+            alt: "dog accepting fate",
             text: "We gotta be strong, soldiers.",
           },
           {
@@ -250,6 +261,11 @@ const STONES: Stone[] = [
           "Interest is the rate at which the debt increases until it's paid off.",
           "Many predatory companies loan money at high interest rates making it hard to pay off.",
           {
+            type: "image",
+            src: catPoor,
+            alt: "cat begging",
+          },
+          {
             type: "tip",
             text: "If an interest is higher than 10%, STOP and think *carefully* about other options.",
           },
@@ -267,6 +283,11 @@ const STONES: Stone[] = [
           "Cash back and rewards are used as ways to blind people from the downsides.",
           "But the highest credit card rewards only go up to 5%.",
           "Let's do the math. Spend $100 on a card. You get free $5 as reward. You accidentally forget to pay off your card end of month and get a $30 interest fee. That's 6 months of rewards!!",
+          {
+            type: "image",
+            src: ohShizzle,
+            alt: "oh shizzle dog",
+          },
           {
             type: "tip",
             text: "ALWAYS pay off your card. Set up card AUTOPAY to avoid mistakes.",
@@ -292,8 +313,19 @@ const STONES: Stone[] = [
           },
           "Life can be scary and unpredictable. Losing some money along the way is normal.",
           "More than half of households get hit with a surprise expense or income loss every year.",
-          "Car trouble is the top offender, then home repairs, hospital trips, and lost paychecks.",
+          {
+            type: "image",
+            src: parking,
+            alt: "car accident",
+            text: "Car trouble is the top offender, then home repairs, hospital trips, and lost paychecks.",
+          },
+          
           "About 4 in 10 adults can’t cover a surprise $400 with cash.",
+          {
+            type: "image",
+            src: noMoney,
+            alt: "dog poor",
+          },
           {
             type: "tip",
             text: "Setting aside money for life is a must.",
@@ -310,9 +342,24 @@ const STONES: Stone[] = [
           "It should be at least 3 months of your living expenses.",
           "Use a *high-yield savings account*, so your money grows while it waits.",
           "Only touch for for NEEDS. Never wants. Never investments.",
-          "A sale is not an emergency.",
-          "Hot stock tip” is not an emergency.",
-          "New sneakers are definitely not an emergency.",
+          {
+            type: "image",
+            src: judge1,
+            alt: "judging you",
+            text: "A sale is not an emergency.",
+          },
+          {
+            type: "image",
+            src: judge2,
+            alt: "judging you",
+            text: "Hot stock tip” is not an emergency.",
+          },
+          {
+            type: "image",
+            src: judge3,
+            alt: "judging you",
+            text: "New sneakers are definitely not an emergency.",
+          },
           {
             type: "tip",
             text: "Build your emergency cushion first, before anything else.",
@@ -338,7 +385,12 @@ const STONES: Stone[] = [
             type: "heading",
             text: "Next steps",
           },
-          "Wow! You've already completed the basics!",
+          {
+            type: "image",
+            src: congratsDog,
+            alt: "yaas congratulations",
+            text: "Wow! You've already completed the basics!",
+          },
           "If you feel like you're ready to take the next step, go on ahead.",
           "I'll take you step by step through opening a brokerage account, retirement account, and more!",
           "Click \"Next Chapter\" found on the bottom right of the screen."

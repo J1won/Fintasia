@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties} from "react";
 import './LandingPage.css'
-import landingPageImage from './assets/landingPageImage.png'
+import landingPageImage from './assets/landingPageImage.jpg'
 import Spanner from "./Spanner";
 import "./VersionOnePage.css";
 import "./ActionPage.css";
