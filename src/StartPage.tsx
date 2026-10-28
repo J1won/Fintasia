@@ -593,7 +593,7 @@ export default function StartPage() {
 
   const closeChat = () => {
     stopTimer();
-    setCur(null);
+    setStone(0);
     setAsking(false);
     setTyping(false);
   };
