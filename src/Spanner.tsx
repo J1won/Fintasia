@@ -86,6 +86,7 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 	const [savingPassword, setSavingPassword] = useState(false);
 	const [passwordNotice, setPasswordNotice] = useState<Notice>(null);
 	const [loggingOut, setLoggingOut] = useState(false);
+	type Profile = { financial_goal: string | null; is_beginner: boolean };
 
 	const changeOpen = (open: boolean) => {
 		setIsOpen(open);
@@ -118,19 +119,50 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 		setNewPassword("");
 		setConfirmPassword("");
 
+		const getSessionProfile = (userId: string): Profile | null => { try { const raw = sessionStorage.getItem(`Profile:${userId}`); return raw ? (JSON.parse(raw) as Profile) : null; } catch { return null; } };
+
 		async function loadProfile() {
 			try {
 				const id = await currentUserId();
-				const { data, error } = await supabase.from("profiles")
-					.select("financial_goal, is_beginner").eq("id", id).single();
+
+				// 1. Try session storage first
+				const cached = getSessionProfile(id);
+				if (cached) {
+					if (!active) return;
+					const savedGoal = cached.financial_goal ?? "";
+					setGoal(savedGoal);
+					setGoalDraft(savedGoal);
+					setMessagesRead(!cached.is_beginner);
+					return;
+				}
+
+				// 2. Cache miss: fetch from Supabase
+				const { data, error } = await supabase
+					.from("profiles")
+					.select("financial_goal, is_beginner")
+					.eq("id", id)
+					.single<Profile>();
 				if (error) throw error;
 				if (!active) return;
+
+				// 3. Save to session storage for next time
+				try {
+					sessionStorage.setItem(
+					`profile:${id}`,
+					JSON.stringify({
+						financial_goal: data.financial_goal,
+						is_beginner: data.is_beginner,
+					})
+					);
+				} catch { // storage full or unavailable; ignore 
+				}
 				const savedGoal = data.financial_goal ?? "";
 				setGoal(savedGoal);
 				setGoalDraft(savedGoal);
 				setMessagesRead(!data.is_beginner);
 			} catch (error) {
-				if (active) setGoalNotice({ tone: "err", text: errorText(error) });
+				if (active) 
+					setGoalNotice({ tone: "err", text: errorText(error) });
 			}
 		}
 		void loadProfile();
