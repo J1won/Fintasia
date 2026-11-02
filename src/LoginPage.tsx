@@ -196,18 +196,42 @@ const Header = ({ onLogin, onSignup }: HeaderProps) => {
 };
 
 function LoginPage() {
+  type Profile = { financial_goal: string | null; is_beginner: boolean };
 
   const handleLogin = async (creds: LoginCreds): Promise<AuthResult> => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: creds.username.trim(),
-      password: creds.password,
-    });
-    if (error) {
-      return {
-        error: "Incorrect email or password.",
-      };
-    }
-    return { error: null };
+    const { data: authData, error } = await supabase.auth.signInWithPassword({
+    email: creds.username.trim(),
+    password: creds.password,
+  });
+
+  if (error || !authData.session) {
+    return { error: "Incorrect email or password." };
+  }
+
+  const userId = authData.session.user.id;
+
+  try {
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("financial_goal, is_beginner")
+      .eq("id", userId)
+      .single<Profile>();
+
+    if (profileError) throw profileError;
+
+    sessionStorage.setItem(
+      `profile:${userId}`,
+      JSON.stringify({
+        financial_goal: profile.financial_goal,
+        is_beginner: profile.is_beginner,
+      })
+    );
+  } catch (e) {
+    // Login succeeded; profile fetch failed. Don't block the user.
+    console.error("Failed to load profile:", e);
+  }
+
+  return { error: null };
   };
 
   const handleSignup = async (details: SignupDetails): Promise<AuthResult> => {
