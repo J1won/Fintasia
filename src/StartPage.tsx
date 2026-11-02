@@ -577,7 +577,7 @@ export default function StartPage() {
   const [answer, setAnswer] = useState<string | null>(null); // user's typed answer
   const [asking, setAsking] = useState(false); // waiting for a typed answer
   const [typing, setTyping] = useState(false); // Fern is "typing"
-  const [draft, setDraft] = useState("");
+  const [draft, setDraft] = useState(readLocalGoal);
   const [isScrollHovered, setIsScrollHovered] = useState(false);
   const [isScrollOpen, setIsScrollOpen] = useState(false);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
@@ -646,7 +646,7 @@ export default function StartPage() {
       setShown((s) => s + 1);
       setTyping(false);
       if (script[shown]?.kind === "kQuestion") {
-        setDraft(loadGoal());
+        loadGoal().then(setDraft);
         setAsking(true);
       }
     }, 350);
