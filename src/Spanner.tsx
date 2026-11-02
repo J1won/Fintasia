@@ -204,6 +204,7 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 			const { error } = await supabase.auth.signOut();
 			if (error) throw error;
 			changeOpen(false);
+			sessionStorage.clear();
 			navigate("/");
 		} catch (error) {
 			setGoalNotice({ tone: "err", text: errorText(error) });
