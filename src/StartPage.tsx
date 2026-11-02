@@ -435,19 +435,50 @@ const IDLE_CONTENT = [
   },
 ];
 
-const loadGoal = (): string => {
-  try {
-    return localStorage.getItem(GOAL_KEY) ?? "";
-  } catch {
-    return "";
-  }
+// Local copy, used as a cache and as a fallback when Supabase can't be reached
+const readLocalGoal = (): string => {
+	try {
+		return localStorage.getItem(GOAL_KEY) ?? "";
+	} catch {
+		return "";
+	}
 };
-const saveGoal = (userGoal: string) => {
-  try {
-    localStorage.setItem(GOAL_KEY, userGoal);
-  } catch {
-    /* storage unavailable: ignore */
-  }
+
+const writeLocalGoal = (userGoal: string) => {
+	try {
+		localStorage.setItem(GOAL_KEY, userGoal);
+	} catch {
+		/* storage unavailable: ignore */
+	}
+};
+
+const loadGoal = async (): Promise<string> => {
+	try {
+		const id = await currentUserId();
+		const { data, error } = await supabase
+			.from("profiles")
+			.select("financial_goal")
+			.eq("id", id)
+			.single();
+		if (error) throw error;
+
+		const savedGoal = data.financial_goal ?? "";
+		writeLocalGoal(savedGoal);
+		return savedGoal;
+	} catch {
+		return readLocalGoal();
+	}
+};
+
+const saveGoal = async (userGoal: string): Promise<void> => {
+	const id = await currentUserId();
+	const { error } = await supabase
+		.from("profiles")
+		.update({ financial_goal: userGoal })
+		.eq("id", id);
+	if (error) throw new Error(error.message);
+
+	writeLocalGoal(userGoal);
 };
 /* ---------- Text Script ---------- */
 function buildScript(tt: Topic): Msg[] {
@@ -481,6 +512,12 @@ function lineHeader(line?: ChatLine): string | undefined {
   if (line === undefined) return undefined;
   if (typeof line === "string") return line;
   return line.text;               // string for most shapes, string | undefined for image
+}
+
+async function currentUserId() {
+	const { data: { user }, error } = await supabase.auth.getUser();
+	if (error || !user) throw new Error("Please log in again.");
+	return user.id;
 }
 /* ---------- Compound Interest Slider ---------- */
 const ANNUAL_RETURN = 0.07;

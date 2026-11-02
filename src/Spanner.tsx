@@ -92,21 +92,21 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 		onAccountModalClick?.(open);
 	};
 
-	useEffect(() => {
-		const audio = new Audio(clickSound);
-		audio.preload = "auto";
-		audio.volume = 0.4;
+	// useEffect(() => {
+	// 	const audio = new Audio(clickSound);
+	// 	audio.preload = "auto";
+	// 	audio.volume = 0.4;
 
-		const playClick = (event: Event) => {
-			const target = event.target as Element | null;
-			if (!target?.closest("button:not(:disabled):not([data-no-sound])")) return;
-			audio.currentTime = 0;
-			audio.play().catch(() => {});
-		};
+	// 	const playClick = (event: Event) => {
+	// 		const target = event.target as Element | null;
+	// 		if (!target?.closest("button:not(:disabled):not([data-no-sound])")) return;
+	// 		audio.currentTime = 0;
+	// 		audio.play().catch(() => {});
+	// 	};
 
-		document.addEventListener("pointerdown", playClick);
-		return () => document.removeEventListener("pointerdown", playClick);
-	}, []);
+	// 	document.addEventListener("pointerdown", playClick);
+	// 	return () => document.removeEventListener("pointerdown", playClick);
+	// }, []);
 
 	useEffect(() => {
 		if (!isOpen) return;
