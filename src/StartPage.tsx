@@ -986,6 +986,7 @@ export default function StartPage() {
                     ref={goRef}
                     hidden={asking}
                     onClick={next}
+                    data-no-sound
                   >
                     {buttonLabel}
                   </button>

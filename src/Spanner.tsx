@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "./lib/supabase";
 import logo from "./assets/logo.png";
 import "./Spanner.css";
+import clickSound from "./assets/click.mp3";
 
 const MIN_PASSWORD_LENGTH = 8;
 type Notice = { tone: "ok" | "err"; text: string } | null;
@@ -90,6 +91,22 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 		setIsOpen(open);
 		onAccountModalClick?.(open);
 	};
+
+	useEffect(() => {
+		const audio = new Audio(clickSound);
+		audio.preload = "auto";
+		audio.volume = 0.4;
+
+		const playClick = (event: Event) => {
+			const target = event.target as Element | null;
+			if (!target?.closest("button:not(:disabled):not([data-no-sound])")) return;
+			audio.currentTime = 0;
+			audio.play().catch(() => {});
+		};
+
+		document.addEventListener("pointerdown", playClick);
+		return () => document.removeEventListener("pointerdown", playClick);
+	}, []);
 
 	useEffect(() => {
 		if (!isOpen) return;
