@@ -31,7 +31,7 @@ import dogSatisfied from "./assets/dogSatisfied.jpg";
 
 
 
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import {
   useEffect,
   useMemo,
