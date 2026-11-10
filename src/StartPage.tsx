@@ -801,9 +801,10 @@ export default function StartPage() {
                     <span aria-hidden="true">&#215;</span>
                   </button>
                   <h2 id="read-confirm-title">
-                    I have read ALL the text messages
+                    {/* I have read ALL the text messages */}
+                    Oops, next page is under construction 😅
                   </h2>
-                  <label className="read-confirm-agreement">
+                  {/* <label className="read-confirm-agreement">
                     <input
                       type="checkbox"
                       checked={hasAcknowledgedReading}
@@ -820,7 +821,7 @@ export default function StartPage() {
                     onClick={() => navigate('/action')}
                   >
                     Continue to next chapter
-                  </button>
+                  </button> */}
                 </section>
               </div>
             )}

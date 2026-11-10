@@ -286,14 +286,14 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 							</div>
 						</div>
 
-						<div className="account-section">
+						{/* <div className="account-section">
 							<label className="account-check">
 								<input type="checkbox" checked={messagesRead}
 									onChange={event => void toggleRead(event.target.checked)} />
 								<span>I have read all text messages.</span>
 							</label>
 							<NoticeText notice={readNotice} />
-						</div>
+						</div> */}
 
 						<form className="account-section" onSubmit={submitPassword}>
 							<label htmlFor="account-new-password">New password</label>
