@@ -5,11 +5,11 @@ import shGrandpa from "./assets/shakygp.png";
 import chGrandpa from "./assets/chillgp.png";
 import scroll from "./assets/scroll.png";
 import catTexting from "./assets/cat-texting.mp4";
-import drCat from "./assets/drCertified.mp4";
+// import drCat from "./assets/drCertified.mp4";
 import proudFace from "./assets/proudFace2.jpg";
-import financiallyLiterateCat from "./assets/financial-dab-cat.mp4";
-import battleCat from "./assets/battle-cat.mp4";
-import burglarCat from "./assets/burglar-cat.mp4";
+// import financiallyLiterateCat from "./assets/financial-dab-cat.mp4";
+// import battleCat from "./assets/battle-cat.mp4";
+// import burglarCat from "./assets/burglar-cat.mp4";
 import dogParadise from "./assets/dogParadise.jpg";
 import dogWarning from "./assets/dogWarning.jpg";
 // import happyDoggy from "./assets/happyDoggy.jpg";
@@ -28,6 +28,10 @@ import ohShizzle from "./assets/ohShizzle.png";
 import parking from "./assets/parking.png";
 import smirk from "./assets/smirk.png";
 import dogSatisfied from "./assets/dogSatisfied.jpg";
+import motorcyle from "./assets/motorcycle.jpg";
+import freeMoney from "./assets/freeMoney.jpg";
+import lifeEmergency from "./assets/lifeEmergency.jpg";
+import dw from "./assets/dw.jpg";
 
 
 
@@ -417,21 +421,21 @@ const STONES: Stone[] = [
 const GOAL_KEY = "mm-goal";
 const IDLE_CONTENT = [
   {
-    video: drCat,
+    video: dw,
     bubble:
-      "Did I hear someone call me? Lol. Don't worry boo boo, I'll teach you everything you need to know about finance.",
+      "Did I hear someone call me? Don't worry boo boo, I'll teach you everything you need to know about finance.",
   },
   {
-    video: financiallyLiterateCat,
-    bubble: "Let's be smart about spending.",
+    video: motorcyle,
+    bubble: "Let's be smart about spending...",
   },
   {
-    video: burglarCat,
-    bubble: "Somebody say free money??",
+    video: freeMoney,
+    bubble: "They lied about free money.",
   },
   {
-    video: battleCat,
-    bubble: "Thy must protect thyself..."
+    video: lifeEmergency,
+    bubble: "Protect yourself from...life?"
   },
 ];
 
@@ -896,12 +900,14 @@ export default function StartPage() {
                 !isAccountModalOpen &&
                 !isScrollOpen &&
                 !isReadConfirmOpen && (
-                  <video
+                  <img
                     src={idleVideo ?? catTexting}
-                    autoPlay
-                    loop
-                    playsInline
+                    // autoPlay
+                    // loop
+                    // playsInline
+                    alt=""
                     aria-hidden="true"
+                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
                   />
                 )}  
                 {idleBubble && <p className="video-bubble">{idleBubble}</p>}
