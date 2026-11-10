@@ -12,7 +12,7 @@ import battleCat from "./assets/battle-cat.mp4";
 import burglarCat from "./assets/burglar-cat.mp4";
 import dogParadise from "./assets/dogParadise.jpg";
 import dogWarning from "./assets/dogWarning.jpg";
-import happyDoggy from "./assets/happyDoggy.jpg";
+// import happyDoggy from "./assets/happyDoggy.jpg";
 import sad1 from "./assets/cryingWoman.jpg";
 import sad2 from "./assets/cryingBarbie.jpg";
 import sad3 from "./assets/sadParadise.jpg";
@@ -569,7 +569,7 @@ function CompoundCalc() {
 
 /* ---------- App ---------- */
 export default function StartPage() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [stone, setStone] = useState(0); // which stepping stone
   const [cur, setCur] = useState<number | null>(null); // open topic inside that stone
@@ -582,7 +582,7 @@ export default function StartPage() {
   const [isScrollOpen, setIsScrollOpen] = useState(false);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [isReadConfirmOpen, setIsReadConfirmOpen] = useState(false);
-  const [hasAcknowledgedReading, setHasAcknowledgedReading] = useState(false);
+  const [, setHasAcknowledgedReading] = useState(false);
   const [modalOrigin, setModalOrigin] = useState({ x: "50%", y: "50%" });
   const openFromButton = (
     event: React.MouseEvent<HTMLButtonElement>,

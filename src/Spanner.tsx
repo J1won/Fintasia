@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "./lib/supabase";
 import logo from "./assets/logo.png";
 import "./Spanner.css";
-import clickSound from "./assets/click.mp3";
+// import clickSound from "./assets/click.mp3";
 
 const MIN_PASSWORD_LENGTH = 8;
 type Notice = { tone: "ok" | "err"; text: string } | null;
@@ -79,8 +79,8 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 	const [editingGoal, setEditingGoal] = useState(false);
 	const [savingGoal, setSavingGoal] = useState(false);
 	const [goalNotice, setGoalNotice] = useState<Notice>(null);
-	const [messagesRead, setMessagesRead] = useState(false);
-	const [readNotice, setReadNotice] = useState<Notice>(null);
+	const [, setMessagesRead] = useState(false);
+	const [, setReadNotice] = useState<Notice>(null);
 	const [newPassword, setNewPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [savingPassword, setSavingPassword] = useState(false);
@@ -194,16 +194,16 @@ export default function Spanner({ onAccountModalClick }: SpannerProps) {
 		}
 	};
 
-	const toggleRead = async (checked: boolean) => {
-		setMessagesRead(checked);
-		setReadNotice(null);
-		try {
-			await updateProfile({ is_beginner: !checked });
-		} catch (error) {
-			setMessagesRead(!checked);
-			setReadNotice({ tone: "err", text: errorText(error) });
-		}
-	};
+	// const toggleRead = async (checked: boolean) => {
+	// 	setMessagesRead(checked);
+	// 	setReadNotice(null);
+	// 	try {
+	// 		await updateProfile({ is_beginner: !checked });
+	// 	} catch (error) {
+	// 		setMessagesRead(!checked);
+	// 		setReadNotice({ tone: "err", text: errorText(error) });
+	// 	}
+	// };
 
 	const submitPassword = async (event: SyntheticEvent<HTMLFormElement>) => {
 		event.preventDefault();
