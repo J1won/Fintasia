@@ -1,25 +1,41 @@
 import "./LandingPage.css";
-import landingPageImage from "./assets/landingPageImage.png";
+import { supabase } from './lib/supabase';
+import landingPageImage from "./assets/landingPageImage.jpg";
 import shGrandpa from "./assets/shakygp.png";
 import chGrandpa from "./assets/chillgp.png";
 import scroll from "./assets/scroll.png";
 import catTexting from "./assets/cat-texting.mp4";
-import drCat from "./assets/drCertified.mp4";
+// import drCat from "./assets/drCertified.mp4";
 import proudFace from "./assets/proudFace2.jpg";
-import financiallyLiterateCat from "./assets/financial-dab-cat.mp4";
-import battleCat from "./assets/battle-cat.mp4";
-import burglarCat from "./assets/burglar-cat.mp4";
+// import financiallyLiterateCat from "./assets/financial-dab-cat.mp4";
+// import battleCat from "./assets/battle-cat.mp4";
+// import burglarCat from "./assets/burglar-cat.mp4";
 import dogParadise from "./assets/dogParadise.jpg";
 import dogWarning from "./assets/dogWarning.jpg";
-import happyDoggy from "./assets/happyDoggy.jpg";
+// import happyDoggy from "./assets/happyDoggy.jpg";
 import sad1 from "./assets/cryingWoman.jpg";
 import sad2 from "./assets/cryingBarbie.jpg";
 import sad3 from "./assets/sadParadise.jpg";
 import poopPretty from "./assets/poopPretty.jpg";
 import lifeFunds from "./assets/costsMoney.jpg";
+import congratsDog from "./assets/congratsdog.png";
+import judge1 from "./assets/judge1.png";
+import judge2 from "./assets/judge2.png";
+import judge3 from "./assets/judge3.png";
+import noMoney from "./assets/noMoney.png";
+import catPoor from "./assets/catPoor.jpg";
+import ohShizzle from "./assets/ohShizzle.png";
+import parking from "./assets/parking.png";
+import smirk from "./assets/smirk.png";
+import dogSatisfied from "./assets/dogSatisfied.jpg";
+import motorcyle from "./assets/motorcycle.jpg";
+import freeMoney from "./assets/freeMoney.jpg";
+import lifeEmergency from "./assets/lifeEmergency.jpg";
+import dw from "./assets/dw.jpg";
 
 
-import { useNavigate } from 'react-router-dom';
+
+// import { useNavigate } from 'react-router-dom';
 import {
   useEffect,
   useMemo,
@@ -130,8 +146,8 @@ const STONES: Stone[] = [
           },
           {
             type: "image",
-            src: happyDoggy,
-            alt: "dog happy",
+            src: smirk,
+            alt: "smirkingJesse",
             text: "Wonderful start.",
           },
           "Continue learning and keep in mind your end goal!",
@@ -199,14 +215,36 @@ const STONES: Stone[] = [
           "And hate to tell ya, marketing is only gonna get better.",
           {
             type: "image",
-            src: happyDoggy,
-            alt: "dog happy",
+            src: dogSatisfied,
+            alt: "dog accepting fate",
             text: "We gotta be strong, soldiers.",
           },
           {
             type: "tip",
             text: "Next time you want something, wait 24 hours and see if the pull fades.",
           }
+        ],
+      },
+      {
+        lines: [
+          {
+            type: "heading",
+            text: "Laziness traps",
+          },
+          "I dont wanna cook. Food delivery",
+          "I dont wanna commute. Uber",
+          "Choosing more expensive but easier options is a common human urge.",
+          "It comes down to how much do you value saving your money for a greater reward later in life.",
+          // {
+          //   type: "image",
+          //   src: happyDoggy,
+          //   alt: "dog happy",
+          //   text: "We gotta be strong, soldiers.",
+          // },
+          // {
+          //   type: "tip",
+          //   text: "Next time you want something, wait 24 hours and see if the pull fades.",
+          // }
         ],
       },
     ],
@@ -227,6 +265,11 @@ const STONES: Stone[] = [
           "Interest is the rate at which the debt increases until it's paid off.",
           "Many predatory companies loan money at high interest rates making it hard to pay off.",
           {
+            type: "image",
+            src: catPoor,
+            alt: "cat begging",
+          },
+          {
             type: "tip",
             text: "If an interest is higher than 10%, STOP and think *carefully* about other options.",
           },
@@ -244,6 +287,11 @@ const STONES: Stone[] = [
           "Cash back and rewards are used as ways to blind people from the downsides.",
           "But the highest credit card rewards only go up to 5%.",
           "Let's do the math. Spend $100 on a card. You get free $5 as reward. You accidentally forget to pay off your card end of month and get a $30 interest fee. That's 6 months of rewards!!",
+          {
+            type: "image",
+            src: ohShizzle,
+            alt: "oh shizzle dog",
+          },
           {
             type: "tip",
             text: "ALWAYS pay off your card. Set up card AUTOPAY to avoid mistakes.",
@@ -269,8 +317,19 @@ const STONES: Stone[] = [
           },
           "Life can be scary and unpredictable. Losing some money along the way is normal.",
           "More than half of households get hit with a surprise expense or income loss every year.",
-          "Car trouble is the top offender, then home repairs, hospital trips, and lost paychecks.",
+          {
+            type: "image",
+            src: parking,
+            alt: "car accident",
+            text: "Car trouble is the top offender, then home repairs, hospital trips, and lost paychecks.",
+          },
+          
           "About 4 in 10 adults can’t cover a surprise $400 with cash.",
+          {
+            type: "image",
+            src: noMoney,
+            alt: "dog poor",
+          },
           {
             type: "tip",
             text: "Setting aside money for life is a must.",
@@ -287,9 +346,24 @@ const STONES: Stone[] = [
           "It should be at least 3 months of your living expenses.",
           "Use a *high-yield savings account*, so your money grows while it waits.",
           "Only touch for for NEEDS. Never wants. Never investments.",
-          "A sale is not an emergency.",
-          "Hot stock tip” is not an emergency.",
-          "New sneakers are definitely not an emergency.",
+          {
+            type: "image",
+            src: judge1,
+            alt: "judging you",
+            text: "A sale is not an emergency.",
+          },
+          {
+            type: "image",
+            src: judge2,
+            alt: "judging you",
+            text: "Hot stock tip” is not an emergency.",
+          },
+          {
+            type: "image",
+            src: judge3,
+            alt: "judging you",
+            text: "New sneakers are definitely not an emergency.",
+          },
           {
             type: "tip",
             text: "Build your emergency cushion first, before anything else.",
@@ -315,7 +389,12 @@ const STONES: Stone[] = [
             type: "heading",
             text: "Next steps",
           },
-          "Wow! You've already completed the basics!",
+          {
+            type: "image",
+            src: congratsDog,
+            alt: "yaas congratulations",
+            text: "Wow! You've already completed the basics!",
+          },
           "If you feel like you're ready to take the next step, go on ahead.",
           "I'll take you step by step through opening a brokerage account, retirement account, and more!",
           "Click \"Next Chapter\" found on the bottom right of the screen."
@@ -342,37 +421,68 @@ const STONES: Stone[] = [
 const GOAL_KEY = "mm-goal";
 const IDLE_CONTENT = [
   {
-    video: drCat,
+    video: dw,
     bubble:
-      "Did I hear someone call me? Lol. Don't worry boo boo, I'll teach you everything you need to know about finance.",
+      "Did I hear someone call me? Don't worry boo boo, I'll teach you everything you need to know about finance.",
   },
   {
-    video: financiallyLiterateCat,
-    bubble: "Let's be smart about spending.",
+    video: motorcyle,
+    bubble: "Let's be smart about spending...",
   },
   {
-    video: burglarCat,
-    bubble: "Somebody say free money??",
+    video: freeMoney,
+    bubble: "They lied about free money.",
   },
   {
-    video: battleCat,
-    bubble: "Thy must protect thyself..."
+    video: lifeEmergency,
+    bubble: "Protect yourself from...life?"
   },
 ];
 
-const loadGoal = (): string => {
-  try {
-    return localStorage.getItem(GOAL_KEY) ?? "";
-  } catch {
-    return "";
-  }
+// Local copy, used as a cache and as a fallback when Supabase can't be reached
+const readLocalGoal = (): string => {
+	try {
+		return localStorage.getItem(GOAL_KEY) ?? "";
+	} catch {
+		return "";
+	}
 };
-const saveGoal = (userGoal: string) => {
-  try {
-    localStorage.setItem(GOAL_KEY, userGoal);
-  } catch {
-    /* storage unavailable: ignore */
-  }
+
+const writeLocalGoal = (userGoal: string) => {
+	try {
+		localStorage.setItem(GOAL_KEY, userGoal);
+	} catch {
+		/* storage unavailable: ignore */
+	}
+};
+
+const loadGoal = async (): Promise<string> => {
+	try {
+		const id = await currentUserId();
+		const { data, error } = await supabase
+			.from("profiles")
+			.select("financial_goal")
+			.eq("id", id)
+			.single();
+		if (error) throw error;
+
+		const savedGoal = data.financial_goal ?? "";
+		writeLocalGoal(savedGoal);
+		return savedGoal;
+	} catch {
+		return readLocalGoal();
+	}
+};
+
+const saveGoal = async (userGoal: string): Promise<void> => {
+	const id = await currentUserId();
+	const { error } = await supabase
+		.from("profiles")
+		.update({ financial_goal: userGoal })
+		.eq("id", id);
+	if (error) throw new Error(error.message);
+
+	writeLocalGoal(userGoal);
 };
 /* ---------- Text Script ---------- */
 function buildScript(tt: Topic): Msg[] {
@@ -406,6 +516,12 @@ function lineHeader(line?: ChatLine): string | undefined {
   if (line === undefined) return undefined;
   if (typeof line === "string") return line;
   return line.text;               // string for most shapes, string | undefined for image
+}
+
+async function currentUserId() {
+	const { data: { user }, error } = await supabase.auth.getUser();
+	if (error || !user) throw new Error("Please log in again.");
+	return user.id;
 }
 /* ---------- Compound Interest Slider ---------- */
 const ANNUAL_RETURN = 0.07;
@@ -457,7 +573,7 @@ function CompoundCalc() {
 
 /* ---------- App ---------- */
 export default function StartPage() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [stone, setStone] = useState(0); // which stepping stone
   const [cur, setCur] = useState<number | null>(null); // open topic inside that stone
@@ -465,12 +581,12 @@ export default function StartPage() {
   const [answer, setAnswer] = useState<string | null>(null); // user's typed answer
   const [asking, setAsking] = useState(false); // waiting for a typed answer
   const [typing, setTyping] = useState(false); // Fern is "typing"
-  const [draft, setDraft] = useState("");
+  const [draft, setDraft] = useState(readLocalGoal);
   const [isScrollHovered, setIsScrollHovered] = useState(false);
   const [isScrollOpen, setIsScrollOpen] = useState(false);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [isReadConfirmOpen, setIsReadConfirmOpen] = useState(false);
-  const [hasAcknowledgedReading, setHasAcknowledgedReading] = useState(false);
+  const [, setHasAcknowledgedReading] = useState(false);
   const [modalOrigin, setModalOrigin] = useState({ x: "50%", y: "50%" });
   const openFromButton = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -534,7 +650,7 @@ export default function StartPage() {
       setShown((s) => s + 1);
       setTyping(false);
       if (script[shown]?.kind === "kQuestion") {
-        setDraft(loadGoal());
+        loadGoal().then(setDraft);
         setAsking(true);
       }
     }, 350);
@@ -545,6 +661,7 @@ export default function StartPage() {
     if (shown < script.length) return reveal();
     if (cur < topics.length - 1) openTopic(stone, cur + 1);
     else if (stone < STONES.length - 1) goStone(stone + 1);
+    else if (stone == STONES.length - 1) goStone(0);
     else closeChat();
   };
 
@@ -688,9 +805,10 @@ export default function StartPage() {
                     <span aria-hidden="true">&#215;</span>
                   </button>
                   <h2 id="read-confirm-title">
-                    I have read ALL the text messages
+                    {/* I have read ALL the text messages */}
+                    Oops, next page is under construction 😅
                   </h2>
-                  <label className="read-confirm-agreement">
+                  {/* <label className="read-confirm-agreement">
                     <input
                       type="checkbox"
                       checked={hasAcknowledgedReading}
@@ -707,7 +825,7 @@ export default function StartPage() {
                     onClick={() => navigate('/action')}
                   >
                     Continue to next chapter
-                  </button>
+                  </button> */}
                 </section>
               </div>
             )}
@@ -782,12 +900,14 @@ export default function StartPage() {
                 !isAccountModalOpen &&
                 !isScrollOpen &&
                 !isReadConfirmOpen && (
-                  <video
+                  <img
                     src={idleVideo ?? catTexting}
-                    autoPlay
-                    loop
-                    playsInline
+                    // autoPlay
+                    // loop
+                    // playsInline
+                    alt=""
                     aria-hidden="true"
+                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
                   />
                 )}  
                 {idleBubble && <p className="video-bubble">{idleBubble}</p>}
@@ -910,6 +1030,7 @@ export default function StartPage() {
                     ref={goRef}
                     hidden={asking}
                     onClick={next}
+                    data-no-sound
                   >
                     {buttonLabel}
                   </button>

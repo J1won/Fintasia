@@ -1,8 +1,12 @@
+
 import { useState } from 'react'
 import type { SubmitEvent } from 'react'
 import './LoginPage.css'
 import welcomeLogo from './assets/welcomeLogo.png'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+import { supabase } from './lib/supabase'
+
+const MIN_PASSWORD_LENGTH = 6
 
 type AuthMode = "none" | "login" | "signup";
  
@@ -10,22 +14,31 @@ interface LoginCreds {
   username: string;
   password: string;
 }
+
 interface SignupDetails {
   username: string;
   password: string;
   passwordTwo: string;
 }
- 
-interface HeaderProps {
-  onLogin: (creds: LoginCreds) => void;
-  onSignup: (details: SignupDetails) => void;
-}
- 
-const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
-  const navigate = useNavigate();
-  const [authMode, setAuthMode] = useState<AuthMode>("none");
 
-  // Login form state 
+interface AuthResult {
+  error: string | null;
+}
+
+interface HeaderProps {
+  onLogin: (creds: LoginCreds) => Promise<AuthResult>;
+  onSignup: (details: SignupDetails) => Promise<AuthResult>;
+}
+
+// Header handles UI and form submission
+const Header = ({ onLogin, onSignup }: HeaderProps) => {
+  const navigate = useNavigate();
+
+  const [authMode, setAuthMode] = useState<AuthMode>("none");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isBusy, setIsBusy] = useState(false);
+
+  // Login form state
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
@@ -34,27 +47,70 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
   const [signupPassword, setSignupPassword] = useState("");
   const [signupPasswordTwo, setSignupPasswordTwo] = useState("");
 
-
-  const handleLoginSubmit = (e: SubmitEvent) => {
-    e.preventDefault();
-    onLogin({ username: loginUsername, password: loginPassword });
-  };
- 
-  const handleSignupSubmit = (e: SubmitEvent) => {
-    e.preventDefault();
-    onSignup({ username: signupUsername, password: signupPassword, passwordTwo: signupPasswordTwo });
+  const switchMode = (mode: AuthMode) => {
+    setErrorMsg(null);
+    setAuthMode(mode);
   };
 
+  const handleResult = (result: AuthResult) => {
+    if (result.error) {
+      setErrorMsg(result.error);
+    } else {
+      navigate('/start');
+    }
+  };
+
+  const handleLoginSubmit = async (e: SubmitEvent) => {
+    e.preventDefault();
+    if (isBusy) return;
+    setErrorMsg(null);
+    setIsBusy(true);
+
+    try {
+      const result = await onLogin({
+        username: loginUsername,
+        password: loginPassword,
+      });
+
+      handleResult(result);
+    } catch {
+      setErrorMsg("Unable to sign in. Please try again.");
+    } finally {
+      setIsBusy(false);
+    }
+  };
+
+  const handleSignupSubmit = async (e: SubmitEvent) => {
+    e.preventDefault();
+    if (isBusy) return;
+
+    setErrorMsg(null);
+    setIsBusy(true);
+
+    try {
+      const result = await onSignup({
+        username: signupUsername,
+        password: signupPassword,
+        passwordTwo: signupPasswordTwo,
+      });
+
+      handleResult(result);
+    } catch {
+      setErrorMsg("Unable to create account. Please try again.");
+    } finally {
+      setIsBusy(false);
+    }
+  };
 
   return (
     <header id='authArea'>
       {/* /////////// Default Welcome Page /////////////// */}
       {authMode === "none" && (
         <>
-          <button className='sparkle-btn' onClick={() => setAuthMode("login")}>
+          <button className='sparkle-btn' onClick={() => switchMode("login")}>
             Login
           </button>
-          <button className='sparkle-btn' onClick={() => setAuthMode("signup")}>
+          <button className='sparkle-btn' onClick={() => switchMode("signup")}>
             Sign Up
           </button>
         </>
@@ -62,13 +118,19 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
       {/* /////////// Login Creds Welcome Page /////////////// */}
       {authMode === "login" && (
         <form className="loginForm" onSubmit={handleLoginSubmit}>
+          {errorMsg && (
+            <p className="auth-error" role="alert">
+              {errorMsg}
+            </p>
+          )}
           <input
-            type="text"
-            placeholder="Username"
+            type="email"
+            placeholder="Email"
             value={loginUsername}
             onChange={(e) => setLoginUsername(e.target.value)}
             className="input"
             autoFocus
+            required
           />
           <input
             type="password"
@@ -76,25 +138,33 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
             value={loginPassword}
             onChange={(e) => setLoginPassword(e.target.value)}
             className="input"
+            required
           />
-          <button type="submit" className='sparkle-btn' onClick={() => navigate('/start')}>
-            Sign In
+          <button type="submit" className='sparkle-btn' disabled={isBusy}>
+            {isBusy ? "Signing in…" : "Sign In"}
           </button>
-          <button type="button" className='sparkle-btn' onClick={() => setAuthMode("none")}>
+          <button type="button" className='sparkle-btn' onClick={() => switchMode("none")} disabled={isBusy}>
             Cancel
           </button>
         </form>
       )}
-      {/* /////////// Sign Up Welcome Page /////////////// */}
+
+      {/* Signup Form */}
       {authMode === "signup" && (
         <form className="loginForm" onSubmit={handleSignupSubmit}>
+          {errorMsg && (
+            <p className="auth-error" role="alert">
+              {errorMsg}
+            </p>
+          )}
           <input
-            type="text"
-            placeholder="Username"
+            type="email"
+            placeholder="Email"
             value={signupUsername}
             onChange={(e) => setSignupUsername(e.target.value)}
             className="input"
             autoFocus
+            required
           />
           <input
             type="password"
@@ -102,6 +172,8 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
             value={signupPassword}
             onChange={(e) => setSignupPassword(e.target.value)}
             className="input"
+            required
+            minLength={MIN_PASSWORD_LENGTH}
           />
           <input
             type="password"
@@ -109,42 +181,104 @@ const Header: React.FC<HeaderProps> = ({ onLogin, onSignup }) => {
             value={signupPasswordTwo}
             onChange={(e) => setSignupPasswordTwo(e.target.value)}
             className="input"
+            required
           />
-          <button type="submit" className='sparkle-btn' onClick={() => navigate('/start')}>
-            Create Account
+          <button type="submit" className='sparkle-btn' disabled={isBusy}>
+            {isBusy ? "Creating…" : "Create Account"}
           </button>
-          <button type="button" className='sparkle-btn' onClick={() => setAuthMode("none")}>
+          <button type="button" className='sparkle-btn' onClick={() => switchMode("none")} disabled={isBusy}>
             Cancel
           </button>
         </form>
       )}
     </header>
-  )
-}
+  );
+};
 
 function LoginPage() {
-//  const [count, setCount] = useState(0)
-  const handleLogin = (creds: LoginCreds) => {
-    console.log("Attempting login:", creds);
-    // Call your auth API here, e.g.:
-    // await fetch('/api/login', { method: 'POST', body: JSON.stringify(creds) })
+  type Profile = { financial_goal: string | null; is_beginner: boolean };
 
+  const handleLogin = async (creds: LoginCreds): Promise<AuthResult> => {
+    const { data: authData, error } = await supabase.auth.signInWithPassword({
+    email: creds.username.trim(),
+    password: creds.password,
+  });
+
+  if (error || !authData.session) {
+    return { error: "Incorrect email or password." };
+  }
+
+  const userId = authData.session.user.id;
+
+  try {
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("financial_goal, is_beginner")
+      .eq("id", userId)
+      .single<Profile>();
+
+    if (profileError) throw profileError;
+
+    sessionStorage.setItem(
+      `profile:${userId}`,
+      JSON.stringify({
+        financial_goal: profile.financial_goal,
+        is_beginner: profile.is_beginner,
+      })
+    );
+  } catch (e) {
+    // Login succeeded; profile fetch failed. Don't block the user.
+    console.error("Failed to load profile:", e);
+  }
+
+  return { error: null };
   };
-  const handleSignup = (details: SignupDetails) => {
-    console.log("Attempting signup:", details);
-    // Call your signup API here, e.g.:
-    // await fetch('/api/signup', { method: 'POST', body: JSON.stringify(details) })
+
+  const handleSignup = async (details: SignupDetails): Promise<AuthResult> => {
+    const email = details.username.trim().toLowerCase();
+
+    if (details.password.length < MIN_PASSWORD_LENGTH) {
+      return {
+        error: `Use at least ${MIN_PASSWORD_LENGTH} characters.`,
+      };
+    }
+    if (details.password !== details.passwordTwo) {
+      return {
+        error: "The passwords don't match.",
+      };
+    }
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password: details.password,
+    });
+    if (error) {
+      const taken =
+        error.code === "user_already_exists" ||
+        /already registered/i.test(error.message);
+      return {
+        error: taken
+          ? "This email is already registered."
+          : error.message,
+      };
+    }
+    if (!data.session) {
+      return {
+        error: "Account created, but no session was returned. Please sign in.",
+      };
+    }
+    return { error: null };
   };
 
   return (
-    <>
     <section id="center">
-      <img src={welcomeLogo}  height="300" alt="" />
-      <Header onLogin={handleLogin} onSignup={handleSignup} />
+      <img src={welcomeLogo} height="300" alt="" />
 
+      <Header
+        onLogin={handleLogin}
+        onSignup={handleSignup}
+      />
     </section>
-    </>
-  )
+  );
 }
 
-export default LoginPage
+export default LoginPage;

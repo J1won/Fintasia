@@ -56,7 +56,7 @@
 	--modal-origin-x: 50%;
 	--modal-origin-y: 50%;
 	position: relative;
-	width: min(100%, 420px);
+	width: min(100%, 1200px);
 	max-height: min(92%, 900px);
 	min-height: 0;
 	overflow-y: auto;
@@ -82,14 +82,11 @@
 	font-size: clamp(22px, 3vw, 28px);
 }
 
-.scroll-modal h2::before {
-	content: "🌱 ";
-}
-
 .scroll-modal p {
 	margin: 0;
 	font-size: 1rem;
 	line-height: 1.5;
+     text-align: left;
 }
 
 .scroll-modal-close {
@@ -145,6 +142,7 @@
 .account-section > label {
 	font-size: 0.85rem;
 	color: #4e7a58;
+     font-weight: 600;
 }
 
 /* The checkbox sits in its own soft green box */
@@ -157,7 +155,8 @@
 
 .account-section textarea,
 .account-section input[type="text"],
-.account-section input[type="password"] {
+.account-section input[type="password"],
+.account-section .goal-display {
 	width: 100%;
 	box-sizing: border-box;
 	padding: 10px 12px;
@@ -179,9 +178,31 @@
 
 .account-modal-actions {
 	display: flex;
-	flex-wrap: wrap;
+	align-items: center;
 	gap: 12px;
-	margin-top: 4px;
+}
+
+.account-modal-actions .account-note {
+	margin: 0;
+     display: flex;
+     align-items: center;
+     gap: 6px;
+}
+
+.account-modal-actions .account-note::before {
+     content: "!";
+     flex-shrink: 0;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     width: 1.1em;
+     height: 1.1em;
+     border: 2px solid #43865c;
+     border-radius: 50%;
+     color: #43865c;
+     font-size: 0.85em;
+     font-weight: 700;
+     line-height: 1;
 }
 
 .account-modal-actions button {
@@ -285,7 +306,7 @@
 
 .account-note {
 	font-size: 0.9rem;
-	font-weight: 600;
+	font-weight: 200;
 }
 
 .account-note.ok {
